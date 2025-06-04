@@ -11,20 +11,20 @@ A console program and library that provides **two powerful approaches** for work
 
 ## 🎯 **Two Ways to Work with XSD**
 
-### 📝 **1. XSD-to-Code Generation** (Traditional Approach)
-Generate static C# source files from XSD schemas - perfect for **compile-time** integration:
-- ✅ **Static C# class files** (.cs) generated from XSD schemas
-- ✅ **Compile-time type safety** - classes become part of your project
-- ✅ **IntelliSense support** - full IDE integration with your generated classes
-- ✅ **Source control friendly** - generated .cs files can be committed and reviewed
-
-### 🚀 **2. XSD-to-Runtime-Types** (Modern Dynamic Approach)  
+### 🚀 **1. XSD-to-Runtime-Types** (Modern Dynamic Approach)  
 Create and manipulate types dynamically at **runtime** with full XPath-like navigation:
 - ✅ **Runtime type generation** - no static .cs files needed
 - ✅ **XPath-like navigation** - access nested properties with `"Customer.Orders[0].Total"`
 - ✅ **Automatic root detection** - intelligently finds main document elements
 - ✅ **Dynamic XML manipulation** - create, modify and serialize XML on-the-fly
 - ✅ **Perfect for data processing** - ETL, XML transformations, dynamic workflows
+
+### 📝 **2. XSD-to-Code Generation** (Traditional Approach)
+Generate static C# source files from XSD schemas - perfect for **compile-time** integration:
+- ✅ **Static C# class files** (.cs) generated from XSD schemas
+- ✅ **Compile-time type safety** - classes become part of your project
+- ✅ **IntelliSense support** - full IDE integration with your generated classes
+- ✅ **Source control friendly** - generated .cs files can be committed and reviewed
 
 Features
 --------
@@ -58,7 +58,7 @@ Unsupported:
 
 ---
 
-# 🚀 **Approach 1: XSD-to-Runtime-Types (Recommended for Dynamic Scenarios)**
+# 🚀 **Approach 1: XSD-to-Runtime-Types (Modern Dynamic Approach)**
 
 **Perfect for:** Data processing, ETL pipelines, dynamic XML workflows, runtime XML manipulation
 
@@ -108,7 +108,7 @@ var total = navigator.GetPropertyValue(instance, "Customer.Orders[0].Total");
 
 ---
 
-# 📝 **Approach 2: XSD-to-Code Generation (Traditional Static Files)**
+# 📝 **Approach 2: XSD-to-Code Generation (Traditional Approach)**
 
 **Perfect for:** Traditional development, compile-time type safety, source control, IntelliSense
 
