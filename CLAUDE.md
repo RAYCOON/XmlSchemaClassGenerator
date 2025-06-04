@@ -103,3 +103,36 @@ The `XsdToCSharpFactory` provides a high-level API that:
 - Generated code uses XmlSerializer attributes for serialization control
 - Choice elements are currently handled as sequences (developer must ensure schema validity)
 - Complex restrictions and recursive choices have limited support
+
+## GitHub Actions NuGet Publishing
+
+The repository includes an automated GitHub Actions workflow for building and publishing NuGet packages.
+
+### Setup Required
+
+1. **Add NuGet API Key as Secret:**
+   - Go to GitHub repository → Settings → Secrets and variables → Actions
+   - Add new secret: `NUGET_API_KEY` with your NuGet.org API key
+   - Get API key from: https://www.nuget.org/account/apikeys
+
+### Publishing Process
+
+- **Automatic builds** on every push to main/master
+- **Tests run** on all builds
+- **Preview packages** published on tagged releases (v1.0.0-preview.X format)
+- **Release packages** published when GitHub releases are created
+
+### Manual Release Steps
+
+1. Create and push a version tag:
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+2. Create a GitHub Release from the tag (triggers production publish)
+
+### Versioning Strategy
+
+- Git tags starting with `v` (e.g., v1.2.3) become release versions
+- Other builds get preview versions: 1.0.0-preview.{build-number}
