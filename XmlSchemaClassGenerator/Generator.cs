@@ -48,7 +48,10 @@ public class Generator
 {
     private readonly GeneratorConfiguration _configuration = new();
 
-    public GeneratorConfiguration Configuration => _configuration;
+    public GeneratorConfiguration Configuration
+    {
+        get => _configuration;
+    }
 
     public string ForceUriScheme
     {
@@ -117,6 +120,15 @@ public class Generator
     {
         get { return _configuration.EnableDataBinding; }
         set { _configuration.EnableDataBinding = value; }
+    }
+
+    /// <summary>
+    /// Generate Choice Item Property for choice elements
+    /// </summary>
+    public bool GenerateChoiceItemProperty
+    {
+        get { return _configuration.GenerateChoiceItemProperty; }
+        set { _configuration.GenerateChoiceItemProperty = value; }
     }
 
     /// <summary>

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -53,7 +54,7 @@ public class DocumentationModel
 [DebuggerDisplay("{Name}")]
 public abstract class TypeModel(GeneratorConfiguration configuration) : GeneratorModel(configuration)
 {
-    protected static readonly CodeDomProvider CSharpProvider = CodeDomProvider.CreateProvider("CSharp");
+    protected static readonly ThreadLocal<CodeDomProvider> CSharpProvider = new(() => CodeDomProvider.CreateProvider("CSharp"));
 
     public NamespaceModel Namespace { get; set; }
     public XmlSchemaElement RootElement { get; set; }
@@ -214,6 +215,10 @@ public class ClassModel(GeneratorConfiguration configuration) : ReferenceTypeMod
     public TypeModel BaseClass { get; set; }
     public List<ClassModel> DerivedTypes { get; set; } = [];
     public override bool IsSubtype => BaseClass != null;
+    
+    // Choice-related properties
+    public List<ChoiceEnumDefinition> ChoiceEnumDefinitions { get; } = [];
+    public int ChoicePropertiesCount { get; set; }
 
     public IEnumerable<ClassModel> AllBaseClasses
     {
@@ -366,6 +371,36 @@ public class ClassModel(GeneratorConfiguration configuration) : ReferenceTypeMod
             keyProperty.IsKey = true;
         }
 
+        // Generate Choice enums
+        foreach (var choiceEnum in ChoiceEnumDefinitions)
+        {
+            var enumDeclaration = new CodeTypeDeclaration(choiceEnum.Name)
+            {
+                IsEnum = true,
+                Attributes = MemberAttributes.Public
+            };
+
+            foreach (var enumValue in choiceEnum.Members)
+            {
+                var enumMember = new CodeMemberField
+                {
+                    Name = enumValue.Name
+                    // Don't set InitExpression for enum members - they get auto-assigned values
+                };
+                
+                // Add XmlEnum attribute if the name differs from the value
+                if (enumValue.Name != enumValue.Value)
+                {
+                    var enumAttribute = AttributeDecl<XmlEnumAttribute>(new CodeAttributeArgument(new CodePrimitiveExpression(enumValue.Value)));
+                    enumMember.CustomAttributes.Add(enumAttribute);
+                }
+                
+                enumDeclaration.Members.Add(enumMember);
+            }
+
+            classDeclaration.Members.Add(enumDeclaration);
+        }
+
         var properties = Properties.GroupBy(x => x.Name).SelectMany(g => g.Select((p, i) => (Property: p, Index: i)).ToList());
         foreach (var (Property, Index) in properties)
         {
@@ -447,13 +482,13 @@ public class ClassModel(GeneratorConfiguration configuration) : ReferenceTypeMod
 
             using (var writer = new System.IO.StringWriter())
             {
-                CSharpProvider.GenerateCodeFromExpression(rootClass.GetDefaultValueFor(defaultString, attribute), writer, new CodeGeneratorOptions());
+                CSharpProvider.Value.GenerateCodeFromExpression(rootClass.GetDefaultValueFor(defaultString, attribute), writer, new CodeGeneratorOptions());
                 val = writer.ToString();
             }
 
             using (var writer = new System.IO.StringWriter())
             {
-                CSharpProvider.GenerateCodeFromExpression(new CodeTypeReferenceExpression(GetReferenceFor(referencingNamespace: null)), writer, new CodeGeneratorOptions());
+                CSharpProvider.Value.GenerateCodeFromExpression(new CodeTypeReferenceExpression(GetReferenceFor(referencingNamespace: null)), writer, new CodeGeneratorOptions());
                 reference = writer.ToString();
             }
 
@@ -516,6 +551,13 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
     public bool IsAny { get; set; }
     public int? Order { get; set; }
     public bool IsKey { get; set; }
+    
+    // Choice-related properties
+    public bool IsChoice { get; set; }
+    public string ChoiceEnumName { get; set; }
+    public List<ChoiceElementInfo> ChoiceElementTypes { get; set; } = [];
+    public string ChoiceIdentifierFieldName { get; set; }
+    public bool IsChoiceIdentifier { get; set; }
 
     public void SetFromNode(string originalName, bool useFixedIfNoDefault, IXmlSchemaNode xs)
     {
@@ -1040,6 +1082,38 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
                     anyAttribute.Arguments.Add(new(nameof(Order), new CodePrimitiveExpression(Order.Value)));
                 attributes.Add(anyAttribute);
             }
+            else if (IsChoice && Configuration.GenerateChoiceItemProperty)
+            {
+                // Generate multiple XmlElement attributes for choice options
+                owningType ??= OwningType;
+                foreach (var choiceElement in ChoiceElementTypes)
+                {
+                    var choiceAttribute = AttributeDecl<XmlElementAttribute>(
+                        new(new CodePrimitiveExpression(choiceElement.ElementName.Name)),
+                        new(nameof(XmlElementAttribute.Type), new CodeTypeOfExpression(choiceElement.ElementType.GetReferenceFor(owningType.Namespace))));
+
+                    if (Order != null)
+                        choiceAttribute.Arguments.Add(new(nameof(Order), new CodePrimitiveExpression(Order.Value)));
+
+                    if (!string.IsNullOrEmpty(choiceElement.ElementName.Namespace))
+                        choiceAttribute.Arguments.Add(new(Namespace, new CodePrimitiveExpression(choiceElement.ElementName.Namespace)));
+
+                    attributes.Add(choiceAttribute);
+                }
+
+                // Add XmlChoiceIdentifier attribute
+                if (!string.IsNullOrEmpty(ChoiceIdentifierFieldName))
+                {
+                    var choiceIdentifierAttribute = AttributeDecl<XmlChoiceIdentifierAttribute>(
+                        new CodeAttributeArgument(new CodePrimitiveExpression(ChoiceIdentifierFieldName)));
+                    attributes.Add(choiceIdentifierAttribute);
+                }
+            }
+            else if (IsChoiceIdentifier)
+            {
+                // Choice identifier property should be ignored in XML serialization
+                attributes.Add(AttributeDecl<XmlIgnoreAttribute>());
+            }
             else
             {
                 if (!Configuration.SeparateSubstitutes && Substitutes.Count > 0)
@@ -1089,7 +1163,7 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
 
                     args.Add(new(nameof(Form), new CodeFieldReferenceExpression(TypeRefExpr<XmlSchemaForm>(), nameof(XmlSchemaForm.Qualified))));
                 }
-                else if ((Form == XmlSchemaForm.Unqualified || Form == XmlSchemaForm.None) && !IsAttribute && !IsAny && XmlNamespace == null)
+                else if ((Form == XmlSchemaForm.Unqualified || Form == XmlSchemaForm.None) && !IsAttribute && !IsAny && !IsChoice && XmlNamespace == null)
                 {
                     args.Add(new(nameof(Form), new CodeFieldReferenceExpression(TypeRefExpr<XmlSchemaForm>(), nameof(XmlSchemaForm.Unqualified))));
                 }
@@ -1228,7 +1302,7 @@ public class SimpleModel(GeneratorConfiguration configuration) : TypeModel(confi
             Type = { Options = CodeTypeReferenceOptions.GenericTypeParameter }
         };
         var writer = new System.IO.StringWriter();
-        CSharpProvider.GenerateCodeFromExpression(typeOfExpr, writer, new CodeGeneratorOptions());
+        CSharpProvider.Value.GenerateCodeFromExpression(typeOfExpr, writer, new CodeGeneratorOptions());
         var fullTypeName = writer.ToString();
         Debug.Assert(fullTypeName.StartsWith("typeof(") && fullTypeName.EndsWith(")"));
         return fullTypeName.Substring(7, fullTypeName.Length - 8);

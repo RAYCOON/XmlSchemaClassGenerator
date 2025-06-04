@@ -9,17 +9,26 @@ using System.Xml.Serialization;
 
 namespace XmlSchemaClassGenerator;
 
-internal class ModelBuilder
+public class ModelBuilder
 {
     private const string ItemName = "Item";
     private const string PropertyName = "Property";
     private const string ElementName = "Element";
     private readonly GeneratorConfiguration _configuration;
-    private readonly XmlSchemaSet _set;
+    internal readonly XmlSchemaSet _set;
     private readonly Dictionary<XmlQualifiedName, HashSet<XmlSchemaAttributeGroup>> AttributeGroups = [];
     private readonly Dictionary<XmlQualifiedName, HashSet<XmlSchemaGroup>> Groups = [];
-    private readonly Dictionary<NamespaceKey, NamespaceModel> Namespaces = [];
-    private readonly Dictionary<string, TypeModel> Types = [];
+    
+    /// <summary>
+    /// All namespaces and their types found in the XSD schema
+    /// </summary>
+    public Dictionary<NamespaceKey, NamespaceModel> Namespaces { get; } = [];
+    
+    /// <summary>
+    /// All types found in the XSD schema, keyed by unique identifier
+    /// </summary>
+    public Dictionary<string, TypeModel> Types { get; } = [];
+    
     private readonly Dictionary<XmlQualifiedName, HashSet<Substitute>> SubstitutionGroups = [];
 
     private static readonly XmlQualifiedName AnyType = new("anyType", XmlSchema.Namespace);
@@ -912,10 +921,32 @@ internal class ModelBuilder
         Substitute substitute = null, int order = 0, bool passProperties = true)
     {
         var properties = new List<PropertyModel>();
+        var processedChoices = new HashSet<XmlSchemaChoice>();
 
         foreach (var item in items)
         {
             PropertyModel property = null;
+
+            // Handle Choice elements when GenerateChoiceItemProperty is enabled
+            if (_configuration.GenerateChoiceItemProperty && 
+                item.XmlParent is XmlSchemaChoice choice && 
+                !processedChoices.Contains(choice))
+            {
+                var choiceItems = items.Where(i => i.XmlParent == choice).ToList();
+                if (choiceItems.Count > 0)
+                {
+                    processedChoices.Add(choice);
+                    var choiceProperties = CreatePropertiesForChoice(source, owningTypeModel, choice, choiceItems, order);
+                    properties.AddRange(choiceProperties);
+                    
+                    // Update order if needed
+                    if (_configuration.EmitOrder)
+                        order += choiceProperties.Count();
+                    
+                    // Skip processing these items individually
+                    continue;
+                }
+            }
 
             switch (item.XmlParticle)
             {
@@ -1129,5 +1160,102 @@ internal class ModelBuilder
         var result = _configuration.NamespaceProvider.FindNamespace(key);
         return !string.IsNullOrEmpty(result) ? result
             : throw new ArgumentException(string.Format("Namespace {0} not provided through map or generator.", xmlNamespace));
+    }
+
+    private IEnumerable<PropertyModel> CreatePropertiesForChoice(Uri source, TypeModel owningTypeModel, XmlSchemaChoice choice, IList<Particle> choiceItems, int order)
+    {
+        var properties = new List<PropertyModel>();
+        
+        if (!(owningTypeModel is ClassModel classModel))
+            return properties;
+
+        // Create choice element info list
+        var choiceElementTypes = new List<ChoiceElementInfo>();
+        foreach (var item in choiceItems)
+        {
+            if (item.XmlParticle is XmlSchemaElement element)
+            {
+                var elementType = CreateTypeModel(GetQualifiedName(owningTypeModel, item.XmlParticle, element), element.ElementSchemaType);
+                choiceElementTypes.Add(new ChoiceElementInfo
+                {
+                    ElementName = element.QualifiedName,
+                    ElementType = elementType,
+                    IsCollection = item.MaxOccurs > 1
+                });
+            }
+        }
+
+        if (choiceElementTypes.Count == 0)
+            return properties;
+
+        // Determine choice property names (handle multiple choices)
+        var currentCount = classModel.ChoicePropertiesCount;
+        var itemPropertyName = currentCount == 0 ? "Item" : $"Item{currentCount}";
+        var enumPropertyName = $"{itemPropertyName}ElementName";
+        var enumName = currentCount == 0 
+            ? $"{owningTypeModel.Name}ItemChoiceType" 
+            : $"{owningTypeModel.Name}ItemChoiceType{currentCount}";
+
+        // Create enum values
+        var enumValues = choiceElementTypes
+            .Select(ce => new EnumValueModel
+            {
+                Name = _configuration.NamingProvider.EnumMemberNameFromValue(enumName, ce.ElementName.Name, null),
+                Value = ce.ElementName.Name
+            })
+            .ToList();
+
+        // Create the actual EnumModel for the choice enum
+        var enumModel = new EnumModel(_configuration)
+        {
+            Name = enumName,
+            Namespace = owningTypeModel.Namespace,
+            XmlSchemaName = new XmlQualifiedName(enumName, owningTypeModel.XmlSchemaName.Namespace),
+            XmlSchemaType = null, // This is a generated enum, not from schema
+            IsAnonymous = false,
+            Values = enumValues
+        };
+        
+        // Register the enum model in the namespace
+        if (owningTypeModel.Namespace != null)
+        {
+            owningTypeModel.Namespace.Types[enumName] = enumModel;
+        }
+
+        // Add enum definition to class model for code generation
+        var enumDefinition = new ChoiceEnumDefinition(enumName, enumValues);
+        classModel.ChoiceEnumDefinitions.Add(enumDefinition);
+
+        // Create Item property (object type)
+        var itemProperty = new PropertyModel(_configuration, itemPropertyName, new SimpleModel(_configuration) { ValueType = typeof(object) }, owningTypeModel)
+        {
+            IsChoice = true,
+            ChoiceEnumName = enumName,
+            ChoiceElementTypes = choiceElementTypes,
+            ChoiceIdentifierFieldName = enumPropertyName,
+            IsRequired = choice.MinOccurs > 0
+        };
+
+        if (_configuration.EmitOrder)
+            itemProperty.Order = order;
+
+        properties.Add(itemProperty);
+
+        // Create identifier enum property using the EnumModel
+        var enumProperty = new PropertyModel(_configuration, enumPropertyName, enumModel, owningTypeModel)
+        {
+            IsChoiceIdentifier = true,
+            IsRequired = choice.MinOccurs > 0
+        };
+
+        if (_configuration.EmitOrder)
+            enumProperty.Order = order + 1;
+
+        properties.Add(enumProperty);
+
+        // Increment choice count
+        classModel.ChoicePropertiesCount++;
+
+        return properties;
     }
 }

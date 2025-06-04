@@ -361,4 +361,10 @@ public class GeneratorConfiguration
     /// Allow DTD parsing. Default is false.
     /// </summary>
     public bool AllowDtdParse { get; set; } = false;
+
+    /// <summary>
+    /// Generate Choice Item Property for choice elements. Default is false.
+    /// When enabled, choice elements are generated as an Item property with an enum to identify the chosen element.
+    /// </summary>
+    public bool GenerateChoiceItemProperty { get; set; } = false;
 }
