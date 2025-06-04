@@ -34,19 +34,40 @@ namespace XmlSchemaClassGenerator
         /// <returns>XsdTypeNavigator that provides XPath-like access to XSD-derived type models</returns>
         public XsdTypeNavigator GenerateTypesFromXsd(string xsdFilePath)
         {
-            if (!File.Exists(xsdFilePath))
-                throw new FileNotFoundException($"XSD file not found: {xsdFilePath}");
+            return GenerateTypesFromXsd(new[] { xsdFilePath });
+        }
 
-            // Create XmlSchemaSet from XSD file
-            var schemaSet = new XmlSchemaSet();
-            using (var reader = XmlReader.Create(xsdFilePath))
+        /// <summary>
+        /// Generates TypeModel objects from multiple XSD files that can be used for XPath-like navigation and property access
+        /// This method supports XSD files with imports and dependencies
+        /// </summary>
+        /// <param name="xsdFilePaths">Paths to the XSD files</param>
+        /// <returns>XsdTypeNavigator that provides XPath-like access to XSD-derived type models</returns>
+        public XsdTypeNavigator GenerateTypesFromXsd(IEnumerable<string> xsdFilePaths)
+        {
+            var files = xsdFilePaths.ToList();
+            if (!files.Any())
+                throw new ArgumentException("At least one XSD file path must be provided");
+
+            foreach (var file in files)
             {
-                schemaSet.Add(null, reader);
+                if (!File.Exists(file))
+                    throw new FileNotFoundException($"XSD file not found: {file}");
+            }
+
+            // Create XmlSchemaSet from all XSD files
+            var schemaSet = new XmlSchemaSet();
+            foreach (var xsdFilePath in files)
+            {
+                using (var reader = XmlReader.Create(xsdFilePath))
+                {
+                    schemaSet.Add(null, reader);
+                }
             }
             schemaSet.Compile();
 
             if (schemaSet.GlobalTypes.Count == 0)
-                throw new InvalidOperationException("No types found in XSD schema");
+                throw new InvalidOperationException("No types found in XSD schemas");
 
             // Use ModelBuilder to create TypeModel objects directly
             var modelBuilder = new ModelBuilder(_configuration, schemaSet);
