@@ -7,9 +7,24 @@ XmlSchemaClassGenerator
 [![netstandard2.0](https://img.shields.io/badge/netstandard-2.0-brightgreen.svg)](https://img.shields.io/badge/netstandard-2.0-brightgreen.svg)
 [![net462](https://img.shields.io/badge/net-462-brightgreen.svg)](https://img.shields.io/badge/net-462-brightgreen.svg)
 
-A console program and library to generate 
-[XmlSerializer](http://msdn.microsoft.com/en-us/library/system.xml.serialization.xmlserializer.aspx) compatible C# classes
-from [XML Schema](http://en.wikipedia.org/wiki/XML_Schema_(W3C)) files.
+A console program and library that provides **two powerful approaches** for working with XML Schema (XSD) files:
+
+## 🎯 **Two Ways to Work with XSD**
+
+### 📝 **1. XSD-to-Code Generation** (Traditional Approach)
+Generate static C# source files from XSD schemas - perfect for **compile-time** integration:
+- ✅ **Static C# class files** (.cs) generated from XSD schemas
+- ✅ **Compile-time type safety** - classes become part of your project
+- ✅ **IntelliSense support** - full IDE integration with your generated classes
+- ✅ **Source control friendly** - generated .cs files can be committed and reviewed
+
+### 🚀 **2. XSD-to-Runtime-Types** (Modern Dynamic Approach)  
+Create and manipulate types dynamically at **runtime** with full XPath-like navigation:
+- ✅ **Runtime type generation** - no static .cs files needed
+- ✅ **XPath-like navigation** - access nested properties with `"Customer.Orders[0].Total"`
+- ✅ **Automatic root detection** - intelligently finds main document elements
+- ✅ **Dynamic XML manipulation** - create, modify and serialize XML on-the-fly
+- ✅ **Perfect for data processing** - ETL, XML transformations, dynamic workflows
 
 Features
 --------
@@ -39,10 +54,66 @@ Unsupported:
 * Possible name clashes and invalid identifiers when names contain non-alphanumeric characters
 * Groups with maxOccurs > 0
 
-Usage
------
+## 📖 **Usage - Choose Your Approach**
 
-For command line use, choose your preferred installation:
+---
+
+# 🚀 **Approach 1: XSD-to-Runtime-Types (Recommended for Dynamic Scenarios)**
+
+**Perfect for:** Data processing, ETL pipelines, dynamic XML workflows, runtime XML manipulation
+
+### **Installation**
+```bash
+dotnet add package XmlSchemaClassGenerator-beta
+```
+
+### **Quick Start - One-Liner Magic!**
+```csharp
+// 🎯 SUPER-SIMPLE: Everything in one line!
+var factory = new XsdToCSharpFactory();
+var navigator = factory.GenerateTypesFromXsd("schema.xsd");
+var rootInstance = factory.CreateRootInstance();  // 🎉 Root element auto-detected!
+
+// 🧭 XPath-like navigation through your types
+navigator.SetPropertyValue(rootInstance, "Customer.Name", "John Doe");
+navigator.SetPropertyValue(rootInstance, "Customer.Orders[0].Total", 299.99m);
+var xml = navigator.SerializeToXml(rootInstance);
+```
+
+### **Key Benefits**
+- ✅ **No manual type discovery** - factory auto-detects root elements using intelligent heuristics
+- ✅ **XPath-like navigation** - access nested properties with simple dot notation  
+- ✅ **Array index support** - navigate collections with `Orders[0].Items[1].Name`
+- ✅ **Complete workflow integration** - navigation AND assembly compilation in one API
+- ✅ **XML serialization helpers** - built-in XML serialization/deserialization
+
+### **Advanced Usage**
+```csharp
+var factory = new XsdToCSharpFactory(configuration);
+var navigator = factory.GenerateTypesFromXsd(xsdFiles);
+
+// Auto-detected root element info
+var rootTypeName = factory.GetRootElementTypeName();  // e.g. "Document", "S071", etc.
+var rootType = factory.GetRootElementType();
+var rootInstance = factory.CreateRootInstance();
+
+// Or create specific instances if needed
+var assembly = factory.GetCompiledAssembly();
+var specificInstance = factory.CreateInstance("SpecificTypeName");
+
+// XPath-style property manipulation  
+navigator.SetPropertyValue(instance, "Customer.Orders[0].Total", 299.99m);
+var total = navigator.GetPropertyValue(instance, "Customer.Orders[0].Total");
+```
+
+---
+
+# 📝 **Approach 2: XSD-to-Code Generation (Traditional Static Files)**
+
+**Perfect for:** Traditional development, compile-time type safety, source control, IntelliSense
+
+### **Command Line Installation**
+Choose your preferred installation:
 - Binary zips included in the [releases on GitHub](https://github.com/mganss/XmlSchemaClassGenerator/releases)
 - Binaries in the tools folder in the [console application NuGet package](https://www.nuget.org/packages/XmlSchemaClassGenerator.Console/)
 - .NET Core CLI tool available in the [dotnet-xscgen NuGet package](https://www.nuget.org/packages/dotnet-xscgen/)
@@ -204,51 +275,7 @@ Options:
                                for scheme, like https or http)
 </pre>
 
-## 🚀 **NEW: High-Level Factory API with Auto-Detection**
-
-For the easiest and most modern development experience, use the **XsdToCSharpFactory** - our high-level API with automatic root element detection:
-
-```C#
-// 🎯 SUPER-SIMPLE: One-liner to get everything!
-var factory = new XsdToCSharpFactory(configuration);
-var navigator = factory.GenerateTypesFromXsd("schema.xsd");
-var rootInstance = factory.CreateRootInstance();  // 🎉 Root element auto-detected!
-
-// 🧭 XPath-like navigation through your types
-navigator.SetPropertyValue(rootInstance, "Person.Name", "John Doe");
-navigator.SetPropertyValue(rootInstance, "Address.Street", "123 Main St");
-var xml = navigator.SerializeToXml(rootInstance);
-```
-
-**Key Benefits:**
-- ✅ **No manual type discovery** - factory auto-detects root elements using intelligent heuristics
-- ✅ **XPath-like navigation** - access nested properties with simple dot notation
-- ✅ **Array index support** - navigate collections with `Orders[0].Items[1].Name`
-- ✅ **Complete workflow integration** - navigation AND assembly compilation in one API
-- ✅ **XML serialization helpers** - built-in XML serialization/deserialization
-
-**Advanced Usage:**
-```C#
-var factory = new XsdToCSharpFactory(configuration);
-var navigator = factory.GenerateTypesFromXsd(xsdFiles);
-
-// Auto-detected root element info
-var rootTypeName = factory.GetRootElementTypeName();  // e.g. "Document", "S071", etc.
-var rootType = factory.GetRootElementType();
-var rootInstance = factory.CreateRootInstance();
-
-// Or create specific instances if needed
-var assembly = factory.GetCompiledAssembly();
-var specificInstance = factory.CreateInstance("SpecificTypeName");
-
-// XPath-style property manipulation
-navigator.SetPropertyValue(instance, "Customer.Orders[0].Total", 299.99m);
-var total = navigator.GetPropertyValue(instance, "Customer.Orders[0].Total");
-```
-
----
-
-## 📚 **Traditional Generator API**
+### **Traditional Generator API (For Static Code Generation)**
 
 For advanced scenarios or when you need fine-grained control, use the [library NuGet package](https://www.nuget.org/packages/XmlSchemaClassGenerator-beta/):
 
@@ -279,6 +306,27 @@ var generator = new Generator
     }
 };
 ```
+
+---
+
+## 🤔 **Which Approach Should I Choose?**
+
+| **Use Case** | **🚀 XSD-to-Runtime-Types** | **📝 XSD-to-Code Generation** |
+|--------------|---------------------------|-------------------------------|
+| **ETL/Data Processing** | ✅ **Perfect** - Dynamic XML manipulation | ❌ Overkill for runtime data |
+| **Dynamic Workflows** | ✅ **Perfect** - Runtime type generation | ❌ Too static |
+| **Web APIs/Services** | ✅ **Excellent** - Fast prototyping | ✅ Good - Type safety |
+| **Traditional Apps** | ✅ Good - But may be overpowered | ✅ **Perfect** - IntelliSense |
+| **Source Control** | ⚠️ Assembly-based (no .cs files) | ✅ **Perfect** - Reviewable .cs files |
+| **IntelliSense/IDE Support** | ⚠️ Limited (runtime types) | ✅ **Perfect** - Full IDE support |
+| **Complex XSD (EESSI, etc.)** | ✅ **Excellent** - Auto root detection | ⚠️ Manual type discovery needed |
+| **Performance** | ✅ **Fast** - No file I/O | ⚠️ Slower - File generation |
+
+### **Quick Decision Guide:**
+- 🚀 **Choose XSD-to-Runtime-Types if:** You're building data processors, ETL pipelines, need dynamic XML manipulation, or working with complex schemas
+- 📝 **Choose XSD-to-Code Generation if:** You're building traditional applications, need full IntelliSense, want reviewable source files, or require compile-time type safety
+
+---
 
 ### Mapping xsd files to C# namespaces
 
