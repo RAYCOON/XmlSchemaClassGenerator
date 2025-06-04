@@ -148,10 +148,18 @@ namespace XmlSchemaClassGenerator
                 {
                     var instanceType = instance.GetType();
                     var property = instanceType.GetProperty(propertyPath);
-                    return property?.GetValue(instance);
+                    if (property == null)
+                    {
+                        // Debug: Log available properties if property not found
+                        var availableProps = instanceType.GetProperties().Select(p => p.Name).ToArray();
+                        System.Diagnostics.Debug.WriteLine($"Property '{propertyPath}' not found on type '{instanceType.Name}'. Available: {string.Join(", ", availableProps)}");
+                        return null;
+                    }
+                    return property.GetValue(instance);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine($"Error getting property '{propertyPath}': {ex.Message}");
                     return null;
                 }
             }

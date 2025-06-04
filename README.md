@@ -204,7 +204,53 @@ Options:
                                for scheme, like https or http)
 </pre>
 
-For use from code use the [library NuGet package](https://www.nuget.org/packages/XmlSchemaClassGenerator-beta/):
+## 🚀 **NEW: High-Level Factory API with Auto-Detection**
+
+For the easiest and most modern development experience, use the **XsdToCSharpFactory** - our high-level API with automatic root element detection:
+
+```C#
+// 🎯 SUPER-SIMPLE: One-liner to get everything!
+var factory = new XsdToCSharpFactory(configuration);
+var navigator = factory.GenerateTypesFromXsd("schema.xsd");
+var rootInstance = factory.CreateRootInstance();  // 🎉 Root element auto-detected!
+
+// 🧭 XPath-like navigation through your types
+navigator.SetPropertyValue(rootInstance, "Person.Name", "John Doe");
+navigator.SetPropertyValue(rootInstance, "Address.Street", "123 Main St");
+var xml = navigator.SerializeToXml(rootInstance);
+```
+
+**Key Benefits:**
+- ✅ **No manual type discovery** - factory auto-detects root elements using intelligent heuristics
+- ✅ **XPath-like navigation** - access nested properties with simple dot notation
+- ✅ **Array index support** - navigate collections with `Orders[0].Items[1].Name`
+- ✅ **Complete workflow integration** - navigation AND assembly compilation in one API
+- ✅ **XML serialization helpers** - built-in XML serialization/deserialization
+
+**Advanced Usage:**
+```C#
+var factory = new XsdToCSharpFactory(configuration);
+var navigator = factory.GenerateTypesFromXsd(xsdFiles);
+
+// Auto-detected root element info
+var rootTypeName = factory.GetRootElementTypeName();  // e.g. "Document", "S071", etc.
+var rootType = factory.GetRootElementType();
+var rootInstance = factory.CreateRootInstance();
+
+// Or create specific instances if needed
+var assembly = factory.GetCompiledAssembly();
+var specificInstance = factory.CreateInstance("SpecificTypeName");
+
+// XPath-style property manipulation
+navigator.SetPropertyValue(instance, "Customer.Orders[0].Total", 299.99m);
+var total = navigator.GetPropertyValue(instance, "Customer.Orders[0].Total");
+```
+
+---
+
+## 📚 **Traditional Generator API**
+
+For advanced scenarios or when you need fine-grained control, use the [library NuGet package](https://www.nuget.org/packages/XmlSchemaClassGenerator-beta/):
 
 ```C#
 var generator = new Generator

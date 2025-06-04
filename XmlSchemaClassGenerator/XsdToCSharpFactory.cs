@@ -1,6 +1,4 @@
 using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,9 +8,30 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 
 namespace XmlSchemaClassGenerator
 {
+    /// <summary>
+    /// Factory class that provides a complete, high-level API for XSD to C# code generation.
+    /// This class wraps the existing Generator/ModelBuilder pipeline and provides both:
+    /// - XPath-like navigation capabilities through XsdTypeNavigator
+    /// - Compiled .NET assemblies for actual type instantiation
+    /// 
+    /// USAGE PATTERN:
+    /// 1. var factory = new XsdToCSharpFactory(configuration)
+    /// 2. var navigator = factory.GenerateTypesFromXsd(xsdFiles)  // Creates navigator AND assembly AND detects root
+    /// 3. var rootInstance = factory.CreateRootInstance()        // Create root element automatically
+    /// 4. Use navigator for XPath-like property access and manipulation
+    /// 
+    /// ADVANCED USAGE:
+    /// - var assembly = factory.GetCompiledAssembly()           // Get the compiled types
+    /// - var rootType = factory.GetRootElementType()            // Get auto-detected root type
+    /// - var instance = factory.CreateInstance("TypeName")      // Create specific instances
+    /// 
+    /// REDUNDANCY ELIMINATED + ROOT DETECTION:
+    /// No need to manually find root element types - factory detects them automatically!
+    /// </summary>
     public class XsdToCSharpFactory
     {
         private readonly GeneratorConfiguration _configuration;
@@ -36,6 +55,8 @@ namespace XmlSchemaClassGenerator
         {
             return GenerateTypesFromXsd(new[] { xsdFilePath });
         }
+
+        private XsdTypeNavigator _navigator;
 
         /// <summary>
         /// Generates TypeModel objects from multiple XSD files that can be used for XPath-like navigation and property access
@@ -72,8 +93,307 @@ namespace XmlSchemaClassGenerator
             // Use ModelBuilder to create TypeModel objects directly
             var modelBuilder = new ModelBuilder(_configuration, schemaSet);
             
+            // Create navigator
+            _navigator = new XsdTypeNavigator(modelBuilder);
+
+            // Store files for assembly compilation
+            _lastXsdFiles = files.ToList();
+            
+            // Also compile to real assembly for complete functionality
+            _compiledAssembly = CompileToAssembly($"XsdFactory_{DateTime.Now.Ticks}");
+            
+            // Auto-detect root element type
+            _rootElementType = DetectRootElementType();
+            
             // Return navigator that provides XPath-like access
-            return new XsdTypeNavigator(modelBuilder);
+            return _navigator;
+        }
+
+        private Assembly _compiledAssembly;
+        private IList<string> _lastXsdFiles;
+        private Type _rootElementType;
+
+        /// <summary>
+        /// Gets the compiled assembly containing the generated types
+        /// Call this after GenerateTypesFromXsd()
+        /// </summary>
+        public Assembly GetCompiledAssembly()
+        {
+            if (_compiledAssembly == null)
+                throw new InvalidOperationException("No assembly generated. Call GenerateTypesFromXsd() first.");
+            
+            return _compiledAssembly;
+        }
+
+        /// <summary>
+        /// Creates an instance of the specified type from the compiled assembly
+        /// </summary>
+        public object CreateInstance(string typeName)
+        {
+            if (_compiledAssembly == null)
+                throw new InvalidOperationException("No assembly generated. Call GenerateTypesFromXsd() first.");
+
+            var type = _compiledAssembly.GetTypes().FirstOrDefault(t => t.Name == typeName);
+            if (type == null)
+                throw new ArgumentException($"Type '{typeName}' not found in generated assembly");
+
+            return Activator.CreateInstance(type);
+        }
+
+        /// <summary>
+        /// Gets the automatically detected root element type
+        /// Call this after GenerateTypesFromXsd()
+        /// </summary>
+        public Type GetRootElementType()
+        {
+            if (_rootElementType == null)
+                throw new InvalidOperationException("No root element type detected. Call GenerateTypesFromXsd() first.");
+            
+            return _rootElementType;
+        }
+
+        /// <summary>
+        /// Gets the name of the automatically detected root element type
+        /// Call this after GenerateTypesFromXsd()
+        /// </summary>
+        public string GetRootElementTypeName()
+        {
+            return GetRootElementType().Name;
+        }
+
+        /// <summary>
+        /// Creates an instance of the automatically detected root element type
+        /// Call this after GenerateTypesFromXsd()
+        /// </summary>
+        public object CreateRootInstance()
+        {
+            if (_rootElementType == null)
+                throw new InvalidOperationException("No root element type detected. Call GenerateTypesFromXsd() first.");
+
+            return Activator.CreateInstance(_rootElementType);
+        }
+
+        /// <summary>
+        /// Compile XSD files to assembly using the proven Roslyn approach from Compiler class
+        /// </summary>
+        private Assembly CompileToAssembly(string assemblyName)
+        {
+            return CompileFiles(assemblyName, _lastXsdFiles);
+        }
+
+        private static readonly string[] DependencyAssemblies =
+        [
+            "netstandard",
+            "System.ComponentModel.Annotations",
+            "System.ComponentModel.Primitives",
+            "System.Diagnostics.Tools",
+            "System.Linq",
+            "System.ObjectModel",
+            "System.Private.CoreLib",
+            "System.Private.Xml",
+            "System.Private.Xml.Linq",
+            "System.Runtime",
+            "System.Runtime.Extensions",
+            "System.Xml.XDocument",
+            "System.Xml.XmlSerializer",
+        ];
+
+        private Assembly CompileFiles(string name, IEnumerable<string> xsdFiles)
+        {
+            // Use temporary file approach like the proven Compiler class
+            var tempDir = Path.Combine(Path.GetTempPath(), name + "_" + Guid.NewGuid().ToString("N").Substring(0, 8));
+            Directory.CreateDirectory(tempDir);
+
+            try
+            {
+                // Create generator for compilation (copy settings from main generator)
+                var compilerGenerator = new Generator
+                {
+                    GenerateNullables = _generator.GenerateNullables,
+                    NamespaceProvider = _generator.NamespaceProvider,
+                    DataAnnotationMode = _generator.DataAnnotationMode,
+                    EmitOrder = _generator.EmitOrder,
+                    NamingScheme = _generator.NamingScheme,
+                    GenerateDesignerCategoryAttribute = false,
+                    GenerateComplexTypesForCollections = true,
+                    EntityFramework = false,
+                    GenerateInterfaces = true,
+                    GenerateDescriptionAttribute = true,
+                    TextValuePropertyName = "Value",
+                    IntegerDataType = typeof(int)
+                };
+
+                var output = new FileOutputWriter(tempDir, true);
+                compilerGenerator.OutputWriter = output;
+
+                compilerGenerator.Generate(xsdFiles);
+
+                // Compile all generated files
+                return CompileGeneratedFiles(name, output.WrittenFiles);
+            }
+            finally
+            {
+                // Clean up temp directory
+                try { Directory.Delete(tempDir, true); } catch { }
+            }
+        }
+
+        private static Assembly CompileGeneratedFiles(string name, IEnumerable<string> filePaths)
+        {
+            return Compile(name, filePaths.Select(f => File.ReadAllText(f)).ToArray());
+        }
+
+        private static readonly LanguageVersion MaxLanguageVersion = Enum
+            .GetValues(typeof(LanguageVersion))
+            .Cast<LanguageVersion>()
+            .Max();
+
+        private static Assembly Compile(string name, params string[] contents)
+        {
+            // Get references in a way that works with .NET Standard 2.0
+            var references = GetPlatformReferences();
+            var options = new CSharpParseOptions(kind: SourceCodeKind.Regular, languageVersion: MaxLanguageVersion);
+            var syntaxTrees = contents.Select(c => CSharpSyntaxTree.ParseText(c, options));
+            var compilation = CSharpCompilation.Create(name, syntaxTrees)
+                .AddReferences(references)
+                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+            using var stream = new MemoryStream();
+            var emitResult = compilation.Emit(stream);
+
+            if (!emitResult.Success)
+            {
+                var errors = string.Join("\n", emitResult.Diagnostics
+                    .Where(d => d.Severity == DiagnosticSeverity.Error)
+                    .Select(d => d.ToString()));
+                throw new InvalidOperationException($"Compilation failed:\n{errors}");
+            }
+
+            return Assembly.Load(stream.ToArray());
+        }
+
+        /// <summary>
+        /// Get platform references in a way that works with .NET Standard 2.0 and .NET Framework
+        /// </summary>
+        private static List<MetadataReference> GetPlatformReferences()
+        {
+            var references = new List<MetadataReference>();
+
+            // Use runtime assemblies directly - works across all platforms
+            try
+            {
+                // Core assemblies
+                references.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
+                references.Add(MetadataReference.CreateFromFile(typeof(System.Xml.Serialization.XmlSerializer).Assembly.Location));
+                references.Add(MetadataReference.CreateFromFile(typeof(System.Linq.Enumerable).Assembly.Location));
+                references.Add(MetadataReference.CreateFromFile(typeof(System.Collections.Generic.List<>).Assembly.Location));
+                
+                // Try to add DataAnnotations
+                try
+                {
+                    references.Add(MetadataReference.CreateFromFile(typeof(System.ComponentModel.DataAnnotations.RequiredAttribute).Assembly.Location));
+                }
+                catch
+                {
+                    // DataAnnotations might not be available in all contexts
+                }
+                
+                // Try to find and add more system assemblies from the runtime directory
+                var runtimeDir = Path.GetDirectoryName(typeof(object).Assembly.Location);
+                if (!string.IsNullOrEmpty(runtimeDir))
+                {
+                    var commonAssemblies = new[]
+                    {
+                        "mscorlib.dll",
+                        "System.dll", 
+                        "System.Core.dll",
+                        "System.Xml.dll",
+                        "System.Runtime.dll",
+                        "System.Collections.dll",
+                        "System.ComponentModel.Primitives.dll",
+                        "netstandard.dll"
+                    };
+                    
+                    foreach (var assemblyName in commonAssemblies)
+                    {
+                        var assemblyPath = Path.Combine(runtimeDir, assemblyName);
+                        if (File.Exists(assemblyPath))
+                        {
+                            try
+                            {
+                                references.Add(MetadataReference.CreateFromFile(assemblyPath));
+                            }
+                            catch
+                            {
+                                // Skip if assembly can't be loaded
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // If all else fails, add minimal references
+                references.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
+            }
+
+            return references;
+        }
+
+        /// <summary>
+        /// Auto-detect the root element type from the generated assembly
+        /// Uses heuristics to find the most likely root element type
+        /// </summary>
+        private Type DetectRootElementType()
+        {
+            if (_compiledAssembly == null)
+                return null;
+
+            var types = _compiledAssembly.GetTypes()
+                .Where(t => t.IsClass && !t.IsAbstract && !t.IsNested)
+                .ToList();
+
+            // Strategy 1: Look for types with XmlRoot attribute
+            var typesWithXmlRoot = types
+                .Where(t => t.GetCustomAttributes(typeof(System.Xml.Serialization.XmlRootAttribute), false).Any())
+                .ToList();
+
+            if (typesWithXmlRoot.Count == 1)
+                return typesWithXmlRoot[0];
+
+            // Strategy 2: Look for common root element patterns (S071, Document, Root, etc.)
+            var commonRootPatterns = new[] { "S071", "Document", "Root", "Message", "Envelope" };
+            foreach (var pattern in commonRootPatterns)
+            {
+                var matchingType = types.FirstOrDefault(t => 
+                    t.Name.Equals(pattern, StringComparison.OrdinalIgnoreCase) ||
+                    t.Name.EndsWith(pattern, StringComparison.OrdinalIgnoreCase));
+                if (matchingType != null)
+                    return matchingType;
+            }
+
+            // Strategy 3: Look for the type that contains the most other types as properties
+            var typeWithMostComplexProperties = types
+                .Select(t => new { Type = t, ComplexPropertyCount = GetComplexPropertyCount(t, types) })
+                .OrderByDescending(x => x.ComplexPropertyCount)
+                .FirstOrDefault();
+
+            if (typeWithMostComplexProperties != null && typeWithMostComplexProperties.ComplexPropertyCount > 0)
+                return typeWithMostComplexProperties.Type;
+
+            // Strategy 4: Return the first type as fallback
+            return types.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Count how many properties of a type are complex types (not primitives)
+        /// </summary>
+        private int GetComplexPropertyCount(Type type, List<Type> allGeneratedTypes)
+        {
+            return type.GetProperties()
+                .Count(p => allGeneratedTypes.Contains(p.PropertyType) || 
+                           (p.PropertyType.IsGenericType && 
+                            p.PropertyType.GetGenericArguments().Any(arg => allGeneratedTypes.Contains(arg))));
         }
 
         private void ApplyConfigurationToGenerator(GeneratorConfiguration config)
@@ -88,6 +408,7 @@ namespace XmlSchemaClassGenerator
             _generator.NamespacePrefix = config.NamespacePrefix;
             _generator.NamingScheme = config.NamingScheme;
             _generator.GenerateChoiceItemProperty = config.GenerateChoiceItemProperty;
+            _generator.NamespaceProvider = config.NamespaceProvider; // This was missing!
         }
 
         /// <summary>
@@ -143,42 +464,6 @@ namespace XmlSchemaClassGenerator
             };
         }
 
-        /*
-        private Dictionary<string, Type> CompileGeneratedCode(Dictionary<string, string> generatedCode)
-        {
-            // Runtime compilation implementation using Roslyn
-            // This is commented out for now due to platform compatibility issues
-            // Will be implemented in a future version
-            throw new NotImplementedException("Runtime compilation is not yet implemented.");
-        }
-        */
 
-        /// <summary>
-        /// In-memory output writer to capture generated code
-        /// </summary>
-        private class InMemoryOutputWriter : OutputWriter
-        {
-            public Dictionary<string, string> GeneratedCode { get; } = new Dictionary<string, string>();
-
-            public override void Write(CodeNamespace codeNamespace)
-            {
-                using (var writer = new StringWriter())
-                {
-                    using (var codeProvider = CodeDomProvider.CreateProvider("CSharp"))
-                    {
-                        var options = new CodeGeneratorOptions
-                        {
-                            BracingStyle = "C",
-                            IndentString = "    "
-                        };
-
-                        codeProvider.GenerateCodeFromNamespace(codeNamespace, writer, options);
-                    }
-                    
-                    var namespaceName = string.IsNullOrEmpty(codeNamespace.Name) ? "Generated" : codeNamespace.Name;
-                    GeneratedCode[namespaceName] = writer.ToString();
-                }
-            }
-        }
     }
 }
