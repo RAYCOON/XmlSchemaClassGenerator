@@ -173,11 +173,23 @@ namespace XmlSchemaClassGenerator.Tests
                 var ordersProperty = type.GetProperty("Orders");
                 if (ordersProperty != null)
                 {
-                    // Create a list/array of the correct type
-                    var listType = typeof(List<>).MakeGenericType(orderType);
-                    var ordersList = Activator.CreateInstance(listType);
-                    listType.GetMethod("Add")?.Invoke(ordersList, new[] { order });
-                    ordersProperty.SetValue(instance, ordersList);
+                    // Create a collection compatible with the property type
+                    var propertyType = ordersProperty.PropertyType;
+                    object ordersCollection;
+                    
+                    if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(System.Collections.ObjectModel.Collection<>))
+                    {
+                        ordersCollection = Activator.CreateInstance(propertyType);
+                    }
+                    else
+                    {
+                        // Fallback to Collection<T>
+                        var collectionType = typeof(System.Collections.ObjectModel.Collection<>).MakeGenericType(orderType);
+                        ordersCollection = Activator.CreateInstance(collectionType);
+                    }
+                    
+                    propertyType.GetMethod("Add")?.Invoke(ordersCollection, new[] { order });
+                    ordersProperty.SetValue(instance, ordersCollection);
                 }
             }
 
