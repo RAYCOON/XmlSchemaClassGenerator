@@ -48,12 +48,24 @@ namespace XmlSchemaClassGenerator
         }
 
         /// <summary>
-        /// Generates TypeModel objects from an XSD file that can be used for XPath-like navigation and property access
+        /// Generates TypeModel objects from an XSD file or directory that can be used for XPath-like navigation and property access
         /// </summary>
-        /// <param name="xsdFilePath">Path to the XSD file</param>
+        /// <param name="xsdFilePath">Path to the XSD file or directory containing XSD files</param>
         /// <returns>XsdTypeNavigator that provides XPath-like access to XSD-derived type models</returns>
         public XsdTypeNavigator GenerateTypesFromXsd(string xsdFilePath)
         {
+            // Check if path is a directory
+            if (Directory.Exists(xsdFilePath))
+            {
+                // Load all XSD files from directory
+                var xsdFiles = Directory.GetFiles(xsdFilePath, "*.xsd", SearchOption.TopDirectoryOnly);
+                if (!xsdFiles.Any())
+                    throw new ArgumentException($"No XSD files found in directory: {xsdFilePath}");
+                
+                return GenerateTypesFromXsd(xsdFiles);
+            }
+            
+            // Single file path
             return GenerateTypesFromXsd(new[] { xsdFilePath });
         }
 
