@@ -3,7 +3,7 @@ name: Build and Publish NuGet Packages
 on:
   push:
     branches: [ master, main ]
-    tags: [ 'v*' ]
+    tags: [ 'v*', 'V*' ]
   pull_request:
     branches: [ master, main ]
   release:
@@ -45,6 +45,8 @@ jobs:
       run: |
         if [[ $GITHUB_REF == refs/tags/v* ]]; then
           VERSION=${GITHUB_REF#refs/tags/v}
+        elif [[ $GITHUB_REF == refs/tags/V* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/V}
         else
           VERSION="1.0.0-preview.${GITHUB_RUN_NUMBER}"
         fi

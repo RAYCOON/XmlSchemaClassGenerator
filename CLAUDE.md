@@ -136,3 +136,40 @@ The repository includes an automated GitHub Actions workflow for building and pu
 
 - Git tags starting with `v` (e.g., v1.2.3) become release versions
 - Other builds get preview versions: 1.0.0-preview.{build-number}
+
+## Validation Features & Limitations
+
+### New Validation Methods
+
+The `XsdToCSharpFactory` provides two validation methods:
+
+- **`GetRequiredPropertyPaths()`**: Returns property paths that are marked as required
+- **`ValidateInstance(object)`**: Validates object instances against basic XSD requirements
+
+### ⚠️ Important Limitations
+
+**Choice Elements**: The validation methods have significant limitations with XSD Choice elements:
+
+- **Current Behavior**: Choice elements are treated as Sequences (all options appear required)
+- **Expected Behavior**: Only ONE choice option should be required
+- **Impact**: `GetRequiredPropertyPaths()` may return incorrect results for schemas with choices
+
+### Recommendations
+
+1. **Use validation methods as a development aid**, not authoritative validation
+2. **Implement custom choice validation** in application logic
+3. **See VALIDATION-LIMITATIONS.md** for detailed workarounds and examples
+4. **For production systems**, consider supplementary validation approaches
+
+### Example Workaround
+
+```csharp
+// Use factory validation as baseline
+var factoryErrors = factory.ValidateInstance(instance);
+
+// Add custom choice validation
+var choiceErrors = ValidateChoiceConstraints(instance);
+
+// Combine for complete validation
+var allErrors = factoryErrors.Concat(choiceErrors).ToList();
+```
