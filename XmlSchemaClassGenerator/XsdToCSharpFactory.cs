@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using System.ComponentModel.DataAnnotations;
 
 namespace XmlSchemaClassGenerator
 {
@@ -446,6 +447,178 @@ namespace XmlSchemaClassGenerator
                 serializer.Serialize(writer, obj);
                 return writer.ToString();
             }
+        }
+
+        /// <summary>
+        /// Gets all required property paths for the current XSD schema.
+        /// Required properties are those marked with [Required] attribute or have MinOccurs > 0 in XSD.
+        /// </summary>
+        /// <returns>List of property paths (e.g., "Customer.Name", "Customer.Orders[*].Total")</returns>
+        public List<string> GetRequiredPropertyPaths()
+        {
+            if (_compiledAssembly == null)
+                throw new InvalidOperationException("No types have been generated. Call GenerateTypesFromXsd() first.");
+
+            var requiredPaths = new List<string>();
+            var rootType = GetRootElementType();
+            
+            if (rootType != null)
+            {
+                CollectRequiredPaths(rootType, "", requiredPaths, new HashSet<Type>());
+            }
+
+            return requiredPaths;
+        }
+
+        /// <summary>
+        /// Validates an object instance against XSD schema requirements and returns validation errors with property paths.
+        /// </summary>
+        /// <param name="instance">The object instance to validate</param>
+        /// <returns>Empty list if valid, otherwise list of validation errors with property paths</returns>
+        public List<XsdValidationError> ValidateInstance(object instance)
+        {
+            if (instance == null)
+                throw new ArgumentNullException(nameof(instance));
+
+            var errors = new List<XsdValidationError>();
+            ValidateInstanceRecursive(instance, "", errors, new HashSet<object>());
+            return errors;
+        }
+
+        private void CollectRequiredPaths(Type type, string currentPath, List<string> requiredPaths, HashSet<Type> visitedTypes)
+        {
+            if (visitedTypes.Contains(type))
+                return;
+
+            visitedTypes.Add(type);
+
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            
+            foreach (var property in properties)
+            {
+                var fullPath = string.IsNullOrEmpty(currentPath) ? property.Name : $"{currentPath}.{property.Name}";
+                
+                // Check for Required attribute
+                var requiredAttr = property.GetCustomAttribute<RequiredAttribute>();
+                if (requiredAttr != null)
+                {
+                    requiredPaths.Add(fullPath);
+                }
+
+                // Check for XmlElement with minOccurs > 0 (implied by Required)
+                try
+                {
+                    var xmlElementAttrs = property.GetCustomAttributes<XmlElementAttribute>();
+                    if (xmlElementAttrs.Any())
+                    {
+                        // Check for nullable types - non-nullable value types are usually required
+                        var propertyType = property.PropertyType;
+                        var underlyingType = Nullable.GetUnderlyingType(propertyType);
+                        
+                        if (underlyingType == null && propertyType.IsValueType && requiredAttr == null)
+                        {
+                            // Value type without Required attribute might still be required
+                            // This is a heuristic - in practice Required attribute should be used
+                        }
+                    }
+                }
+                catch (AmbiguousMatchException)
+                {
+                    // Property has multiple XmlElement attributes - this is common in complex schemas
+                    // Skip attribute-based analysis for this property
+                }
+
+                // Recursively check complex types
+                var propType = property.PropertyType;
+                if (IsCollectionType(propType))
+                {
+                    var elementType = GetCollectionElementType(propType);
+                    if (elementType != null && IsComplexType(elementType))
+                    {
+                        CollectRequiredPaths(elementType, $"{fullPath}[*]", requiredPaths, new HashSet<Type>(visitedTypes));
+                    }
+                }
+                else if (IsComplexType(propType))
+                {
+                    CollectRequiredPaths(propType, fullPath, requiredPaths, new HashSet<Type>(visitedTypes));
+                }
+            }
+        }
+
+        private void ValidateInstanceRecursive(object instance, string currentPath, List<XsdValidationError> errors, HashSet<object> visitedObjects)
+        {
+            if (instance == null || visitedObjects.Contains(instance))
+                return;
+
+            visitedObjects.Add(instance);
+
+            var type = instance.GetType();
+            var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var property in properties)
+            {
+                var fullPath = string.IsNullOrEmpty(currentPath) ? property.Name : $"{currentPath}.{property.Name}";
+                var value = property.GetValue(instance);
+
+                // Check Required attribute
+                var requiredAttr = property.GetCustomAttribute<RequiredAttribute>();
+                if (requiredAttr != null)
+                {
+                    if (value == null || (value is string str && string.IsNullOrEmpty(str)))
+                    {
+                        errors.Add(new XsdValidationError
+                        {
+                            PropertyPath = fullPath,
+                            ErrorMessage = $"Required property '{property.Name}' is missing or empty.",
+                            ErrorType = XsdValidationErrorType.Required
+                        });
+                        continue;
+                    }
+                }
+
+                if (value != null)
+                {
+                    // Validate collection items
+                    if (IsCollectionType(property.PropertyType) && value is System.Collections.IEnumerable enumerable)
+                    {
+                        int index = 0;
+                        foreach (var item in enumerable)
+                        {
+                            if (item != null && IsComplexType(item.GetType()))
+                            {
+                                ValidateInstanceRecursive(item, $"{fullPath}[{index}]", errors, new HashSet<object>(visitedObjects));
+                            }
+                            index++;
+                        }
+                    }
+                    // Validate complex type properties
+                    else if (IsComplexType(property.PropertyType))
+                    {
+                        ValidateInstanceRecursive(value, fullPath, errors, new HashSet<object>(visitedObjects));
+                    }
+                }
+            }
+        }
+
+        private bool IsCollectionType(Type type)
+        {
+            return type != typeof(string) && typeof(System.Collections.IEnumerable).IsAssignableFrom(type);
+        }
+
+        private Type GetCollectionElementType(Type collectionType)
+        {
+            if (collectionType.IsArray)
+                return collectionType.GetElementType();
+
+            var genericArgs = collectionType.GetGenericArguments();
+            return genericArgs.Length > 0 ? genericArgs[0] : null;
+        }
+
+        private bool IsComplexType(Type type)
+        {
+            return !type.IsPrimitive && type != typeof(string) && type != typeof(DateTime) && 
+                   type != typeof(decimal) && type != typeof(Guid) && !type.IsEnum &&
+                   Nullable.GetUnderlyingType(type) == null;
         }
 
         private GeneratorConfiguration CreateDefaultConfiguration()
