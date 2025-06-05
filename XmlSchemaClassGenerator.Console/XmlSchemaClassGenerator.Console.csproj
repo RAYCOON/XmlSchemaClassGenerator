@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>A .NET CLI tool to generate XmlSerializer compatible C# classes from XML Schema files.</Description>
-    <Copyright>Copyright 2013-$([System.DateTime]::Now.Year) Michael Ganss</Copyright>
+    <Description>A .NET CLI tool to generate XmlSerializer compatible C# classes from XML Schema files. Enhanced fork with advanced features and factory patterns.</Description>
+    <Copyright>Copyright 2013-$([System.DateTime]::Now.Year) Michael Ganss, Sven Haude</Copyright>
     <AssemblyTitle>XmlSchemaClassGenerator.Console</AssemblyTitle>
     <AppVeyor_Build_Version Condition="'$(APPVEYOR_BUILD_VERSION)' == ''">1.0.0</AppVeyor_Build_Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
@@ -11,14 +11,14 @@
     <AssemblyName>XmlSchemaClassGenerator.Console</AssemblyName>
     <RootNamespace>XmlSchemaClassGenerator.Console</RootNamespace>
     <OutputType>Exe</OutputType>
-    <Authors>Michael Ganss</Authors>
-    <PackageId>XmlSchemaClassGenerator.Console</PackageId>
-    <PackageTags>xsd xmlschema generator</PackageTags>
-    <PackageProjectUrl>https://github.com/mganss/XmlSchemaClassGenerator</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/mganss/XmlSchemaClassGenerator/blob/master/LICENSE</PackageLicenseUrl>
+    <Authors>Michael Ganss, Sven Haude</Authors>
+    <PackageId>Raycoon.XmlSchemaClassGenerator.Console</PackageId>
+    <PackageTags>xsd xmlschema generator csharp cli tool console factory</PackageTags>
+    <PackageProjectUrl>https://github.com/sven-haude/XmlSchemaClassGenerator</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/sven-haude/XmlSchemaClassGenerator/blob/master/LICENSE</PackageLicenseUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/mganss/XmlSchemaClassGenerator</RepositoryUrl>
+    <RepositoryUrl>git://github.com/sven-haude/XmlSchemaClassGenerator</RepositoryUrl>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
