@@ -1,0 +1,20 @@
+# Mark test files as documentation, not code
+*.xsd linguist-documentation
+*.xml linguist-documentation
+*.bpmn linguist-documentation
+*.xhtml linguist-documentation
+*.html linguist-documentation
+*.rtf linguist-documentation
+
+# Ensure C# is detected as main language  
+*.cs linguist-language=C#
+*.csproj linguist-language=XML
+
+# Ignore generated/vendor files
+XmlSchemaClassGenerator.Tests/generated/* linguist-generated
+**/bin/** linguist-generated
+**/obj/** linguist-generated
+
+# Ignore test data directories completely
+XmlSchemaClassGenerator.Tests/xml/** linguist-vendored
+XmlSchemaClassGenerator.Tests/xsd/** linguist-vendored
