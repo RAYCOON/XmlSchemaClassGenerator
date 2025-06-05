@@ -1,7 +1,7 @@
 XmlSchemaClassGenerator
 =======================
 
-[![Nuget](https://img.shields.io/nuget/v/XmlSchemaClassGenerator-beta)](https://www.nuget.org/packages/XmlSchemaClassGenerator-beta/)
+[![Nuget](https://img.shields.io/nuget/v/Raycoon.XmlSchemaClassGenerator)](https://www.nuget.org/packages/Raycoon.XmlSchemaClassGenerator/)
 [![Build status](https://ci.appveyor.com/api/projects/status/yhxiw0stmv5y7f6n/branch/master?svg=true)](https://ci.appveyor.com/project/mganss/xmlschemaclassgenerator/branch/master)
 [![codecov.io](https://codecov.io/github/mganss/XmlSchemaClassGenerator/coverage.svg?branch=master)](https://codecov.io/github/mganss/XmlSchemaClassGenerator?branch=master)
 [![netstandard2.0](https://img.shields.io/badge/netstandard-2.0-brightgreen.svg)](https://img.shields.io/badge/netstandard-2.0-brightgreen.svg)
@@ -64,7 +64,7 @@ Unsupported:
 
 ### **Installation**
 ```bash
-dotnet add package XmlSchemaClassGenerator-beta
+dotnet add package Raycoon.XmlSchemaClassGenerator
 ```
 
 ### **Quick Start - One-Liner Magic!**
@@ -114,8 +114,8 @@ var total = navigator.GetPropertyValue(instance, "Customer.Orders[0].Total");
 
 ### **Command Line Installation**
 Choose your preferred installation:
-- Binary zips included in the [releases on GitHub](https://github.com/mganss/XmlSchemaClassGenerator/releases)
-- Binaries in the tools folder in the [console application NuGet package](https://www.nuget.org/packages/XmlSchemaClassGenerator.Console/)
+- Binary zips included in the [releases on GitHub](https://github.com/sven-haude/XmlSchemaClassGenerator/releases)
+- Binaries in the tools folder in the [console application NuGet package](https://www.nuget.org/packages/Raycoon.XmlSchemaClassGenerator.Console/)
 - .NET Core CLI tool available in the [dotnet-xscgen NuGet package](https://www.nuget.org/packages/dotnet-xscgen/)
 - CI Builds are available at the NuGet feed https://ci.appveyor.com/nuget/xmlschemaclassgenerator-0f1t3r6ti475
 
@@ -277,7 +277,7 @@ Options:
 
 ### **Traditional Generator API (For Static Code Generation)**
 
-For advanced scenarios or when you need fine-grained control, use the [library NuGet package](https://www.nuget.org/packages/XmlSchemaClassGenerator-beta/):
+For advanced scenarios or when you need fine-grained control, use the [library NuGet package](https://www.nuget.org/packages/Raycoon.XmlSchemaClassGenerator/):
 
 ```C#
 var generator = new Generator
