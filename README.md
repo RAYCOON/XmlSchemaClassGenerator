@@ -559,6 +559,22 @@ are all integer types, then the narrowest integer type will be used that can fit
 
 Note that semantic issues might arise with this approach. For example, `DateTime` values are serialized with both date and time information included. See discussion at [#397](https://github.com/mganss/XmlSchemaClassGenerator/issues/397).
 
+## Related Projects
+
+### [XmlSampleGenerator](./XmlSampleGenerator/README.md)
+A utility library that generates sample XML instances from XML Schema Definition (XSD) files. Similar to Microsoft's `xsd.exe /c` functionality but as a standalone library. Perfect for:
+- Generating test XML data from schemas
+- Creating XML documentation examples
+- Prototyping and development
+
+### [Examples](./XmlSchemaClassGenerator.Examples/README.md)
+Comprehensive examples demonstrating all features of XmlSchemaClassGenerator:
+- Array index navigation with XPath-like syntax
+- XsdToCSharpFactory usage patterns
+- Auto property initialization
+- Dynamic type access
+- Complete working code samples
+
 Contributing
 ------------
 
