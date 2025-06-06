@@ -1,0 +1,56 @@
+# .claudeignore - Files and directories to ignore when using Claude Code
+
+# Build outputs
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.cache
+*.sln.docstates
+.vscode/
+
+# NuGet packages
+packages/
+*.nupkg
+*.snupkg
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Generated files
+generated/
+*.generated.cs
+
+# Temporary files
+*.tmp
+*.temp
+~$*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large test data that might not be relevant
+XmlSchemaClassGenerator.Tests/xml/netex_tests/
+XmlSchemaClassGenerator.Tests/xml/bpmn_tests/
+XmlSchemaClassGenerator.Tests/xsd/netex/
+XmlSchemaClassGenerator.Tests/xsd/wfs/
+
+# Binary key files
+*.snk
+
+# Example and demo files that are less critical
+*Example.cs
+*Demo.cs
+
+# Documentation assets
+*.rtf
