@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(dotnet build)",
+      "Bash(ls:*)",
+      "Bash(chmod:*)",
+      "Bash(dotnet run:*)",
+      "Bash(./convert-rbuc-flat.sh:*)",
+      "Bash(./analyze-rbuc-problem.sh:*)"
+    ],
+    "deny": []
+  }
+}
