@@ -1,0 +1,33 @@
+{
+  "name": "NAE 4.4.1/6.0.1 RC1 Complete Schema Conversion",
+  "outputDirectory": "./output/NAE",
+  "globalSettings": {
+    "namespacePrefix": "NAE",
+    "generateNullables": true,
+    "enableDataBinding": false,
+    "generateInterfaces": true,
+    "usePascalCase": true,
+    "separateFiles": true,
+    "separateNamespaceHierarchy": false,
+    "collectionType": "System.Collections.Generic.List<>",
+    "collectionSettersMode": "Public",
+    "generateDescriptionAttribute": true,
+    "uniqueTypeNames": true,
+    "useShouldSerializePattern": false,
+    "enumAsString": false,
+    "namespaceMappings": [
+      {
+        "xmlNamespace": "",
+        "cSharpNamespace": "NAE.Common"
+      }
+    ]
+  },
+  "schemas": [
+    {
+      "name": "All NAE Schemas",
+      "sourcePath": "schemas/NAE/*.xsd",
+      "outputSubDirectory": "",
+      "enabled": true
+    }
+  ]
+}

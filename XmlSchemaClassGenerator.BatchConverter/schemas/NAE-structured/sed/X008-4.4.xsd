@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedX008="http://ec.europa.eu/eessi/ns/4_4/X008" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:XSec="http://ec.europa.eu/eessi/ns/4_4/XSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/X008" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/XSec" schemaLocation="XSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='ReasonInvalidateSEDType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>503866B2-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>3F8A4FBD-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>The person died</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>08838DC3-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>The case was mistakenly sent to you</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>09838DC3-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Wrong information submitted</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>76DCE0CE-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>The case was reconsidered and the grounds for the invalidated SED are no longer valid</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>22E793D5-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>The national decision was contested by the customer. Further information will follow after the final decision about the contestation</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>6BC5B7DC-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>The national decision was contested by the customer. No further SED will follow</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>E39CC9EB-2B15-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>99</value>
+						<definition>Other</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04|05|06|99){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='InvalidateSEDType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>60393937-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'SEDType' minOccurs='1' maxOccurs='1' type='CC:EESSITinyStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>12BE6AC8-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateIssued' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>13BE6AC8-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'reason' minOccurs='0' maxOccurs='1' type='sedX008:ReasonInvalidateSEDType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>14BE6AC8-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'pleaseProvideMoreDetailsIf99OtherSelected' minOccurs='0' maxOccurs='1' type='CC:EESSILongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CB838351-C84A-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='X008'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>F21B7459-C207-E611-80E2-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED X008</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'CaseContext' minOccurs='1' maxOccurs='1' type='XSec:XAdministrativeContextType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>AD07F8D8-A079-E611-80CF-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'TheFollowingSEDConsideredInvalidWithdrawn' minOccurs='1' maxOccurs='1' type='sedX008:InvalidateSEDType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>FB8E4B22-9518-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='X008' type='sedX008:X008' />
+</xsd:schema>

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS032NAF="https://www.gkv-spitzenverband.de/6_0/S032NAF" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S032NAF" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S032NAF">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Zahlungsankündigung für ausländische Forderungen von Verzugszinsen</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNotePAYILP" type="sedS032NAF:GlobalNoteInformationPaymentClaimForInterestLatePaymentType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Information über Zahlung - Zinsen (PAY_ILP)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualPAYILPs" type="sedS032NAF:IndividualLatePaymentsInformationType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne PAY_ILPs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteInformationPaymentClaimForInterestLatePaymentType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAY_ILPReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale PAY_ILP-Referenz des Träger des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalTransactionReferenceDebtorInstitution" type="CC:EESSIMediumStringType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Überweisungstext
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfIndividualPayments" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der einzelnen Zahlungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalPaymentAmountToBePaidEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Zahlung (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalInterestAmountEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Zinsen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfCreditNotesForUnpaidILPsEUR" type="CC:EESSIAmountType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Gutschriften für unbezahlte Verzugszinsforderungen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfAcceptedContestationsForUnpaidILPsEUR" type="CC:EESSIAmountType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Beanstandungen für unbezahlte Verzugszinsforderungen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualLatePaymentsInformationType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualPAYILP" type="sedS032NAF:IndividualClaimInterestLatePaymentType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne PAY_ILP
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualClaimInterestLatePaymentType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS032NAF:ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountOfPaymentEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Zahlung (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfIndividualInterestsEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Zinsen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountOfCreditNotesOfUnpaidILPsEUR" type="CC:EESSIAmountType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Einzelgutschriften (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountOfContestationsOfUnpaidILPsEUR" type="CC:EESSIAmountType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der akzeptierten Einzelbeanstandungen unbezahlter Verzugszinsforderungen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CreditNotes" type="SSecNat:EESSICreditNotesType" minOccurs="0"/>
+			<xsd:element name="AcceptedContestations" type="sedS032NAF:AcceptedContestationsType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Akzeptierten Beanstandungen</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReferencesType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalCLAReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche globale CLA-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAY_ILPReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale PAY_ILP-Referenz des Träger des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualCLANumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Ursprüngliche Nummer der einzelnen CLA der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualIMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="0">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Ursprüngliche Nummer der einzelnen IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualPAY_ILPNumberDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen PAY_ILP des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="COCReferencesCreditorLiaisonBodyType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="COCReferenceDebtorLiaisonBody" type="sedS032NAF:COCReferenceCreditorLiaisonBodyType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+COC-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="COCReferenceCreditorLiaisonBodyType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalCOC_ILPReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale COC_ILP-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCOC_ILPNumberDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_ILP des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="COCILPReferencesDebtorLiaisonBodyType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AmountAcceptedContestationEUR" type="CC:EESSIAmountType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Einzelbetrag der akzeptierten Beanstandungsbetrag</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ReferencesAcceptedContestation" type="sedS032NAF:COCILPReferenceDebtorLiaisonBodyType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Referenzen der akzeptierten Beanstandung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="COCILPReferenceDebtorLiaisonBodyType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:sequence>
+				<xsd:element name="GlobalCOC_ILPReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_ILP-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="IndividualCOC_ILPNumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_ILP der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:sequence>
+				<xsd:element name="GlobalCOC_ILPReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_ILP-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="IndividualCOC_ILPNumberDebtorInstitution" type="CC:EESSICRUniqueidentifierType">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_ILP des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="AcceptedContestationsType">
+		<xsd:sequence>
+			<xsd:element name="AcceptedContestationEUR" type="sedS032NAF:COCILPReferencesDebtorLiaisonBodyType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Akzeptierte Beanstandung</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S032NAF" type="sedS032NAF:S032NAF">
+		<xsd:annotation/>
+	</xsd:element>
+</xsd:schema>

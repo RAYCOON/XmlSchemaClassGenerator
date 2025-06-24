@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:XSec="http://ec.europa.eu/eessi/ns/4_4/XSec" xmlns:sedX050="http://ec.europa.eu/eessi/ns/4_4/X050" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:sedX050N="https://www.gkv-spitzenverband.de/6_0/X050N" targetNamespace="https://www.gkv-spitzenverband.de/6_0/X050N" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/X050" schemaLocation="X050-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/XSec" schemaLocation="XSec-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:complexType name="BusinessExceptionCodeType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<value>EESSI_AP_001</value>
+						<definition>Ungültige Absender-IK + [AP-MESSAGE].</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_AP_002</value>
+						<definition>Ungültige Empfänger-IK + [AP-MESSAGE].</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_AP_003</value>
+						<definition>Schemaprüfung AP fehlgeschlagen + {AP_Parser_ MESSAGE}.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_AP_004</value>
+						<definition>Versand der Nachricht fehlgeschlagen + {AP-MESSAGE}.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_AP_005</value>
+						<definition>Absender-IK {DE:000000000} verfügt nicht über die notwendige Kompetenz für den BUC {BUC-Type}.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_AP_006</value>
+						<definition>Empfänger-IK {DE:000000000} verfügt nicht über die notwendige Kompetenz für den BUC {BUC-Type}.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_AP_007</value>
+						<definition>Malwareprüfung im AP fehlgeschlagen.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_02</value>
+						<definition>Fehler bei der Dekodierung des Nutzdatensatzes.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_03</value>
+						<definition>Fehler bei der Dekodierung des Anhangs.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_08</value>
+						<definition>Die UUID im Nutzdatensatz zu einem Anhang, ist nicht identisch mit der ID im dazugehörigen SBDH.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_09</value>
+						<definition>Die Angaben zum MimeType im Nutzdatensatz sind nicht identisch zu den Angaben im SBDH.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_10</value>
+						<definition>Die Set ID im Nutzdatensatz ist nicht mit identisch zum Feld SetID im zugehörigen SBDH.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_17</value>
+						<definition>Schemaprüfung fehlgeschlagen + {Parser_ MESSAGE}.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_18</value>
+						<definition>Anzahl der Anhänge im Nutzdatensatz entspricht nicht der Anzahl der Anhänge im SBDH.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>EESSI_NATIONAL_19</value>
+						<definition>Die UUID im Nutzdatensatz ist nicht mit identisch zum Feld Instance Identifier im zugehörigen SBDH.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>CONFORMANCE_02</value>
+						<definition>Maximale Dateigröße überschritten.</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value" minOccurs="1" maxOccurs="unbounded">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="(EESSI_AP_001|EESSI_AP_002|EESSI_AP_003|EESSI_AP_004|EESSI_AP_005|EESSI_AP_006|EESSI_AP_007|EESSI_NATIONAL_02|EESSI_NATIONAL_03|EESSI_NATIONAL_08|EESSI_NATIONAL_09|EESSI_NATIONAL_10|EESSI_NATIONAL_17|EESSI_NATIONAL_18|EESSI_NATIONAL_19|CONFORMANCE_02){1}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessExceptionType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">Fehlertyp.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="businessException" type="sedX050N:BusinessExceptionDetailsType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Ausnahmesituation im Verfahrensablauf</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="accessPointErrorMessage" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">AccessPoint-Fehlernachricht.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BusinessExceptionDetailsType">
+		<xsd:sequence>
+			<xsd:element name="exceptionCode" type="sedX050N:BusinessExceptionCodeType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Fehlercode</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="sedX050NUniqueConstraint1">
+					<xsd:selector xpath="value"/>
+					<xsd:field xpath="."/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="exceptionMessage" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">Fehlernachricht</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="X050N">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">Ausnahmesituation im Verfahrensablauf</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CaseContext" type="XSec:XAdministrativeContextType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Kontext zum Fall</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BusinessExceptionHasOccurred" type="sedX050N:BusinessExceptionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Folgende Ausnahmesituation(en) im Verfahrensablauf sind eingetreten</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WhileReceivingFollowingSED" type="sedX050:WhileReceivingFollowingSEDType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Bei Erhalt des folgenden SED:</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="X050N" type="sedX050N:X050N"/>
+</xsd:schema>

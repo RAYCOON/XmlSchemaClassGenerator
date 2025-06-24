@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS054NDFRueck="https://www.gkv-spitzenverband.de/6_0/S054NDFRueck" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S054NDFRueck" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S054NDFRueck">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+Information über Erstattung einer Überzahlung einer deutschen Forderung</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNoteIRORRO" type="sedS054NDFRueck:GlobalNoteInformationRefundOverpaymentType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Information über Erstattung einer Überzahlung (IRO_RRO)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualIRORROs" type="sedS054NDFRueck:IndividualRefundOverpaymentsType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne IRO_RROs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteInformationRefundOverpaymentType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalRROReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RRO-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalRROReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RRO-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAY_RROReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale PAY_RRO-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalTransactionReference" type="CC:EESSIMediumStringType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Überweisungstext
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfIndividualPayments" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der einzelnen Zahlungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalPaymentAmountToBeRefundedEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Zahlungen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualRefundOverpaymentsType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualIRORRO" type="sedS054NDFRueck:GlobalNoteIndividualRefundOverpaymentType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne IRO_RRO
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteIndividualRefundOverpaymentType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS054NDFRueck:ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountToBeRefundedEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Zahlung (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReferencesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalRROReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RRO-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalRROReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RRO-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAY_RROReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale PAY_RRO-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalTransactionReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Überweisungstext
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualRRONumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen RRO der forderungsberechtigten des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualRRONumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen RRO des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualPAY_RRONumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen PAY_RRO des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S054NDFRueck" type="sedS054NDFRueck:S054NDFRueck">
+		<xsd:annotation/>
+	</xsd:element>
+</xsd:schema>

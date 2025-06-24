@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedX050="http://ec.europa.eu/eessi/ns/4_4/X050" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:XSec="http://ec.europa.eu/eessi/ns/4_4/XSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/X050" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/XSec" schemaLocation="XSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='BusinessExceptionMultipleType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>8952E8C6-A9EA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>8A52E8C6-A9EA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Receiving a SED for a missing case</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>9806FEE7-A9EA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Receiving an update for a missing SED</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>CECA8D46-AAEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>Receiving a SED after the case was removed by receiving a X006 SED</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>683EDC84-AAEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Receiving a SED after the case was forwarded to another participant</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>F706CAB2-AAEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>Receiving a SED not in the correct order, as defined by the BUC</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>214130C4-AAEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>Receiving a SED when the case is in global closed status</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>6A8404D5-AAEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>07</value>
+						<definition>Receiving a SED with an invalid Business signature</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>5EC90DF0-AAEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>08</value>
+						<definition>Receiving a SED / Attachment which failed antimalware checking</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='unbounded'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|04|03|05|06|07|08){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='BusinessExceptionType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>D3243C31-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'businessException' minOccurs='1' maxOccurs='1' type='sedX050:BusinessExceptionMultipleType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CD88BF91-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="sedX050UniqueConstraint1">
+					<xsd:selector xpath="value"/>
+					<xsd:field xpath="."/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='WhileReceivingFollowingSEDType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>D2243C31-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'SEDCode' minOccurs='1' maxOccurs='1' type='CC:EESSITinyStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CB88BF91-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'SEDVersion' minOccurs='1' maxOccurs='1' type='CC:EESSITinyStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CC88BF91-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='X050'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>F51B7459-C207-E611-80E2-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED X050</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'CaseContext' minOccurs='0' maxOccurs='1' type='XSec:XAdministrativeContextType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A407F8D8-A079-E611-80CF-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'TheFollowingBusinessExceptionHasOccurred' minOccurs='1' maxOccurs='1' type='sedX050:BusinessExceptionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>12EAEDC4-9418-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'WhileReceivingFollowingSED' minOccurs='1' maxOccurs='1' type='sedX050:WhileReceivingFollowingSEDType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>BB278FBE-9418-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='X050' type='sedX050:X050' />
+</xsd:schema>

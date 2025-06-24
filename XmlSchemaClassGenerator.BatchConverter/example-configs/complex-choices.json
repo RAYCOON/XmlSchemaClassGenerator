@@ -1,0 +1,51 @@
+{
+  "name": "Complex Schemas with Choice Elements",
+  "outputDirectory": "./output",
+  "globalSettings": {
+    "namespacePrefix": "ComplexApp",
+    "generateNullables": true,
+    "enableDataBinding": true,
+    "generateInterfaces": true,
+    "usePascalCase": true,
+    "separateFiles": true,
+    "collectionType": "System.Collections.Generic.List<>",
+    "collectionSettersMode": "Init",
+    "generateDescriptionAttribute": true,
+    "uniqueTypeNames": true,
+    "useShouldSerializePattern": true,
+    "enumAsString": false
+  },
+  "schemas": [
+    {
+      "name": "Payment Methods (with choices)",
+      "sourcePath": "schemas/payment/payment-methods.xsd",
+      "outputSubDirectory": "Payment",
+      "settings": {
+        "separateSubstitutes": true,
+        "handleChoicesAsSequence": true,
+        "useShouldSerializePattern": true
+      },
+      "enabled": true
+    },
+    {
+      "name": "Shipping Options (with substitution groups)",
+      "sourcePath": "schemas/shipping/shipping-options.xsd", 
+      "outputSubDirectory": "Shipping",
+      "settings": {
+        "separateSubstitutes": true,
+        "generateInterfaces": true
+      },
+      "enabled": true
+    },
+    {
+      "name": "Document Types (with complex restrictions)",
+      "sourcePath": "schemas/document/document-types.xsd",
+      "outputSubDirectory": "Document",
+      "settings": {
+        "uniqueTypeNames": true,
+        "collectionSettersMode": "Private"
+      },
+      "enabled": true
+    }
+  ]
+}

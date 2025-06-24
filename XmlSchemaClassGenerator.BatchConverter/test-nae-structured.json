@@ -1,0 +1,26 @@
+{
+  "name": "Test NAE Structured Conversion",
+  "outputDirectory": "./output/NAE-Structured",
+  "globalSettings": {
+    "namespacePrefix": "NAE",
+    "generateNullables": true,
+    "enableDataBinding": false,
+    "generateInterfaces": false,
+    "usePascalCase": true,
+    "separateFiles": true,
+    "collectionType": "System.Collections.Generic.List<>",
+    "collectionSettersMode": "Public",
+    "generateDescriptionAttribute": false,
+    "uniqueTypeNames": true,
+    "enableUpaCheck": false,
+    "namespaceMappings": []
+  },
+  "schemas": [
+    {
+      "name": "Test R_BUC_01",
+      "sourcePath": "schemas/NAE-structured/transactions/R_BUC_01-4.4-Counterparty-CaseOwner-New-X050N-4.4.1-20250606T150014.xsd",
+      "outputSubDirectory": "R_BUC",
+      "enabled": true
+    }
+  ]
+}

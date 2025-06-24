@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS112NAF="https://www.gkv-spitzenverband.de/6_0/S112NAF" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S112NAF" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S112NAF">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Beanstandung einer Gesamtforderung - Pauschalbeträge</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNoteCOCCLAIMO" type="sedS112NAF:MonthsInventoryClaimContestationType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Beanstandung einer Gesamtforderung - Pauschalbeträge (COC_CLA_IMO)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="MonthsInventoryClaimContestationType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+E2E0364F-9218-E611-80EA-000C292ED0D7 
+SEDSpecific 
+EESSI</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCLA_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale CLA_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCOC_CLA_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale COC_CLA_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ContestationRefusalCode" type="sedS112NAF:RefusalCodeCOCCLAIMOType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ablehnungscode der Beanstandung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LumpSumCorrected" type="SSecNat:ForeignCurrencyPayment" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Korrigierter Pauschalbetrag
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="copyFlag" type="SSecNat:NationalMarker" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nationale Kennzeichnung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RefusalCodeCOCCLAIMOType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<value>01</value>
+						<definition>Forderungen über Pauschalbeträge zu spät übermittelt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>02</value>
+						<definition>Berichtigung Pauschalbetrag</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>03</value>
+						<definition>Forderungen ohne Verzeichnisse</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value" minOccurs="1" maxOccurs="1">
+				<xsd:annotation/>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="(01|02|03){1}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S112NAF" type="sedS112NAF:S112NAF">
+		<xsd:annotation>
+			
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

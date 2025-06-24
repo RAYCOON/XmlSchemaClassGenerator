@@ -1,0 +1,43 @@
+{
+  "name": "Default Batch Configuration",
+  "outputDirectory": "./output",
+  "globalSettings": {
+    "namespacePrefix": "GeneratedModels",
+    "generateNullables": true,
+    "enableDataBinding": false,
+    "generateInterfaces": true,
+    "usePascalCase": true,
+    "separateFiles": true,
+    "collectionType": "System.Collections.Generic.List<>",
+    "collectionSettersMode": "Public",
+    "generateDescriptionAttribute": true,
+    "namespaceMappings": [
+      {
+        "xmlNamespace": "http://example.com/simple",
+        "cSharpNamespace": "GeneratedModels.Simple"
+      },
+      {
+        "xmlNamespace": "http://example.com/payment",
+        "cSharpNamespace": "GeneratedModels.Payment"
+      }
+    ]
+  },
+  "schemas": [
+    {
+      "name": "Simple Customer Schema",
+      "sourcePath": "schemas/example-simple.xsd",
+      "outputSubDirectory": "Simple",
+      "enabled": true
+    },
+    {
+      "name": "Payment with Choices",
+      "sourcePath": "schemas/example-with-choice.xsd",
+      "outputSubDirectory": "Payment",
+      "settings": {
+        "useShouldSerializePattern": true,
+        "separateSubstitutes": true
+      },
+      "enabled": true
+    }
+  ]
+}

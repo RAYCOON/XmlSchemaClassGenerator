@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS103NAF="https://www.gkv-spitzenverband.de/6_0/S103NAF" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S103NAF" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S103NAF">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Eingangsbestätigung der Beanstandung der Monatsverzeichnisse</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNoteACKCOCIMO" type="sedS103NAF:GlobalNoteMonthsInventoryContestationAcknowledgementType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Eingangsbestätigung zur Beanstandung eines Monatsverzeichnisses (ACK_COC_IMO)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualACK_COC_IMOs" type="sedS103NAF:IndividualMonthsInventoryContestationAcknowledgementsType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Einzelne ACK_COC_IMOs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteMonthsInventoryContestationAcknowledgementType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCOC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCOC_IMOReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalACK_COC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ACK_COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfContestations" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der Beanstandungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfReceiptByCreditorLiaisonBody" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Mitgeteiltes Eingangsdatum der Verbindungsstelle des forderungsberechtigen Mitgliedstaats
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfReceiptByCreditorLiaisonBodyDVKA" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Für Fristberechnung maßgebliches Eingangsdatum der Beanstandung bei der Verbindungsstelle des forderungsberechtigen Mitgliedstaats (festgelegt durch GKV-Spitzenverband, DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualMonthsInventoryContestationAcknowledgementsType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualACK_COC_IMO" type="sedS103NAF:IndividualMonthsInventoryContestationAcknowledgementType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Einzelne ACK_COC_IMO
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualMonthsInventoryContestationAcknowledgementType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS103NAF:ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReferencesType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCOC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCOC_IMOReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalACK_COC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale ACK_COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualIMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCOC_IMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCOC_IMONumberDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_IMO des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualACK_COC_IMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ACK_COC_IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S103NAF" type="sedS103NAF:S103NAF">
+		<xsd:annotation/>
+	</xsd:element>
+</xsd:schema>

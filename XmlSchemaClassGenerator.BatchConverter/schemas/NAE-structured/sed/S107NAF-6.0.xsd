@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS107NAF="https://www.gkv-spitzenverband.de/6_0/S107NAF" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S107NAF" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S107NAF">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Beanstandung einer Gutschrift von Monaten</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNoteCOCCRNIMO" type="sedS107NAF:GlobalNoteMonthsInventoryCreditNoteContestationType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Beanstandung einer Gutschrift im Zusammenhang mit dem Monatsverzeichnis in Bezug auf eine Person (COC_CRN_IMO)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCOCCRNIMOs" type="sedS107NAF:IndividualMonthsInventoryCreditNoteContestationsType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne COC_CRN_IMOs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteMonthsInventoryCreditNoteContestationType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCRN_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale CRN_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="GlobalCOC_CRN_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_CRN_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="GlobalCOC_CRN_IMOReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_CRN_IMO-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="TotalNumberOfCreditNotesContestations" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der beanstandeten Gutschriften
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfContestedMonthsToBeWithdrawn" type="xsd:int" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der beanstandeten Monate, die zurückgezogen werden
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualMonthsInventoryCreditNoteContestationsType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualCOCCRNIMO" type="sedS107NAF:IndividualMonthsInventoryCreditNoteContestationType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne COC_CRN_IMO
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualMonthsInventoryCreditNoteContestationType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS107NAF:ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CreditNoteRefusalCode" type="sedS107NAF:CreditNoteRefusalCodeType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">Gutschrift - Ablehnungscode</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numberContestedMonthsWithdrawn" type="xsd:int" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Anzahl der beanstandeten Monate, die zurückgezogen werden
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="copyFlag" type="SSecNat:NationalMarker" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nationale Kennzeichnung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReferencesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCRN_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale CRN_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="GlobalCOC_CRN_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_CRN_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="GlobalCOC_CRN_IMOReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_CRN_IMO-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="IndividualIMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCRN_IMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen CRN_IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="IndividualCOC_CRN_IMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_CRN_IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="IndividualCOC_CRN_IMONumberDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_CRN_IMO des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RefusalCodeCOCCRNIMOType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<value>01</value>
+						<definition>Entsprechendes IMO liegt nicht vor</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>02</value>
+						<definition>Anzahl der Monate der Gutschrift übersteigt Monatsanzahl des IMO</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>03</value>
+						<definition>Korrektur der Monatsanzahl der Gutschrift</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>04</value>
+						<definition>IMO wurde beanstandet</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>99</value>
+						<definition>Sonstiges [bitte Feld „Sonstiges“ ausfüllen]</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value" minOccurs="1" maxOccurs="1">
+				<xsd:annotation/>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="(01|02|03|04|99){1}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S107NAF" type="sedS107NAF:S107NAF">
+		<xsd:annotation>
+			
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="CreditNoteRefusalCodeOtherType">
+		<xsd:sequence>
+			<xsd:element name="refusalCodeOtherInfo" type="CC:EESSIVeryLongStringType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CreditNoteRefusalCodeType">
+		<xsd:sequence>
+			<xsd:element name="creditNoteRefusalCode" type="sedS107NAF:RefusalCodeCOCCRNIMOType" minOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Gutschrift - Ablehnungscode</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FillInFollowingIfCreditNoteRefusalCode99" type="sedS107NAF:CreditNoteRefusalCodeOtherType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Bitte ausfüllen, wenn "Ablehnungscode der Gutschriften" = "99 - Sonstiges [Feld 'Sonstiges' ist auszufüllen]":</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

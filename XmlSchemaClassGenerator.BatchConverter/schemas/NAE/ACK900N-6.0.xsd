@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:sedACK900N="https://www.gkv-spitzenverband.de/6_0/ACK900N" targetNamespace="https://www.gkv-spitzenverband.de/6_0/ACK900N" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:simpleType name="UuidType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">Typ für die Aufnahme einer UUID. Die Formatierung ist zu beachten: 8-4-4-4-12. Gross- oder Kleinschreibung ist irrelevant.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultatWertType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">Typ für die Aufnahme eines Antworttextes mit maximal 512 Zeichen.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9 a-z A-Z äÄüÜöÖ @!?§€+;.,:=_\- ßẞ'()\[\]{}/\\]{0,512})"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ACK900N">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">Komplexer Typ für die Quittierung oder Statusrückmeldung zu einer Nachricht.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Quittierung" type="sedACK900N:QuittierungType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Die Übermittlung wird quittiert.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="QuittierungType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">Komplexer Typ für die Details einer Quittierung oder Statusrückmeldung.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DocId" type="sedACK900N:UuidType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Die Id der quittierten Nachricht</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VerarbeitungsResultatCode" type="sedACK900N:ResultatCodeType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Das Resultat der Verarbeitung der gesendeten Nachricht als Quittungsinhalt.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VerarbeitungsResultatWert" type="sedACK900N:ResultatWertType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Das Resultat der Verarbeitung der gesendeten Nachricht als Quittungsinhalt.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ResultatCodeType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">Typ für Resultatarten.
+        <OfficialConstraintContextValue>
+					<CodeListEntry>
+						<value>001</value>
+						<definition>Verarbeitung erfolgreich</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>002</value>
+						<definition>Verarbeitung nicht erfolgreich</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>003</value>
+						<definition>Verarbeitung unbekannt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>004</value>
+						<definition>Aktivierung von GKV_SUC_04 für anfragende Institution ist fehlgeschlagen</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>005</value>
+						<definition>Anfragende Institution wurde für GKV_SUC_04 aktiviert</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>006</value>
+						<definition>Anfragende Institution wurde für GKV_SUC_04 deaktiviert</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>007</value>
+						<definition>Angefragte Institution ist aktuell erreichbar</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>008</value>
+						<definition>Angefragte Institution ist aktuell nicht erreichbar</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>999</value>
+						<definition>Sonstige</definition>
+					</CodeListEntry>
+				</OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Wert nur aus Auswahl zulässig</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="(001|002|003|004|005|006|007|008|999){1}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ACK900N" type="sedACK900N:ACK900N"/>
+</xsd:schema>

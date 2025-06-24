@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS026NA="https://www.gkv-spitzenverband.de/6_0/S026NA" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S026NA" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S026NA">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Nationale Abweisung der Forderung von Verzugszinsen</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNoteNA_ILP" type="sedS026NA:GlobalNoteClaimForInterestLatePaymentType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nationale Abweisung der Forderung von Verzugszinsen (ILP)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualNA_ILPs" type="sedS026NA:IndividualInterestLatePaymentsType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Einzelne ILPs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteClaimForInterestLatePaymentType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalNA_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale NA_ILP-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfNA" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der nationalen Abweisungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNAInterestAmountEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der national abgewiesenen Zinsen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualInterestLatePaymentsType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualNA_ILP" type="sedS026NA:IndividualClaimInterestLatePaymentType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Einzelne ILP
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualClaimInterestLatePaymentType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS026NA:ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="InterestAmountEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Zinsbetrag
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RefusalCode" type="sedS026NA:RefusalCodeType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Grund der nationalen Abweisung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="FillInMandatoryFieldEmpty" type="SSecNat:MandatoryFieldEmptyType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn „Grund der nationalen Abweisung“ = „01 - Pflichtfeld nicht ausgefüllt“:
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="FillInEESSIPercentage" type="CC:EESSIPercentageType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn „Grund der nationalen Abweisung“ = „02 - Falscher Zinssatz“:
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="FillInEESSIPeriod" type="CC:EESSIPeriodType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn „Grund der nationalen Abweisung“ = „07 - Falscher Zinszeitraum“:
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="FillInEESSIVeryLongString" type="CC:EESSIVeryLongStringType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn „Grund der nationalen Abweisung“ = „99 - sonstiger Grund“:
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReferencesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCLA_IMOReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale CLA- oder IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalNA_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale NA_ILP-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCLA_IMONumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen CLA oder IMO der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualNA_ILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen NA_ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RefusalCodeType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<value>01</value>
+						<definition>Pflichtfeld nicht ausgefüllt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>02</value>
+						<definition>Falscher Zinssatz</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>03</value>
+						<definition>Es wurde eine Anzahlung geleistet</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>04</value>
+						<definition>Ursprüngliche Forderung wurde fristgerecht bezahlt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>05</value>
+						<definition>Ursprüngliche Forderung wurde fristgerecht beanstandet</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>06</value>
+						<definition>Verzugszinsfordrung zu spät übermittelt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>07</value>
+						<definition>Falscher Zinszeitraum</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>08</value>
+						<definition>Kostenrechnungsnummer unbekannt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>09</value>
+						<definition>Forderung noch nicht bezahlt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>10</value>
+						<definition>Falscher Zinsbetrag / Rundungsfehler</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>11</value>
+						<definition>Summe der Einzelzinsforderungen entspricht nicht der Gesamtsumme</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>99</value>
+						<definition>sonstiger Grund</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value">
+				<xsd:annotation/>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="(01|02|03|04|05|06|07|08|09|10|11|99){1}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S026NA" type="sedS026NA:S026NA">
+		<xsd:annotation/>
+	</xsd:element>
+</xsd:schema>

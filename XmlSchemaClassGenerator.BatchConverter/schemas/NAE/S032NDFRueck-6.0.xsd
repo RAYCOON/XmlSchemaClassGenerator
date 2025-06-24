@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS032NDFRueck="https://www.gkv-spitzenverband.de/6_0/S032NDFRueck" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S032NDFRueck" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S032NDFRueck">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Zahlungsankündigung einer Rückerstattung von bereits bezahlten deutschen Forderungen</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="REPAY_CRN_ILP" type="sedS032NDFRueck:REPAY_CRN_ILPType"/>
+			<xsd:element name="REPAY_COC_ILP" type="sedS032NDFRueck:REPAY_COC_ILPType"/>
+			<xsd:element name="REPAY_OTHER_ILP" type="sedS032NDFRueck:REPAY_OTHER_ILPType"/>
+		</xsd:choice>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="Global_REPAY_CRN_ILPType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCRN_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale CRN_ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCRN_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale CRN_ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAY_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale PAY_ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalREPAY_CRN_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale REPAY_CRN_ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalTransactionReference" type="CC:EESSIMediumStringType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Überweisungstext
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfIndividualPayments" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der einzelnen Zahlungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfCreditNotesForAlreadyPaidILPsEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Gutschriften für bereits bezahlte Forderungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalPaymentAmountToBeRefundedEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Summe der zu erstattenden Zahlungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Individual_REPAY_CRN_ILPsType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualREPAY_CRN_ILP" type="sedS032NDFRueck:Individual_REPAY_CRN_ILPType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne REPAY_CRN_ILP
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Individual_REPAY_CRN_ILPType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS032NDFRueck:REPAY_CRN_ILP_ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountOfPaymentEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Zahlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfCreditNotesForAlreadyPaidILPsEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Gutschriften bereits bezahlter Verzugszinsforderungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_CRN_ILP_ReferencesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalCRN_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale CRN_ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCRN_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale CRN_ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalCLAReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche globale CLA-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalCLAReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche globale CLA-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Vorgangsnummer Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAY_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale PAY_ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalREPAY_CRN_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale REPAY_CRN_ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCRN_ILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen CRN_ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCRN_ILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen CRN_ILP des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualCLANumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche Nummer der einzelnen CLA der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualCLANumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche Nummer der einzelnen CLA des Trägers des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualPAY_ILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen PAY_ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualREPAY_CRN_ILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen REPAY_CRN_ILP des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Global_REPAY_COC_ILPType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalRPY_COC_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+GlobalRPY COC _ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalREPAY_COC_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale REPAY_COC_ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalTransactionReference" type="CC:EESSIMediumStringType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Überweisungstext
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfIndividualPayments" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der einzelnen Zahlungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfAcceptedContestationsForAlreadyPaidILPsEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der Beanstandungen für bereits bezahlte Forderungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalPaymentAmountToBeRefundedEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Summe der zu erstattenden Zahlungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Individual_REPAY_COC_ILPsType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualREPAY_COC_ILP" type="sedS032NDFRueck:Individual_REPAY_COC_ILPType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne REPAY_COC_ILP
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Individual_REPAY_COC_ILPType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS032NDFRueck:REPAY_COC_ILP_ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountOfPaymentEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Zahlungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountOfContestationsForAlreadyPaidILPsEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Beanstandung bereits bezahlter Verzugszinsforderungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_COC_ILP_ReferencesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalCLAReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche globale CLA-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalCLAReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche globale CLA-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Vorgangsnummer Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalCOC_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale COC_ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAY_ILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale PAY_ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalREPAY_COC_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale REPAY_COC_ILP-Referenz des Träger des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualCLANumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche Nummer der einzelnen CLA der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualCLANumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ursprüngliche Nummer der einzelnen CLA des Trägers des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualCOC_ILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualPAY_ILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen PAY_ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualREPAY_COC_ILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen REPAY_COC_ILP des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_Other_ILP_GlobalNoteType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalPAYReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale PAY-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalREPAY_Other_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale REPAY_Other_ILP-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalTransactionReference" type="CC:EESSIMediumStringType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Überweisungstext
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfIndividualPayments" type="CC:EESSICRIndividualClaimsCountType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der einzelnen Rückerstattungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfPaymentsForAlreadyPaidClaimsEUR" type="CC:EESSIAmountType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der zu viel bezahlten Forderungen (EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalPaymentAmountToBeRefundedEUR" type="CC:EESSIAmountType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Summe der zu erstattenden Zahlungen (EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_Other_ILPs_IndividualType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Individual_REPAY_Other_ILP" type="sedS032NDFRueck:REPAY_Other_ILP_IndividualType" maxOccurs="unbounded">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Einzelne REPAY_Other_ILP
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_Other_ILP_IndividualType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS032NDFRueck:REPAY_Other_ILP_ReferencesType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalIndividualAmountPaymentEUR" type="CC:EESSIAmountType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Zahlungen (EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_Other_ILP_ReferencesType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalILPReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale ILP-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Vorgangsnummer Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalCLAReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+						Ursprüngliche globale CLA-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Vorgangsnummer DVKA)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalGlobalCLAReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+						Ursprüngliche globale CLA-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Vorgangsnummer Krankenkasse)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
+			<xsd:element name="GlobalPAYReferenceCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale PAY-Referenz der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalREPAY_Other_ILPReferenceCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Globale REPAY_Other_ILP-Referenz des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen ILP des Trägers des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualCLANumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+						Nummer der ursprünglichen einzelnen CLA der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer DVKA)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OriginalIndividualCLANumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+						Nummer der ursprünglichen einzelnen CLA des Trägers des forderungsberechtigten Mitgliedstaats (Kostenrechnungsnummer Krankenkasse)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualPAYNumberCreditorLiaisonBody" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen PAY der Verbindungsstelle des forderungsberechtigten Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualREPAY_Other_ILPNumberCreditorInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen REPAY_Other_ILP des Trägers des forderungsberechtigten Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S032NDFRueck" type="sedS032NDFRueck:S032NDFRueck">
+		<xsd:annotation/>
+	</xsd:element>
+	<xsd:complexType name="REPAY_CRN_ILPType">
+		<xsd:sequence>
+			<xsd:element name="RefundBasedOnCreditNotesForAlreadyPaidClaims" type="sedS032NDFRueck:Global_REPAY_CRN_ILPType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Erstattung wegen Gutschriften für bereits bezahlte Verzugszinsforderungen (REPAY_CRN_ILP)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualREPAY_CRN_ILPs" type="sedS032NDFRueck:Individual_REPAY_CRN_ILPsType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne REPAY_CRN_ILPs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_COC_ILPType">
+		<xsd:sequence>
+			<xsd:element name="RefundBasedOnAcceptedContestatiosForAlreadyPaidClaims" type="sedS032NDFRueck:Global_REPAY_COC_ILPType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Erstattung wegen akzeptierten Beanstandungen für bereits bezahlte Verzugszinsforderungen (REPAY_COC_ILP)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualREPAY_COC_ILPs" type="sedS032NDFRueck:Individual_REPAY_COC_ILPsType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne REPAY_COC_ILPs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="REPAY_OTHER_ILPType">
+		<xsd:sequence>
+			<xsd:element name="Global_REPAY_Other_ILP" type="sedS032NDFRueck:REPAY_Other_ILP_GlobalNoteType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Erstattung aus sonstigem Grund für bereits bezahlte Forderungen (REPAY_Other_ILP)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Individual_REPAY_Other_ILPs" type="sedS032NDFRueck:REPAY_Other_ILPs_IndividualType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Einzelne REPAY_Other_ILPs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CreditNotesType"/>
+</xsd:schema>

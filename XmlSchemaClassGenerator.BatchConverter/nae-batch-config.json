@@ -1,0 +1,73 @@
+{
+  "Name": "Example XSD Batch Conversion",
+  "OutputDirectory": "./output",
+  "GlobalSettings": {
+    "NamespacePrefix": "MyCompany",
+    "GenerateNullables": true,
+    "EnableDataBinding": true,
+    "GenerateInterfaces": true,
+    "UsePascalCase": true,
+    "SeparateFiles": true,
+    "SeparateNamespaceHierarchy": false,
+    "CollectionType": "System.Collections.Generic.List\u003C\u003E",
+    "CollectionSettersMode": "Public",
+    "GenerateDescriptionAttribute": true,
+    "UniqueTypeNames": false,
+    "UseShouldSerializePattern": false,
+    "EnumAsString": false,
+    "NamespaceMappings": [
+      {
+        "XmlNamespace": "http://example.com/schema1",
+        "CSharpNamespace": "MyCompany.Schema1"
+      },
+      {
+        "XmlNamespace": "http://example.com/schema2",
+        "CSharpNamespace": "MyCompany.Schema2"
+      },
+      {
+        "XmlNamespace": "",
+        "CSharpNamespace": "MyCompany.DefaultNamespace"
+      }
+    ]
+  },
+  "Schemas": [
+    {
+      "Name": "Customer Schema",
+      "SourcePath": "schemas/customer.xsd",
+      "OutputSubDirectory": "Customer",
+      "Settings": null,
+      "Enabled": true
+    },
+    {
+      "Name": "Order Schema with Choices",
+      "SourcePath": "schemas/order.xsd",
+      "OutputSubDirectory": "Order",
+      "Settings": {
+        "SeparateSubstitutes": true,
+        "HandleChoicesAsSequence": true,
+        "NamespacePrefix": null,
+        "GenerateNullables": true,
+        "EnableDataBinding": false,
+        "GenerateInterfaces": true,
+        "UsePascalCase": true,
+        "SeparateFiles": true,
+        "SeparateNamespaceHierarchy": false,
+        "CollectionType": "System.Collections.Generic.List\u003C\u003E",
+        "CollectionSettersMode": "Public",
+        "GenerateDescriptionAttribute": true,
+        "UniqueTypeNames": false,
+        "UseShouldSerializePattern": true,
+        "EnumAsString": false,
+        "NamespaceMappings": []
+      },
+      "Enabled": true
+    },
+    {
+      "Name": "Product Schema (Disabled)",
+      "SourcePath": "schemas/product.xsd",
+      "OutputSubDirectory": null,
+      "Settings": null,
+      "Enabled": false
+    }
+  ]
+}

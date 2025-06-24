@@ -1,0 +1,64 @@
+{
+  "name": "NAE Individual Schema Conversion",
+  "outputDirectory": "./output/NAE",
+  "globalSettings": {
+    "namespacePrefix": "NAE",
+    "generateNullables": true,
+    "enableDataBinding": false,
+    "generateInterfaces": true,
+    "usePascalCase": true,
+    "separateFiles": true,
+    "separateNamespaceHierarchy": false,
+    "collectionType": "System.Collections.Generic.List<>",
+    "collectionSettersMode": "Public",
+    "generateDescriptionAttribute": true,
+    "uniqueTypeNames": true,
+    "useShouldSerializePattern": false,
+    "enumAsString": false,
+    "enableUpaCheck": false,
+    "namespaceMappings": [
+      {
+        "xmlNamespace": "",
+        "cSharpNamespace": "NAE.Common"
+      }
+    ]
+  },
+  "schemas": [
+    {
+      "name": "BasicTypes",
+      "sourcePath": "schemas/NAE/BasicTypes-1.2.xsd",
+      "outputSubDirectory": "Types",
+      "enabled": true
+    },
+    {
+      "name": "BusinessScope",
+      "sourcePath": "schemas/NAE/BusinessScope-1.2.xsd",
+      "outputSubDirectory": "Types",
+      "enabled": true
+    },
+    {
+      "name": "DocumentIdentification",
+      "sourcePath": "schemas/NAE/DocumentIdentification-1.2.xsd",
+      "outputSubDirectory": "Types",
+      "enabled": true
+    },
+    {
+      "name": "CC-4.4",
+      "sourcePath": "schemas/NAE/CC-4.4.xsd",
+      "outputSubDirectory": "CommonComponents",
+      "enabled": true
+    },
+    {
+      "name": "A100N-6.0",
+      "sourcePath": "schemas/NAE/A100N-6.0.xsd",
+      "outputSubDirectory": "A_Messages",
+      "enabled": true
+    },
+    {
+      "name": "ACK900N-6.0",
+      "sourcePath": "schemas/NAE/ACK900N-6.0.xsd",
+      "outputSubDirectory": "A_Messages",
+      "enabled": true
+    }
+  ]
+}

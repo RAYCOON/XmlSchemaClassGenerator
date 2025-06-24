@@ -1,0 +1,66 @@
+{
+  "Name": "Example XSD Batch Conversion",
+  "OutputDirectory": "./output",
+  "GlobalSettings": {
+    "NamespacePrefix": "MyCompany",
+    "GenerateNullables": true,
+    "EnableDataBinding": true,
+    "GenerateInterfaces": true,
+    "UsePascalCase": true,
+    "SeparateFiles": true,
+    "SeparateNamespaceHierarchy": false,
+    "CollectionType": "System.Collections.Generic.List\u003C\u003E",
+    "CollectionSettersMode": "Public",
+    "GenerateDescriptionAttribute": true,
+    "UniqueTypeNames": false,
+    "UseShouldSerializePattern": false,
+    "EnumAsString": false,
+    "NamespaceMappings": [
+      {
+        "XmlNamespace": "http://example.com/simple",
+        "CSharpNamespace": "MyCompany.Simple"
+      },
+      {
+        "XmlNamespace": "http://example.com/payment",
+        "CSharpNamespace": "MyCompany.Payment"
+      },
+      {
+        "XmlNamespace": "",
+        "CSharpNamespace": "MyCompany.DefaultNamespace"
+      }
+    ]
+  },
+  "Schemas": [
+    {
+      "Name": "Simple Example Schema",
+      "SourcePath": "schemas/example-simple.xsd",
+      "OutputSubDirectory": "Simple",
+      "Settings": null,
+      "Enabled": true
+    },
+    {
+      "Name": "Payment Schema with Choices",
+      "SourcePath": "schemas/example-with-choice.xsd",
+      "OutputSubDirectory": "Payment",
+      "Settings": {
+        "SeparateSubstitutes": true,
+        "HandleChoicesAsSequence": true,
+        "NamespacePrefix": null,
+        "GenerateNullables": true,
+        "EnableDataBinding": false,
+        "GenerateInterfaces": true,
+        "UsePascalCase": true,
+        "SeparateFiles": true,
+        "SeparateNamespaceHierarchy": false,
+        "CollectionType": "System.Collections.Generic.List\u003C\u003E",
+        "CollectionSettersMode": "Public",
+        "GenerateDescriptionAttribute": true,
+        "UniqueTypeNames": false,
+        "UseShouldSerializePattern": true,
+        "EnumAsString": false,
+        "NamespaceMappings": []
+      },
+      "Enabled": true
+    }
+  ]
+}

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS051NDS="https://www.gkv-spitzenverband.de/6_0/S051NDS" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S051NDS" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S051NDS">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Deutscher Antrag auf Erstattung einer Überzahlung</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNoteRRO" type="sedS051NDS:GlobalNoteRROType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Antrag auf Erstattung einer Überzahlung (RRO)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualRROs" type="sedS051NDS:IndividualRefundRequestOverpaymentsType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne RROs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteRROType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="country" type="CC:EESSIEUEFTACountryType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Staat für den eingereicht wird
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LiaisonBody" type="SSecNat:LiaisonBodyType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Verbindungsstelle
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GlobalRROReferenceInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RRO-Referenz des Träger des Absenders (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IdentificationOfTheSender" type="CC:EESSISenderIdentificationType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Identifizierung des Absenders
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfIndividualRRO" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Gesamtzahl der Anträge auf Erstattung einer Überzahlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOriginalBenefitsEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der ursprünglichen Leistungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalAmountOfIndividualOverpaymentsEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Gesamtbetrag der einzelnen Überzahlungen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualRefundRequestOverpaymentsType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualRRO" type="sedS051NDS:IndividualRROType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne RRO
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualRROType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS051NDS:ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RefundPeriod" type="CC:EESSIPeriodType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Erstattungszeitraum
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dateCreditorDebtorInstitutionReceivedRelevantInformation" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum, an dem der forderungsberechtigte/leistungspflichtige Träger die relevanten Informationen erhalten hat
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numberMonths" type="xsd:int" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Anzahl der Monate
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RefundAmountInEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Erstattungsbetrag (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RefundReason" type="sedS051NDS:RefundReasonType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Erstattungsgrund</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AmountBenefitsInEUR" type="CC:EESSIAmountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Höhe der Leistungen (in EUR)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReferencesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalRROReferenceInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RRO-Referenz des Träger des Absenders (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualRRONumberInstitution" type="CC:EESSICRUniqueidentifierType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen RRO des Trägers des Absenders (Krankenkasse)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="CLA" type="SSecNat:CLA_IMO_ILP_ReferencesType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="de">
+Kosten nach tatsächlichen Aufwendungen
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="IMO" type="SSecNat:CLA_IMO_ILP_ReferencesType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="de">
+Kosten nach pauschalen Aufwendungen
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="ILP" type="SSecNat:CLA_IMO_ILP_ReferencesType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="de">
+Verzugszinsen
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConditionalDateType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="dateRefundCode" type="CC:EESSIBusinessDateType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum für Erstattungsgrund
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConditionalOtherType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de">
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="other" type="CC:EESSIVeryLongStringType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Sonstiger Grund
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S051NDS" type="sedS051NDS:S051NDS">
+		<xsd:annotation/>
+	</xsd:element>
+	<xsd:complexType name="RefundReasonType">
+		<xsd:sequence>
+			<xsd:element name="RefundReason" type="SSecNat:S051N_RefundReasonsType">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+						<ccts:OfficialConstraintContextValue>
+							<CodeListEntry>
+								<value>01</value>
+								<definition>Person erhält eine Rente in ihrem Wohnstaat seit</definition>
+							</CodeListEntry>
+							<CodeListEntry>
+								<value>02</value>
+								<definition>Betreffende/-r Familienangehörige/-r hat Anspruch auf Leistungen im Wohnstaat seit</definition>
+							</CodeListEntry>
+							<CodeListEntry>
+								<value>03</value>
+								<definition>Vorheriger Anspruch im Wohnstaat seit</definition>
+							</CodeListEntry>
+							<CodeListEntry>
+								<value>04</value>
+								<definition>Die Person ist verstorben am</definition>
+							</CodeListEntry>
+							<CodeListEntry>
+								<value>05</value>
+								<definition>Der Anspruch endete am</definition>
+							</CodeListEntry>
+							<CodeListEntry>
+								<value>06</value>
+								<definition>Betrag der Anzahlung war höher als Schlusszahlung</definition>
+							</CodeListEntry>
+							<CodeListEntry>
+								<value>99</value>
+								<definition>Sonstiges [bitte Feld „Sonstiges“ ausfüllen]</definition>
+							</CodeListEntry>
+						</ccts:OfficialConstraintContextValue>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="RefundCode01Contestation" type="sedS051NDS:ConditionalDateType" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn „Erstattungsgrund“ den Wert „01“, „02“, „03“, „04“ oder „05“ hat.
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="RefundCode99Other" type="sedS051NDS:ConditionalOtherType" minOccurs="0">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn "Grund der natonalen Abweisung" = "99 - sonstiger Grund":
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

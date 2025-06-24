@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/SSec" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:complexType name='SPersonAddressType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>88BB383D-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'Address' minOccurs='1' maxOccurs='1' type='CC:EESSIAddressWorldType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>43ECAD34-9518-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'residenceInThisCountrySince' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5FC558FF-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SOtherReasonLongType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>A4BB383D-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'otherReason' minOccurs='0' maxOccurs='1' type='CC:EESSILongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>80375805-9318-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SPayDetOngoingType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3926E214-0A0F-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'Period' minOccurs='0' maxOccurs='1' type='CC:EESSIOngoingPeriodType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>3C26E214-0A0F-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'Amount' minOccurs='1' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>3D26E214-0A0F-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'frequencyPayment' minOccurs='1' maxOccurs='1' type='SSec:SPaymentFrequencyDayWeekMonthOtherType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>3A26E214-0A0F-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PleaseFillInFollowingIfFrequencyPaymentOther' minOccurs='0' maxOccurs='1' type='SSec:SOtherFrequencyPaymentType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>28B836E5-160F-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SProviderType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>5167DE8A-B2B0-E611-80D2-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'name' minOccurs='1' maxOccurs='1' type='CC:EESSIShortStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5467DE8A-B2B0-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'Address' minOccurs='1' maxOccurs='1' type='CC:EESSIAddressWorldType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5567DE8A-B2B0-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SProvisionalReplacementCertificateOtherType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>96BF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'EntitlementValidityPeriod' minOccurs='1' maxOccurs='1' type='CC:EESSIOngoingPeriodType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A2BF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateIssue' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>059C31C6-4C0D-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SPersonStatusType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>CCD68283-F853-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'status' minOccurs='1' maxOccurs='1' type='SSec:SStatusFormerFrontierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CED68283-F853-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SOtherFrequencyPaymentType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>71BB383D-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'other' minOccurs='0' maxOccurs='1' type='CC:EESSIMediumStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>54C558FF-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'descriptionBenefits' minOccurs='0' maxOccurs='1' type='CC:EESSIVeryLongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>33CBF90C-A9DC-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SBenefitsInKindType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B333C21F-DA48-E611-80C9-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'natureBenefits' minOccurs='1' maxOccurs='1' type='SSec:SSicknessNatureOfBenefitCodeType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>FA4E090A-2695-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'BenefitsPeriod' minOccurs='1' maxOccurs='1' type='CC:EESSIPeriodType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CE33C21F-DA48-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'AllBenefitsAmount' minOccurs='1' maxOccurs='1' type='CC:EESSIAllBenefitsAmountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>6CBFDE71-E74C-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SProvisionalReplacementCertificateEHICType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>93BF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'eHICNumber' minOccurs='1' maxOccurs='1' type='CC:EESSIEHICType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A9E55056-0CC2-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'EntitlementValidityPeriod' minOccurs='1' maxOccurs='1' type='SSec:SPeriodEHICType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>9EBF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SSicknessEntitlementType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B133C21F-DA48-E611-80C9-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'document' minOccurs='1' maxOccurs='1' type='SSec:SSicknessEntitlementDocumentCodeContentType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B833C21F-DA48-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name = 'PleaseFillInFollowingIfProvisionalReplacement01' minOccurs='0' maxOccurs='1' type='SSec:SProvisionalReplacementCertificateEHICType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>9DBF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'FillInIfProvisionalReplacement' minOccurs='0' maxOccurs='1' type='SSec:SProvisionalReplacementCertificatePeriodType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>9FBF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'ProvisionalReplacementCertificateEHICCertificate' minOccurs='0' maxOccurs='1' type='SSec:SProvisionalReplacementCertificateOtherType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>A1BF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SLumpSumLegalCategoryClassType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B90DFC2F-EBEE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'lumpSumCategoryBasedPersonStatus' minOccurs='1' maxOccurs='1' type='SSec:SLumpSumLegalCategoryType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>BB0DFC2F-EBEE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name = 'Art63p2a' minOccurs='0' maxOccurs='1' type='SSec:SLumpSumCategoryArt63P2aType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>B2DB36B1-769F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'Art63p2b' minOccurs='0' maxOccurs='1' type='SSec:SLumpSumCategoryArt63P2bType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>CF0DFC2F-EBEE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SDateType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3F243C31-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'date' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5B22B817-9318-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SLumpSumCategoryArt63P2bType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>BA0DFC2F-EBEE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'lumpSumCategory' minOccurs='0' maxOccurs='1' type='SSec:SLumpSumCategoryType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>BC0DFC2F-EBEE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SISOCodeCountryInsuranceType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>42243C31-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'iSOCodeCountryInsurance' minOccurs='0' maxOccurs='1' type='CC:EESSIEUEFTACountryType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5D22B817-9318-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SPersonEUAddressType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>554155C7-5003-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'Address' minOccurs='1' maxOccurs='1' type='CC:EESSIAddressEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5A4155C7-5003-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'residenceInThisCountrySince' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>574155C7-5003-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='STreatmentType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>5067DE8A-B2B0-E611-80D2-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'description' minOccurs='1' maxOccurs='1' type='CC:EESSILongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5267DE8A-B2B0-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateRequestByPerson' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5367DE8A-B2B0-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'Provider' minOccurs='1' maxOccurs='1' type='SSec:SProviderType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5767DE8A-B2B0-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SLumpSumCategoryArt63P2aType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>91DB36B1-769F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'lumpSumCategory' minOccurs='0' maxOccurs='1' type='SSec:SLumpSumCategoryType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>061A9469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SAdditionalInformationAboutAPersonType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>63243C31-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'nationality' minOccurs='0' maxOccurs='1' type='CC:EESSINationalityMultipleType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>2632C2CB-EA65-E611-80CB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="SUniqueConstraint1">
+					<xsd:selector xpath="value"/>
+					<xsd:field xpath="."/>
+				</xsd:unique>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SProvisionalReplacementCertificatePeriodType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>95BF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'EntitlementValidityPeriod' minOccurs='1' maxOccurs='1' type='CC:EESSIPeriodType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A0BF3EBC-09C2-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateIssue' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>069C31C6-4C0D-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SDiedOnType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>40243C31-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'diedOn' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5C22B817-9318-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SOtherCrucialInformationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3E492A3C-ADDC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'otherCrucialInformationOrAnyAdditionalInformation' minOccurs='0' maxOccurs='1' type='CC:EESSIVeryLongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>41492A3C-ADDC-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SPersonFullInfoType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>52393937-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'PersonIdentification' minOccurs='1' maxOccurs='1' type='CC:EESSIPersonType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>814C6765-C3BB-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'AdditionalInformationPerson' minOccurs='0' maxOccurs='1' type='SSec:SAdditionalInformationAboutAPersonType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>845D168D-9418-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SInsuredPersonStatusType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>623AE181-D21D-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'status' minOccurs='1' maxOccurs='1' type='SSec:SStatusInsuredPersonType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>633AE181-D21D-E711-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SRejectCancellationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>EA4D5182-6573-455B-A222-3CB6A4FDB37D</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'RejectedGroundsCancellationProgressStartDate' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C267A06E-F57F-444B-A2F5-5C1BFF0B3393</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SPeriodEHICType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3A243C31-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'startDate' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>18684F61-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'endDate' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>19684F61-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SFamilyMemberStatusType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>48A8905D-D5BB-E611-80D2-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'status' minOccurs='1' maxOccurs='1' type='SSec:SStatusFamilyMemberType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>D2B1B6AE-94BC-429A-B091-F5F1DB5687CA</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PleaseFillInDetailsMainInsuredPerson' minOccurs='1' maxOccurs='1' type='SSec:SPersonFullInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>4AA8905D-D5BB-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'AddressMainInsuredPerson' minOccurs='1' maxOccurs='1' type='CC:EESSIAddressWorldType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>D0A891C2-D9BB-E611-80D2-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SPaymentFrequencyDayWeekMonthOtherType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>613C653B-3D23-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>81C6B04E-3D23-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Daily</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>15B76C5A-3D23-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Weekly</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>F63B6762-3D23-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Monthly</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>F73B6762-3D23-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>99</value>
+						<definition>Other</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|99){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SBenefitTypeSicknessMaternityPaternityType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>C268D049-4626-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>8FEACB68-4626-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Sickness</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>90EACB68-4626-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Maternity</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>A2444774-4626-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Paternity</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SLumpSumCategoryType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>EEE959FF-4B26-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>62647B1F-4C26-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>IR 987/2009, Art 64, Age 0-19</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>5DA6F629-4C26-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>IR 987/2009, Art 64, Age 20-64</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>85E23636-4C26-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>IR 987/2009, Art 64, Age 65+</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='STreatmentEnumType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>E49C5DE1-6126-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>D91602F4-6126-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Necessary care</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B659DCFC-6126-E611-80C8-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Scheduled treatment</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SSicknessNatureOfBenefitCodeType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>FE8AE932-A249-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>CD01DA4E-A249-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Sickness</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>CE01DA4E-A249-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Maternity, paternity</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>9B516E56-A249-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Accident non professional</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>9C516E56-A249-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>Long term care</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SSicknessEntitlementDocumentCodeContentType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>C5470C42-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>F6D5EC77-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>EHIC - European Health Insurance Card</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>EDDDBCCB-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>PRC Provisional Replacement Certificate</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>590F57DC-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>S1 Registering for health care cover</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>3E1366E5-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>S2 Entitlement to scheduled treatment</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>3F1366E5-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>S3 Medical treatment for former worker in former country of work</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>A8FFEA86-9229-E711-80D4-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>S037 Extension of entitlement document - scheduled treatment</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>7B9121FB-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>07</value>
+						<definition>S072 Entitlement document - Residence</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>7C9121FB-7394-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>08</value>
+						<definition>S045 Entitlement document - Temporary Stay</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>A18ED307-7494-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>09</value>
+						<definition>S008 Entitlement document - Former Frontier Worker - Family Member of Former Frontier Worker</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>859DFC27-7494-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>10</value>
+						<definition>E106 Entitlement document - Residence</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>869DFC27-7494-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>11</value>
+						<definition>E109 Certificate for the registration of members of the employed or self-employed person's family</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>53F8EF32-7494-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>12</value>
+						<definition>E112 Certificate concerning the retention of the right to sickness or maternity benefits</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>3C96F139-7494-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>13</value>
+						<definition>E120 Certificate of entitlement to benefits in kind for pension claimants and members of their family</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>ACB02443-7494-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>14</value>
+						<definition>E121 Certificate for the registration of pensioners</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04|05|06|07|08|09|10|11|12|13|14){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SLumpSumLegalCategoryType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>834515A4-709F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>E064C8C5-709F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>IR 987/2009, Art 63, 2.a</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>BF85DDD3-709F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>IR 987/2009, Art 63, 2.b</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>00D8B4DE-709F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>IR 574/72, Art. 94</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>CFEC90E9-709F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>IR 574/72, Art. 95</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SEntitlementDocumentsType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B78C3EBA-16DC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>1BFED260-93DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Portable Document S1</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>F057F667-93DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>SED S072</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>F157F667-93DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>E106</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>BF345870-93DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>E109</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>C0345870-93DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>E120</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>96FF1D78-93DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>E121</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04|05|06){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SEntitlementYesNoType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>80C7B037-9FDC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>4F8F7D59-9FDC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>The person concerned is not entitled to benefits in kind - long term care</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>13304270-9FDC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>The person concerned is entitled to benefits in kind - long term care</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SEntitlementNoReasonType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>159F16CF-8FDD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>56AE0EFA-8FDD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Not insured in our Member State since</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B8D6F501-90DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Not entitled to sickness benefits from our member state since</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>6E20810C-90DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Resides in our Member State since</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>D912664C-90DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>No longer resides in your Member State since</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>DA12664C-90DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>Died on</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>750BE58E-90DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>Insured in another country on the basis of pension conform Regulation (EC) 883/2004 art 24(2)(b)</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>D2537595-90DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>07</value>
+						<definition>Status of the person has changed</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>418590F1-D7D4-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+						<value>08</value>
+						<definition>Change of institution within our Member State. You will shortly receive a new entitlement certificate stating the ID of the competent institution.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>D3537595-90DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>99</value>
+						<definition>Other reason</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04|05|06|07|08|99){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SSicknessEntitlementDocumentCodeContentTypeLumpSumType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>893794BC-CFFD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>5DF236D2-CFFD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>S1 - Registering for health care cover</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>5EF236D2-CFFD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>S072 - Entitlement document - Residence</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>5DA9D7DA-CFFD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>E109 - Certificate for the Registration of members of the employed or self-employed person's family</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>5EA9D7DA-CFFD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>E121 - Certificate for the registration of pensioners</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SStatusFormerFrontierType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>797C6236-D313-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>E006D454-D313-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Former Frontier Worker</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>096C2F65-D313-E711-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Family member of a former frontier worker</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SStatusInsuredPersonType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>DD2810D5-BE38-4A32-BF30-D794C549A1C3</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>2467B553-39CA-4930-B032-E16530706831</ccts:UniqueID>
+						<value>01</value>
+						<definition>Insured person</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>45FEE000-F362-484A-AA9B-8D459EB5F98D</ccts:UniqueID>
+						<value>02</value>
+						<definition>Pensioner</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>29B9CADD-FAC8-41F3-BE5C-7ABCE485E606</ccts:UniqueID>
+						<value>03</value>
+						<definition>Pension claimant</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SStatusFamilyMemberType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>AD0C2451-5E4D-4501-A6FE-28D2D741FE06</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>4C9AE74B-F8A5-447A-904E-24240C4B7B52</ccts:UniqueID>
+						<value>01</value>
+						<definition>Family member of insured person</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>3D8B7DF4-4F56-47EC-B557-67D489FF3A02</ccts:UniqueID>
+						<value>02</value>
+						<definition>Family member of pensioner</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>415E0800-5C6C-4842-BB9E-B6558BA425BA</ccts:UniqueID>
+						<value>03</value>
+						<definition>Family member of pension claimant</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SCancellationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>A30BD7A2-22BA-452F-A794-399A818BF323</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SC.Sickness.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>F3FDEDAF-79EB-462E-B51E-084E6CABB4F2</ccts:UniqueID>
+						<value>01</value>
+						<definition>With End Date</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>79524CAC-088A-4BFC-94E8-2FA63BB426CC</ccts:UniqueID>
+						<value>02</value>
+						<definition>In Full</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

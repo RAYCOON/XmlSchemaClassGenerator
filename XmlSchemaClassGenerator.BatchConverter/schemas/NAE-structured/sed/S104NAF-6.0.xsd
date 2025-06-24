@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC" xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:SSecNat="https://www.gkv-spitzenverband.de/6_0/SSecNat" xmlns:sedS104NAF="https://www.gkv-spitzenverband.de/6_0/S104NAF" targetNamespace="https://www.gkv-spitzenverband.de/6_0/S104NAF" version="6.0.0">
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+	<xsd:import namespace="https://www.gkv-spitzenverband.de/6_0/SSecNat" schemaLocation="SSecNat-6.0.xsd"/>
+	<xsd:complexType name="S104NAF">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+Antwort auf Beanstandung der Monatsverzeichnisse</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalNoteRPYCOCIMO" type="sedS104NAF:GlobalNoteMonthsInventoryContestationReplyType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Antwort auf eine Beanstandung eines Monatsverzeichnisses (RPY_COC_IMO)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualRPYCOCIMOs" type="sedS104NAF:IndividualMonthsInventoryContestationRepliesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne RPY_COC_IMOs
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sedPackage" type="xsd:string"/>
+		<xsd:attribute name="sedGVer" type="xsd:int"/>
+		<xsd:attribute name="sedVer" type="xsd:int"/>
+	</xsd:complexType>
+	<xsd:complexType name="GlobalNoteMonthsInventoryContestationReplyType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="GlobalCOC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="GlobalCOC_IMOReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="GlobalRPY_COC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RPY_COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfReplyContestations" type="CC:EESSICRIndividualClaimsCountType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Anzahl der Antworten auf Beanstandungen
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TotalNumberOfAcceptedMonthsContested" type="xsd:int" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Anzahl der akzeptierten bestandeten Monate
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfReceiptByDebtorLiaisonBody" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Eingangsdatum bei der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateOfSubmission" type="CC:EESSIBusinessDateType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Datum der Übermittlung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualMonthsInventoryContestationRepliesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IndividualRPYCOCIMO" type="sedS104NAF:IndividualMonthsInventoryContestationReplyType" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Einzelne RPY_COC_IMO
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndividualMonthsInventoryContestationReplyType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IDCreditorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des forderungsberechtigten Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Kennung des leistungspflichtigen Trägers
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="References" type="sedS104NAF:ReferencesType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Bezug
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Person, die Leistungen bezieht
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ReplyCode" type="sedS104NAF:ReplyCodeType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Antwortcode
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NumberMonthsAfterAcceptedContestation" type="sedS104NAF:NumberMonthsAfterAcceptedContestationType">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Anzahl der Monate nach angenommener Beanstandung</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="copyFlag" type="SSecNat:NationalMarker" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nationale Kennzeichnung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReferencesType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GlobalIMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Vorgangsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="GlobalCOC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="GlobalCOC_IMOReferenceDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Globale COC_IMO-Referenz des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="GlobalRPY_COC_IMOReferenceDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Globale RPY_COC_IMO-Referenz der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualIMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (Kostenrechnungsnummer DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="IndividualCOC_IMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="IndividualCOC_IMONumberDebtorInstitution" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Nummer der einzelnen COC_IMO des Trägers des leistungspflichtigen Mitgliedstaats (Krankenkasse)
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="IndividualRPY_COC_IMONumberDebtorLiaisonBody" type="CC:EESSICRUniqueidentifierType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					
+					<xsd:documentation xml:lang="de">
+Nummer der einzelnen RPY_COC_IMO der Verbindungsstelle des leistungspflichtigen Mitgliedstaats (DVKA)
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReplyCodeType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="replyCodeCOCIMO" type="sedS104NAF:ReplyCodeCOCIMOType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Antwortcode COC_IMO
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="ConditionalAcceptance" type="sedS104NAF:ContestedMonthsNumberType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn „Antwortcode COC_IMO“ = „1 - Beanstandung akzeptiert – betroffene einzelne IMO wird vollständig zurückgezogen“ = „2 - Beanstandung akzeptiert – betroffene IMO wird reduziert“:
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="ConditionalDate" type="sedS104NAF:ConditionalDateType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn „Antwortcode COC_IMO“ = „3 - Beanstandung nach Ablauf der Frist“ oder „Antwortcode COC_IMO“ = „06 - Der vorrangige Anspruch im Wohnstaat besteht“ oder „Antwortcode COC_IMO“ = „07 - Person erhält eine Rente in ihrem Wohnstaat, eine Kopie der Entscheidung ist beigefügt“:
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="InformationRequested" type="sedS104NAF:ContestationReplyCodeInformationRequestedType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="de">Bitte ausfüllen, wenn "Antwortcode COC_IMO" = "04 - Angeforderte Informationen aktualisiert"</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="OtherContestationRefusalCode" type="sedS104NAF:OtherReplyCodeType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="de">
+Füllen Sie bitte folgendes Feld aus, wenn„Antwortcode COC_IMO" = „99 - Sonstiger Grund“:
+      </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ReplyCodeCOCIMOType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de">
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<value>01</value>
+						<definition>Beanstandung akzeptiert – betroffene einzelne IMO wird vollständig zurückgezogen.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>02</value>
+						<definition>Beanstandung akzeptiert – betroffene IMO wird reduziert</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>03</value>
+						<definition>Beanstandung nach Ablauf der Frist, erhalten am [bitte Datum eintragen]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>04</value>
+						<definition>Angefragte Informationen aktualisiert</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>05</value>
+						<definition>Bei Überprüfung wurde keine doppelte Rechnungsstellung gefunden</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>06</value>
+						<definition>Der vorrangige Anspruch im Wohnstaat besteht ab dem [bitte Datum eintragen]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>07</value>
+						<definition>Person erhält eine Rente in ihrem Wohnstaat ab [bitte Datum eintragen], eine Kopie der Entscheidung ist beigefügt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>08</value>
+						<definition>Person hat vorrangigen Anspruch aufgrund einer Rente aus anderem Staat, eine Kopie des Rentenbescheids ist beigefügt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>09</value>
+						<definition>Familienangehörige/r hat keinen Anspruch im Wohnstaat</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>10</value>
+						<definition>Kosten sind nicht auf Grundlage tatsächlicher Aufwendungenzu begleichen</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>11</value>
+						<definition>Familienangehörige/r ist jetzt in der Anspruchsbescheinigung eingetragen</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>12</value>
+						<definition>Laut den beigefügten Dokumenten ist die Rechnung zubegleichen</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>13</value>
+						<definition>Die Anspruchsbescheinigungen sind beigefügt</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>14</value>
+						<definition>Beigefügt finden Sie die angeforderten Dokumente</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<value>99</value>
+						<definition>sonstiger Grund [bitte Feld „sonstiger Grund“ ausfüllen]</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value" minOccurs="1" maxOccurs="1">
+				<xsd:annotation/>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:pattern value="(01|02|03|04|05|06|07|08|09|10|11|12|13|14|99){1}"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ContestedMonthsNumberType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numberMonthsAfterAfterAcceptedContestation" type="xsd:int" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Anzahl der Monate nach angenommenerBeanstandung
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UpdateEntitlementDocument" type="sedS104NAF:UpdateEntitlementDocumentType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Aktualisierung der Anspruchsbescheinigung</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UpdateAccountingPeriod" type="CC:EESSIPeriodType" minOccurs="0"/>
+			<xsd:element name="UpdateDebtorInstitution" type="sedS104NAF:UpdateDebtorInstitutionType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Aktualisierung des leistungspflichtigen Trägers</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UpdatePersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConditionalDateType">
+		<xsd:annotation>
+			
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="contestationRefusalCodeInfoDate" type="CC:EESSIBusinessDateType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ablehnungscode der Beanstandung -Informationsdatum
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OtherReplyCodeType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="de"/>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="contestationRefusalCodeInfoOther" type="CC:EESSIVeryLongStringType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">
+Ablehnungscode der Beanstandung - Sonstiger Grund
+      </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="S104NAF" type="sedS104NAF:S104NAF">
+		<xsd:annotation>
+			
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="NumberMonthsAfterAcceptedContestationType">
+		<xsd:sequence>
+			<xsd:element name="numberMonthsAfterAcceptedContestation" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ContestationReplyCodeInformationRequestedType">
+		<xsd:sequence>
+			<xsd:element name="UpdateEntitlementDocument" type="sedS104NAF:UpdateEntitlementDocumentType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Aktualisierung der Anspruchsbescheinigung</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UpdateAccountingPeriod" type="CC:EESSIPeriodType" minOccurs="0"/>
+			<xsd:element name="UpdateDebtorInstitution" type="sedS104NAF:UpdateDebtorInstitutionType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="de">Aktualisierung des leistungspflichtigen Trägers</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UpdatePersonReceivingBenefits" type="CC:EESSIPersonInfoType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UpdateEntitlementDocumentType">
+		<xsd:annotation>
+			<xsd:documentation>
+				<ccts:UniqueID>6FBD3087-2BD3-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue/>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="entitlementDocument" type="SSec:SSicknessEntitlementDocumentCodeContentTypeLumpSumType"/>
+			<xsd:element name="ValidityPeriod" type="CC:EESSIOngoingPeriodType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UpdateDebtorInstitutionType">
+		<xsd:sequence>
+			<xsd:element name="IDDebtorInstitution" type="CC:EESSIInstitutionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

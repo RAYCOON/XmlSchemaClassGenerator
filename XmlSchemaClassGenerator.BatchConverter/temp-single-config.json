@@ -1,0 +1,34 @@
+{
+  "name": "S033NAF-6.0",
+  "outputDirectory": "output/NAE-Individual/S_Messages/S033NAF-6.0",
+  "globalSettings": {
+    "namespacePrefix": "NAE.S_Messages",
+    "generateNullables": true,
+    "enableDataBinding": false,
+    "generateInterfaces": false,
+    "usePascalCase": true,
+    "separateFiles": true,
+    "separateNamespaceHierarchy": false,
+    "collectionType": "System.Collections.Generic.List<>",
+    "collectionSettersMode": "Public",
+    "generateDescriptionAttribute": false,
+    "uniqueTypeNames": true,
+    "useShouldSerializePattern": false,
+    "enumAsString": false,
+    "enableUpaCheck": false,
+    "doNotForceIsNullable": true,
+    "compactTypeNames": true,
+    "disableComments": true,
+    "generateDesignerCategoryAttribute": false,
+    "generateSerializableAttribute": false,
+    "generateDebuggerStepThroughAttribute": false,
+    "namespaceMappings": []
+  },
+  "schemas": [
+    {
+      "name": "S033NAF-6.0",
+      "sourcePath": "schemas/NAE/S033NAF-6.0.xsd",
+      "enabled": true
+    }
+  ]
+}

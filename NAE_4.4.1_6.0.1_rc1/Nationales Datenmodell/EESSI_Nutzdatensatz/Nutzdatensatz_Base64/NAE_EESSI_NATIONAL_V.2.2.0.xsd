@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified">	
+	<!--  Version 2.2.0 / 10.02.2025 -->
+	<xs:element name="NAE">
+		<xs:annotation>
+			<xs:documentation>Nutzdatenstruktur für den Transport einer BusinessNachricht im NAE KKS-Verfahren (vollständige Base64-Kodierung)</xs:documentation>
+			<xs:documentation>EESSIMessage: Nachricht für EESSI-Daten</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SchemaVersion" type="xs:string" fixed="2.2"/>
+				<xs:element name="EESSIMessage" type="ctMessageType" minOccurs="1" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="stReferenceType">
+		<xs:annotation>
+			<xs:documentation>Definiert die UUID der EESSI-Nachricht im 8-4-4-4-12 Format</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ctMessageType">
+		<xs:annotation>
+			<xs:documentation>Definiert die Datenstruktur für eine NAE-Nachricht</xs:documentation>
+			<xs:documentation>Id: Referenz auf InstanceIdentifier des BusinessDocument</xs:documentation>
+			<xs:documentation>SetId: Referenz auf SetID des BusinessDocument</xs:documentation>
+			<xs:documentation>PredecessorSed: Technische Vorgänger-SED - wird befüllt von der Applikation VIAS</xs:documentation>
+			<xs:documentation>BusinessDocumentContent: Enthält das BusinessDocument im Base64-codierter Form</xs:documentation>
+			<xs:documentation>Attachments: Enthält ggf. vorhandene Anhänge</xs:documentation>
+			<xs:documentation>ReceiptTime: Eingangszeitpunkt der Nachricht am NAE-Gateway (nur bei aus der internationalen Domäne eingehenden Nachrichten</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Id" type="stReferenceType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SetId" type="stReferenceType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="PredecessorSed" type="stReferenceType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BusinessDocumentContent" type="xs:base64Binary" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ReceiptTime" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Attachments" type="ctAttachmentsType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ctAttachmentsType">
+		<xs:sequence>
+			<xs:element name="Attachment" type="ctAttachmentType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Definiert die Datenstruktur eines Anhangs</xs:documentation>
+		<xs:documentation>Attachment: Enthält den Anhang im Base64-Format</xs:documentation>
+		<xs:documentation>Id: Id des Anhangs entsprechend SBDH</xs:documentation>
+		<xs:documentation>MimeType: MIME-Type des Anhangs entsprechend SBDH</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ctAttachmentType">
+		<xs:sequence>
+			<xs:element name="Id" type="stReferenceType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MimeType" type="stManifestType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Content" type="xs:base64Binary" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="stManifestType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="application/pdf"/>
+			<xs:enumeration value="image/jpeg"/>			
+			<xs:enumeration value="image/tiff"/>
+			<xs:enumeration value="application/zip"/>
+			<xs:enumeration value="application/gzip"/>			
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
