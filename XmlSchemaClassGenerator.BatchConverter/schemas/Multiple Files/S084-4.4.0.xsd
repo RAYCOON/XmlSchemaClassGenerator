@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedS084="http://ec.europa.eu/eessi/ns/4_4/S084" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/S084" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='GlobalNoteClaimContestationReplyType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>D59C9CC4-0949-E611-80C9-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalCLAReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>D69C9CC4-0949-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCOCReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>D79C9CC4-0949-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalRPYCOCReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B1F0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberOfContestationReplies' minOccurs='1' maxOccurs='1' type='CC:EESSICRIndividualClaimsCountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B2F0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'TotalAmountAcceptedContestations' minOccurs='1' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C1F0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateOfSubmission' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B3F0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ReferencesType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3F2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalCLAReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5A2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCOCReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>702F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalRPYCOCReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>712F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualCLANumberCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>612F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualCOCNumberDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>622F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualRPYCOCNumberCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>632F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='SicknessContestationReplyCodeType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>0E367DC4-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>9BEE97CF-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Contestation accepted – the individual claim is totally withdrawn</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>9CEE97CF-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Contestation accepted – updated benefits and amounts must be provided</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>8A9F20DC-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Contestation after deadline, received on [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>8B9F20DC-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>Information requested updated</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>BC9FD4E3-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>After checking, no double invoice found</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>27FB87EA-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>The primary entitlement in state of residence starts on [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>28FB87EA-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>07</value>
+						<definition>The family member is not entitled in the state of residence</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>E41265F3-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>08</value>
+						<definition>The costs are not to be settled by lump sum</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>E51265F3-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>09</value>
+						<definition>The family member is now registered on the entitlement document</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>1B8CA5FA-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>10</value>
+						<definition>According to the attached documents the invoice has to be paid</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>1C8CA5FA-A349-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>11</value>
+						<definition>Enclosed you find the entitlement document</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>0A4E8002-A449-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+						<value>12</value>
+						<definition>Enclosed you find the requested documents</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>F6EFBC17-06F5-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>99</value>
+						<definition>Other</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04|05|06|07|08|09|10|11|12|99){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='UpdateDebtorInstitutionType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>94F5DFE0-3DD0-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IDDebtorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>4D13F690-48D0-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='BenefitsConditionType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>5F8861B7-57FE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'BenefitsAfterAcceptedContestation' minOccurs='0' maxOccurs='1' type='SSec:SBenefitsInKindType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>7C8861B7-57FE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'UpdateEntitlementDocument' minOccurs='0' maxOccurs='1' type='SSec:SSicknessEntitlementType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>312B3B8B-37D0-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'UpdateDebtorInstitution' minOccurs='0' maxOccurs='1' type='sedS084:UpdateDebtorInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>4C13F690-48D0-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'UpdatePersonReceivingBenefits' minOccurs='0' maxOccurs='1' type='CC:EESSIPersonInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>20738D9A-7ED2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ContestationReplyCodeDateType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>472F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'contestationReplyCodeDate' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>642F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ReplyCodeInformationRequestedType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>5D7631D5-85D2-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'UpdateEntitlementDocument' minOccurs='0' maxOccurs='1' type='SSec:SSicknessEntitlementType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5F7631D5-85D2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'UpdateDebtorInstitution' minOccurs='0' maxOccurs='1' type='sedS084:UpdateDebtorInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>30C849C7-87D2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'UpdatePersonReceivingBenefits' minOccurs='0' maxOccurs='1' type='CC:EESSIPersonInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>43CB065B-89D2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ContestationReplyCodeOtherType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>492F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'contestationReplyCodeOther' minOccurs='0' maxOccurs='1' type='CC:EESSIVeryLongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>652F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='InformationReplyContestationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>90402D0E-35D0-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'contestationReplyCode' minOccurs='1' maxOccurs='1' type='sedS084:SicknessContestationReplyCodeType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>2F2B3B8B-37D0-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name = 'FillInFollowingIfContestationReplyCode02' minOccurs='0' maxOccurs='1' type='sedS084:BenefitsConditionType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>302B3B8B-37D0-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'FillInFollowingIfContestationReplyCode0306' minOccurs='0' maxOccurs='1' type='sedS084:ContestationReplyCodeDateType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>21738D9A-7ED2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'FillInFollowingIfContestationReplyCode04' minOccurs='0' maxOccurs='1' type='sedS084:ReplyCodeInformationRequestedType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>5E7631D5-85D2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'PleaseFillInFollowingIfContestationReplyCodeOther' minOccurs='0' maxOccurs='1' type='sedS084:ContestationReplyCodeOtherType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>44CB065B-89D2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualClaimContestationReplyType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>D49C9CC4-0949-E611-80C9-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IDCreditorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C3F0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IDDebtorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>BDF0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'References' minOccurs='1' maxOccurs='1' type='sedS084:ReferencesType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>832F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PersonReceivingBenefits' minOccurs='1' maxOccurs='1' type='CC:EESSIPersonInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>BEF0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'InformationReplyContestation' minOccurs='1' maxOccurs='1' type='sedS084:InformationReplyContestationType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>91402D0E-35D0-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IndividualAmountAcceptedContestations' minOccurs='1' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>BFF0EBF3-0B49-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IndividualAmountAfterAcceptedContestation' minOccurs='0' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>73598B35-8BD2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualClaimContestationsRepliesType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>A309C818-A549-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IndividualRPYCOC' minOccurs='1' maxOccurs='unbounded' type='sedS084:IndividualClaimContestationReplyType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A809C818-A549-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='S084'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>4FFCF16B-45DF-E511-80BF-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED S084</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'GlobalNoteRPYCOC' minOccurs='1' maxOccurs='1' type='sedS084:GlobalNoteClaimContestationReplyType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>E1760187-9418-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IndividualRPYCOCs' minOccurs='1' maxOccurs='1' type='sedS084:IndividualClaimContestationsRepliesType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>E3760187-9418-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="S084individualCLANumberCreditorLiaisonBodyUniqueConstraint1">
+					<xsd:selector xpath="IndividualRPYCOC/References"/>
+					<xsd:field xpath="individualCLANumberCreditorLiaisonBody"/>
+				</xsd:unique>
+				<xsd:unique name="S084individualCOCNumberDebtorLiaisonBodyUniqueConstraint2">
+					<xsd:selector xpath="IndividualRPYCOC/References"/>
+					<xsd:field xpath="individualCOCNumberDebtorLiaisonBody"/>
+				</xsd:unique>
+				<xsd:unique name="S084individualRPYCOCNumberCreditorLiaisonBodyUniqueConstraint3">
+					<xsd:selector xpath="IndividualRPYCOC/References"/>
+					<xsd:field xpath="individualRPYCOCNumberCreditorLiaisonBody"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='S084' type='sedS084:S084'>
+		<xsd:key name = 'sedS084keyname1'>
+			<xsd:selector xpath = 'GlobalNoteRPYCOC' />
+			<xsd:field xpath = 'globalCLAReferenceCreditorLiaisonBody' />
+		</xsd:key>
+		<xsd:key name = 'sedS084keyname2'>
+			<xsd:selector xpath = 'GlobalNoteRPYCOC' />
+			<xsd:field xpath = 'globalCOCReferenceDebtorLiaisonBody' />
+		</xsd:key>
+		<xsd:key name = 'sedS084keyname3'>
+			<xsd:selector xpath = 'GlobalNoteRPYCOC' />
+			<xsd:field xpath = 'globalRPYCOCReferenceCreditorLiaisonBody' />
+		</xsd:key>
+		<xsd:keyref name = 'sedS084keyrefname1' refer='sedS084:sedS084keyname1'>
+			<xsd:selector xpath = 'IndividualRPYCOCs/IndividualRPYCOC/References' />
+			<xsd:field xpath = 'globalCLAReferenceCreditorLiaisonBody' />
+		</xsd:keyref>
+		<xsd:keyref name = 'sedS084keyrefname2' refer='sedS084:sedS084keyname2'>
+			<xsd:selector xpath = 'IndividualRPYCOCs/IndividualRPYCOC/References' />
+			<xsd:field xpath = 'globalCOCReferenceDebtorLiaisonBody' />
+		</xsd:keyref>
+		<xsd:keyref name = 'sedS084keyrefname3' refer='sedS084:sedS084keyname3'>
+			<xsd:selector xpath = 'IndividualRPYCOCs/IndividualRPYCOC/References' />
+			<xsd:field xpath = 'globalRPYCOCReferenceCreditorLiaisonBody' />
+		</xsd:keyref>
+	</xsd:element>
+</xsd:schema>
