@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace XmlSchemaClassGenerator.BatchConverter.Models;
 
 public class BatchConfiguration
@@ -10,7 +12,7 @@ public class BatchConfiguration
 
 public class GlobalSettings
 {
-    public string? NamespacePrefix { get; set; }
+    public string NamespacePrefix { get; set; }
     public bool GenerateNullables { get; set; } = true;
     public bool EnableDataBinding { get; set; } = false;
     public bool GenerateInterfaces { get; set; } = true;
@@ -20,10 +22,13 @@ public class GlobalSettings
     public string CollectionType { get; set; } = "System.Collections.Generic.List<>";
     public string CollectionSettersMode { get; set; } = "Public";
     public bool GenerateDescriptionAttribute { get; set; } = true;
+    public bool InitializeComplexTypesInConstructor { get; set; } = false;
     public bool UniqueTypeNames { get; set; } = false;
     public bool UseShouldSerializePattern { get; set; } = false;
     public bool EnumAsString { get; set; } = false;
     public List<NamespaceMapping> NamespaceMappings { get; set; } = new();
+    public List<NamespacePattern> NamespacePatterns { get; set; } = new();
+    public List<FileNameMapping> FileNameMappings { get; set; } = new();
 }
 
 public class NamespaceMapping
@@ -32,12 +37,24 @@ public class NamespaceMapping
     public string CSharpNamespace { get; set; } = "";
 }
 
+public class NamespacePattern
+{
+    public string XmlPattern { get; set; } = "";
+    public string CSharpTemplate { get; set; } = "";
+}
+
+public class FileNameMapping
+{
+    public string Namespace { get; set; } = "";
+    public string FileName { get; set; } = "";
+}
+
 public class SchemaConfiguration
 {
     public string Name { get; set; } = "";
     public string SourcePath { get; set; } = "";
-    public string? OutputSubDirectory { get; set; }
-    public SchemaSettings? Settings { get; set; }
+    public string OutputSubDirectory { get; set; }
+    public SchemaSettings Settings { get; set; }
     public bool Enabled { get; set; } = true;
 }
 

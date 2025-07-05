@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\XmlSampleGenerator\XmlSampleGenerator.csproj" />
     <ProjectReference Include="..\XmlSchemaClassGenerator\XmlSchemaClassGenerator.csproj" />
+    <ProjectReference Include="..\XmlSchemaClassGenerator.BatchConverter\XmlSchemaClassGenerator.BatchConverter.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="coverlet.msbuild" Version="6.0.4">

@@ -10,6 +10,8 @@ This document outlines the current limitations of the XSD validation implementat
 
 XSD Choice elements represent mutually exclusive options where exactly ONE element from the choice group must be present. However, current validation logic treats Choice elements as if they were Sequence elements.
 
+**Note**: When using `GenerateChoiceItemProperty = true` in the XmlSchemaClassGenerator configuration, choice elements are generated with an `Item` property and `ItemElementName` enum (similar to xsd.exe), which provides better runtime support for choice validation. However, the validation methods in `XsdToCSharpFactory` still have limitations in recognizing these choice constraints.
+
 ### Technical Details
 
 **XSD Schema Example:**

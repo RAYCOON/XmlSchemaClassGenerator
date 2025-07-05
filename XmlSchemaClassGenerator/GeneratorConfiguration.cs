@@ -17,6 +17,31 @@ public class GeneratorConfiguration
         {
             GenerateNamespace = key =>
             {
+                // Check if filename-based namespace generation is enabled and we have a source file
+                if (UseFilenameAsNamespace && key.Source != null)
+                {
+                    var filename = System.IO.Path.GetFileName(key.Source.LocalPath);
+                    var ns = filename;
+                    
+                    // Apply all namespace transforms in order
+                    foreach (var transform in NamespaceTransforms)
+                    {
+                        if (!string.IsNullOrEmpty(transform.Pattern))
+                        {
+                            ns = System.Text.RegularExpressions.Regex.Replace(ns, transform.Pattern, transform.Replacement ?? "");
+                        }
+                    }
+                    
+                    // If we have a namespace prefix and the transform didn't already include it
+                    if (!string.IsNullOrEmpty(NamespacePrefix) && !ns.StartsWith(NamespacePrefix))
+                    {
+                        ns = NamespacePrefix + "." + ns;
+                    }
+                    
+                    return ns;
+                }
+                
+                // Default namespace generation logic
                 var xn = key.XmlSchemaNamespace;
                 var name = string.Join(".",
                     xn.Split('/').Where(p => p != "schema" && IdentifierRegex.IsMatch(p))
@@ -188,6 +213,12 @@ public class GeneratorConfiguration
     /// The name of the property that will contain the text value of an XML element
     /// </summary>
     public string TextValuePropertyName { get; set; } = "Value";
+
+    /// <summary>
+    /// Initialize complex type properties in class constructors
+    /// When true, generates constructors that initialize all complex type properties to avoid null references
+    /// </summary>
+    public bool InitializeComplexTypesInConstructor { get; set; } = false;
 
     /// <summary>
     /// Provides a fast and safe way to write to the Log
@@ -367,4 +398,17 @@ public class GeneratorConfiguration
     /// When enabled, choice elements are generated as an Item property with an enum to identify the chosen element.
     /// </summary>
     public bool GenerateChoiceItemProperty { get; set; } = false;
+
+    /// <summary>
+    /// Use filename as the basis for namespace generation. Default is false.
+    /// When enabled, the namespace is derived from the XSD filename using the NamespaceTransforms.
+    /// </summary>
+    public bool UseFilenameAsNamespace { get; set; } = false;
+
+    /// <summary>
+    /// List of regex transformations to apply to the filename when generating namespaces.
+    /// Each transform consists of a pattern and replacement string.
+    /// Transforms are applied in order.
+    /// </summary>
+    public List<NamespaceTransform> NamespaceTransforms { get; set; } = new List<NamespaceTransform>();
 }

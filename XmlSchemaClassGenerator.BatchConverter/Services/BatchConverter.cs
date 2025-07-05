@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Spectre.Console;
 using XmlSchemaClassGenerator.BatchConverter.Models;
 using XmlSchemaClassGenerator.NamingProviders;
@@ -88,6 +94,15 @@ public class BatchConverterService
 
                 generator.OutputFolder = outputPath;
                 
+                // Set custom output writer if file name mappings are configured
+                var settings = schema.Settings ?? _configuration.GlobalSettings;
+                if (settings.FileNameMappings?.Any() == true)
+                {
+                    var mappingDict = settings.FileNameMappings
+                        .ToDictionary(m => m.Namespace, m => m.FileName);
+                    generator.OutputWriter = new CustomFileOutputWriter(outputPath, mappingDict);
+                }
+                
                 var startTime = DateTime.Now;
                 // Handle wildcards in source path
                 var sourcePaths = new List<string>();
@@ -145,21 +160,31 @@ public class BatchConverterService
             namespaces.Add($"{mapping.XmlNamespace}={mapping.CSharpNamespace}");
         }
 
-        if (namespaces.Any() || !string.IsNullOrEmpty(settings.NamespacePrefix))
+        // Create base namespace provider
+        var baseNamespaceProvider = namespaces
+            .Select(n => CodeUtilities.ParseNamespace(n, settings.NamespacePrefix))
+            .ToNamespaceProvider(key =>
+            {
+                var xn = key.XmlSchemaNamespace;
+                var name = string.Join(".", xn.Split('/').Where(p => p != "schema" && GeneratorConfiguration.IdentifierRegex.IsMatch(p))
+                    .Select(n => n.ToTitleCase(NamingScheme.PascalCase)));
+                if (!string.IsNullOrEmpty(settings.NamespacePrefix)) 
+                { 
+                    name = settings.NamespacePrefix + (string.IsNullOrEmpty(name) ? "" : ("." + name)); 
+                }
+                return name;
+            });
+
+        // Apply namespace patterns if any
+        if (settings.NamespacePatterns?.Any() == true)
         {
-            generator.NamespaceProvider = namespaces
-                .Select(n => CodeUtilities.ParseNamespace(n, settings.NamespacePrefix))
-                .ToNamespaceProvider(key =>
-                {
-                    var xn = key.XmlSchemaNamespace;
-                    var name = string.Join(".", xn.Split('/').Where(p => p != "schema" && GeneratorConfiguration.IdentifierRegex.IsMatch(p))
-                        .Select(n => n.ToTitleCase(NamingScheme.PascalCase)));
-                    if (!string.IsNullOrEmpty(settings.NamespacePrefix)) 
-                    { 
-                        name = settings.NamespacePrefix + (string.IsNullOrEmpty(name) ? "" : ("." + name)); 
-                    }
-                    return name;
-                });
+            var patterns = settings.NamespacePatterns
+                .Select(p => new KeyValuePair<string, string>(p.XmlPattern, p.CSharpTemplate));
+            generator.NamespaceProvider = patterns.ToNamespaceProviderWithPatterns(baseNamespaceProvider);
+        }
+        else
+        {
+            generator.NamespaceProvider = baseNamespaceProvider;
         }
 
         return generator;
@@ -174,6 +199,7 @@ public class BatchConverterService
         generator.SeparateClasses = settings.SeparateFiles;
         generator.SeparateNamespaceHierarchy = settings.SeparateNamespaceHierarchy;
         generator.GenerateDescriptionAttribute = settings.GenerateDescriptionAttribute;
+        generator.InitializeComplexTypesInConstructor = settings.InitializeComplexTypesInConstructor;
         generator.UniqueTypeNamesAcrossNamespaces = settings.UniqueTypeNames;
         generator.UseShouldSerializePattern = settings.UseShouldSerializePattern;
         generator.EnumAsString = settings.EnumAsString;
@@ -225,7 +251,7 @@ public class SchemaResult
 {
     public string SchemaName { get; set; } = "";
     public bool Success { get; set; }
-    public string? Error { get; set; }
+    public string Error { get; set; }
     public TimeSpan Duration { get; set; }
-    public string? OutputPath { get; set; }
+    public string OutputPath { get; set; }
 }

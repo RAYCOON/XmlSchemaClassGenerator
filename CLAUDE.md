@@ -101,7 +101,8 @@ The `XsdToCSharpFactory` provides a high-level API that:
 - Tests use xUnit and target .NET 8.0
 - The console app uses Mono.Options for argument parsing
 - Generated code uses XmlSerializer attributes for serialization control
-- Choice elements are currently handled as sequences (developer must ensure schema validity)
+- Choice elements are handled as sequences by default (developer must ensure schema validity)
+- With `GenerateChoiceItemProperty = true` option, choice elements generate xsd.exe-compatible code with `Item` and `ItemElementName` properties
 - Complex restrictions and recursive choices have limited support
 
 ## GitHub Actions NuGet Publishing
