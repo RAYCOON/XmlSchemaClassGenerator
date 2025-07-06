@@ -33,7 +33,37 @@ namespace XmlSchemaClassGenerator.Tests
             var xsdPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "xsd", "eessi", "A008-4.4.0-20241203T114133.xsd");
             var outputPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "xsd", "csharp");
             var generatedFilePath = Path.Combine(outputPath, "A008-4.4.1.Designer.cs");
-            var existingFilePath = Path.Combine(outputPath, "A008-4.4.0.Designer.cs");
+            
+            // Look for the existing file in multiple possible locations
+            var existingFileName = "A008-4.4.0.Designer.cs";
+            var existingFilePath = Path.Combine(outputPath, existingFileName);
+            
+            // If the file doesn't exist in the output directory, try to find it in the source tree
+            if (!File.Exists(existingFilePath))
+            {
+                // Try to find the file relative to the test assembly location
+                var sourceRoot = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                while (sourceRoot != null && !File.Exists(Path.Combine(sourceRoot, "xsd", "csharp", existingFileName)))
+                {
+                    sourceRoot = Path.GetDirectoryName(sourceRoot);
+                    if (sourceRoot != null && Path.GetFileName(sourceRoot) == "XmlSchemaClassGenerator.Tests")
+                    {
+                        break;
+                    }
+                }
+                
+                if (sourceRoot != null)
+                {
+                    var sourceFilePath = Path.Combine(sourceRoot, "xsd", "csharp", existingFileName);
+                    if (File.Exists(sourceFilePath))
+                    {
+                        // Copy the file to the expected location
+                        Directory.CreateDirectory(outputPath);
+                        File.Copy(sourceFilePath, existingFilePath, true);
+                        _output.WriteLine($"Copied existing file from source: {sourceFilePath}");
+                    }
+                }
+            }
 
             // Debug output for CI environment
             if (!File.Exists(existingFilePath))

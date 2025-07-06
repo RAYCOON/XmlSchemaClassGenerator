@@ -63,5 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="xml\eessi\" />
+    <Folder Include="xsd\csharp\" />
   </ItemGroup>
 </Project>
