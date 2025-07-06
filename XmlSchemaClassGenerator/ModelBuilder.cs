@@ -927,16 +927,6 @@ public class ModelBuilder
         {
             PropertyModel property = null;
 
-            // Debug output for PurposeSEDType
-            if (owningTypeModel.Name == "PurposeSEDType")
-            {
-                if (item.XmlParticle is XmlSchemaElement elem)
-                {
-                    Console.WriteLine($"[DEBUG] PurposeSEDType element: {elem.Name}, XmlParent type: {item.XmlParent?.GetType().Name ?? "null"}");
-                    Console.WriteLine($"[DEBUG] Is parent a choice? {item.XmlParent is XmlSchemaChoice}");
-                }
-                Console.WriteLine($"[DEBUG] GenerateChoiceItemProperty: {_configuration.GenerateChoiceItemProperty}");
-            }
 
             // Handle Choice elements when GenerateChoiceItemProperty is enabled
             if (_configuration.GenerateChoiceItemProperty && 
@@ -944,19 +934,10 @@ public class ModelBuilder
                 !processedChoices.Contains(choice))
             {
                 var choiceItems = items.Where(i => i.XmlParent == choice).ToList();
-                if (owningTypeModel.Name == "PurposeSEDType")
-                {
-                    Console.WriteLine($"[DEBUG] Found choice, items count: {choiceItems.Count}");
-                    Console.WriteLine($"[DEBUG] processedChoices contains choice: {processedChoices.Contains(choice)}");
-                }
                 if (choiceItems.Count > 0)
                 {
                     processedChoices.Add(choice);
                     var choiceProperties = CreatePropertiesForChoice(source, owningTypeModel, choice, choiceItems, order);
-                    if (owningTypeModel.Name == "PurposeSEDType")
-                    {
-                        Console.WriteLine($"[DEBUG] CreatePropertiesForChoice returned {choiceProperties.Count()} properties");
-                    }
                     properties.AddRange(choiceProperties);
                     
                     // Update order if needed
@@ -1151,11 +1132,6 @@ public class ModelBuilder
             case null:
                 yield break;
             case XmlSchemaElement element:
-                // Debug for PurposeSEDType elements
-                if (element.Name == "NotificationChangesInRelevantData" || element.Name == "InformationWorkingInTwoOrMoreMemberStates")
-                {
-                    Console.WriteLine($"[DEBUG] GetElements creating particle for {element.Name}, parent type: {parent?.GetType().Name}");
-                }
                 yield return new Particle(element, parent); break;
             case XmlSchemaAny any:
                 yield return new Particle(any, parent); break;
