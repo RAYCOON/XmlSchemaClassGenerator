@@ -1,0 +1,67 @@
+{
+  "name": "Multiple Schema Conversion Example",
+  "outputDirectory": "./output",
+  "globalSettings": {
+    "namespacePrefix": "MyApp",
+    "generateNullables": true,
+    "enableDataBinding": false,
+    "generateInterfaces": true,
+    "usePascalCase": true,
+    "separateFiles": true,
+    "separateNamespaceHierarchy": true,
+    "collectionType": "System.Collections.ObjectModel.ObservableCollection<>",
+    "collectionSettersMode": "Private",
+    "generateDescriptionAttribute": true,
+    "uniqueTypeNames": false,
+    "namespaceMappings": [
+      {
+        "xmlNamespace": "http://schemas.example.com/common/v1",
+        "cSharpNamespace": "MyApp.Common.V1"
+      },
+      {
+        "xmlNamespace": "http://schemas.example.com/customer/v1", 
+        "cSharpNamespace": "MyApp.Customer.V1"
+      },
+      {
+        "xmlNamespace": "",
+        "cSharpNamespace": "MyApp.Default"
+      }
+    ]
+  },
+  "schemas": [
+    {
+      "name": "Common Types",
+      "sourcePath": "schemas/common/common-types.xsd",
+      "outputSubDirectory": "Common",
+      "enabled": true
+    },
+    {
+      "name": "Customer Management",
+      "sourcePath": "schemas/customer/customer.xsd",
+      "outputSubDirectory": "Customer",
+      "enabled": true
+    },
+    {
+      "name": "Order Processing",
+      "sourcePath": "schemas/order/order.xsd",
+      "outputSubDirectory": "Order",
+      "settings": {
+        "useShouldSerializePattern": true,
+        "collectionSettersMode": "Public"
+      },
+      "enabled": true
+    },
+    {
+      "name": "Product Catalog",
+      "sourcePath": "schemas/product/product.xsd",
+      "outputSubDirectory": "Product",
+      "enabled": true
+    },
+    {
+      "name": "Legacy Schema (Disabled)",
+      "sourcePath": "schemas/legacy/old-format.xsd",
+      "outputSubDirectory": "Legacy",
+      "enabled": false
+    }
+  ]
+}

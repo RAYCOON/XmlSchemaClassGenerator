@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedS102="http://ec.europa.eu/eessi/ns/4_4/S102" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/S102" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='GlobalNoteMonthsInventoryContestationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>E09B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalIMOReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F09B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCOCIMOReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F19B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberContestations' minOccurs='1' maxOccurs='1' type='CC:EESSICRIndividualClaimsCountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B74CA03D-44D3-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberContestedMonths' minOccurs='1' maxOccurs='1' type='xsd:int'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>EE9B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateSubmission' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F79B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ReferencesType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>E0199469-849F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalIMOReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>E8199469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCOCIMOReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>E9199469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualIMONumberCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F0199469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualCOCIMONumberDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F2199469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ContestationRefusalCodeCOCIMOType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>0F1D387C-7F4F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>3AFE3794-7F4F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>This document does not concern us</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>1438AFAE-7F4F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Institution code is incorrect. Please provide correct institution code.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>76454FD0-7F4F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>Unable to identify the person from the information provided. Please check.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>6F23C70D-804F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>04</value>
+						<definition>Entitlement document is unknown or not found. Please provide copy.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>015CC61A-804F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>Lump-sum category is incorrect.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>44845C5C-804F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>Person was not insured during lump-sum period. Please provide copy of entitlement document.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>0F157A81-804F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>07</value>
+						<definition>The period of lump-sum is not covered by the entitlement period.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>85926AB9-804F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>08</value>
+						<definition>The period of lump-sum is partially covered by the entitlement period. Please adjust the IMO.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>548AB714-814F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>09</value>
+						<definition>The costs are to be settled by actual costs as from [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>18FDB029-814F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>10</value>
+						<definition>The costs are to be settled by actual costs until [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>0A299A62-814F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>11</value>
+						<definition>The person is not registered on the entitlement document.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>911EAA92-814F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>12</value>
+						<definition>The entitlement document has not been registered</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>CF23AEAD-814F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>13</value>
+						<definition>Double invoice [duplicated invoice number should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>177CD5CA-814F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>14</value>
+						<definition>The entitlement in the state of residence started on [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>C83F22F2-814F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>15</value>
+						<definition>Family member concerned is entitled to benefits in the state of residence since [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>FDCAEB28-824F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>16</value>
+						<definition>The person receives a pension in his/her state of residence as from [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>96EE5C39-824F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>17</value>
+						<definition>The person receives a dominating pension from another state</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>5C677A41-824F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>18</value>
+						<definition>The person died on [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>3A1BE74C-824F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>19</value>
+						<definition>IMO introduced after deadline [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>79A6FB84-824F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>20</value>
+						<definition>Contestation IMO reply received after deadline [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>8FDDA33C-3BD3-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+						<value>21</value>
+						<definition>Person moved to another state [date should be filled in]</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>42FDB6A0-824F-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>99</value>
+						<definition>Other [field 'Other' should be filled in]</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|99){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ContestationRefusalCodeInfoDateType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>1E684264-9DEF-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'contestationRefusalCodeInfoDate' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>22684264-9DEF-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ContestationRefusalCodeInformationDuplicateInvoiceType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>1D684264-9DEF-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'duplicatedGlobalIMOReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>25684264-9DEF-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'duplicatedIndividualIMONumberDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>26684264-9DEF-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='DuplicatedInvoiceRefusalCodeType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>1B684264-9DEF-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'ContestationRefusalCodeInformationDuplicateI' minOccurs='0' maxOccurs='1' type='sedS102:ContestationRefusalCodeInformationDuplicateInvoiceType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>27684264-9DEF-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ContestationRefusalCodeInfoOtherType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>1F684264-9DEF-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'contestationRefusalCodeInfoOther' minOccurs='0' maxOccurs='1' type='CC:EESSILongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>23684264-9DEF-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ContestationRefusalCodeType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>EBECCCD8-3CD3-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'contestationRefusalCode' minOccurs='1' maxOccurs='1' type='sedS102:ContestationRefusalCodeCOCIMOType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>ECECCCD8-3CD3-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name = 'ConditionalContestationRefusalDate' minOccurs='0' maxOccurs='1' type='sedS102:ContestationRefusalCodeInfoDateType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>82F63D93-3ED3-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'ConditionalContestationRefusalDuplicateInvoice' minOccurs='0' maxOccurs='1' type='sedS102:DuplicatedInvoiceRefusalCodeType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>1E15773D-40D3-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'ConditionalOtherContestationRefusal' minOccurs='0' maxOccurs='1' type='sedS102:ContestationRefusalCodeInfoOtherType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>1F15773D-40D3-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualMonthsInventoryContestationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>DF9B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IDCreditorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>0A1A9469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IDDebtorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>0F1A9469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'References' minOccurs='1' maxOccurs='1' type='sedS102:ReferencesType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>0D1A9469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PersonReceivingBenefits' minOccurs='1' maxOccurs='1' type='CC:EESSIPersonInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>091A9469-849F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'ContestationRefusalCode' minOccurs='1' maxOccurs='1' type='sedS102:ContestationRefusalCodeType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>EDECCCD8-3CD3-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'numberMonthsContested' minOccurs='1' maxOccurs='1' type='xsd:int'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>21684264-9DEF-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualMonthsInventoryContestationsType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>E19B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IndividualCOCIMO' minOccurs='1' maxOccurs='unbounded' type='sedS102:IndividualMonthsInventoryContestationType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>FE9B4596-7C9F-E611-80D1-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='S102'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>5AFCF16B-45DF-E511-80BF-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED S102</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'GlobalNoteCOCIMO' minOccurs='1' maxOccurs='1' type='sedS102:GlobalNoteMonthsInventoryContestationType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>08334300-9818-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IndividualCOCIMOs' minOccurs='1' maxOccurs='1' type='sedS102:IndividualMonthsInventoryContestationsType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>09334300-9818-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="S102individualIMONumberCreditorLiaisonBodyUniqueConstraint1">
+					<xsd:selector xpath="IndividualCOCIMO/References"/>
+					<xsd:field xpath="individualIMONumberCreditorLiaisonBody"/>
+				</xsd:unique>
+				<xsd:unique name="S102individualCOCIMONumberDebtorLiaisonBodyUniqueConstraint2">
+					<xsd:selector xpath="IndividualCOCIMO/References"/>
+					<xsd:field xpath="individualCOCIMONumberDebtorLiaisonBody"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='S102' type='sedS102:S102'>
+		<xsd:key name = 'sedS102keyname1'>
+			<xsd:selector xpath = 'GlobalNoteCOCIMO' />
+			<xsd:field xpath = 'globalIMOReferenceCreditorLiaisonBody' />
+		</xsd:key>
+		<xsd:key name = 'sedS102keyname2'>
+			<xsd:selector xpath = 'GlobalNoteCOCIMO' />
+			<xsd:field xpath = 'globalCOCIMOReferenceDebtorLiaisonBody' />
+		</xsd:key>
+		<xsd:keyref name = 'sedS102keyrefname1' refer='sedS102:sedS102keyname1'>
+			<xsd:selector xpath = 'IndividualCOCIMOs/IndividualCOCIMO/References' />
+			<xsd:field xpath = 'globalIMOReferenceCreditorLiaisonBody' />
+		</xsd:keyref>
+		<xsd:keyref name = 'sedS102keyrefname2' refer='sedS102:sedS102keyname2'>
+			<xsd:selector xpath = 'IndividualCOCIMOs/IndividualCOCIMO/References' />
+			<xsd:field xpath = 'globalCOCIMOReferenceDebtorLiaisonBody' />
+		</xsd:keyref>
+	</xsd:element>
+</xsd:schema>

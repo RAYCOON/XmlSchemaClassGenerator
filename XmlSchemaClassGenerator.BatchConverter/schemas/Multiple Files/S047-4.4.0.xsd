@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedS047="http://ec.europa.eu/eessi/ns/4_4/S047" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/S047" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='InformationTypeS047MultipleType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>7A13BDF0-A9DC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>90E7D81B-AADC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>The last day for which the person concerned receives cash benefits in respect of incapacity for work</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>A5131723-AADC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Crucial information or any other additional information</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='unbounded'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='LastDayReceivedCashBenefitsType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3D492A3C-ADDC-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'lastDayPersonReceivesCashBenefitsForWorkIncapacity' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>40492A3C-ADDC-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='WeInformAboutType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>41343C49-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'typeInformation' minOccurs='0' maxOccurs='1' type='sedS047:InformationTypeS047MultipleType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>3F492A3C-ADDC-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="sedS047UniqueConstraint1">
+					<xsd:selector xpath="value"/>
+					<xsd:field xpath="."/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name = 'FillInIfTypeInformationTheLastDay' minOccurs='0' maxOccurs='1' type='sedS047:LastDayReceivedCashBenefitsType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>42492A3C-ADDC-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'FillInIfTypeInformationOther' minOccurs='0' maxOccurs='1' type='SSec:SOtherCrucialInformationType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>43492A3C-ADDC-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='S047'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>33FCF16B-45DF-E511-80BF-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED S047</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'Person' minOccurs='1' maxOccurs='1' type='SSec:SPersonFullInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>83F145D4-9618-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PersonAddress' minOccurs='0' maxOccurs='1' type='CC:EESSIAddressWorldType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>82F145D4-9618-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'WeInformAbout' minOccurs='1' maxOccurs='1' type='sedS047:WeInformAboutType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>81F145D4-9618-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='S047' type='sedS047:S047' />
+</xsd:schema>

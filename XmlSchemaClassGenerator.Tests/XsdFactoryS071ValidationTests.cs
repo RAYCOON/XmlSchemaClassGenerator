@@ -8,7 +8,7 @@ namespace XmlSchemaClassGenerator.Tests
 {
     public class XsdFactoryS071ValidationTests
     {
-        private const string S071SchemaPath = "xsd/eessi/S071-4.4.xsd";
+        private const string S071SchemaPath = "xsd/eessi/S071-4.4.0-20241203T114131.xsd";
         private const string XAdESSchemaPath = "xsd/eessi/XAdES.xsd";
         private const string XmlDSigSchemaPath = "xsd/eessi/xmldsig-core-schema.xsd";
 

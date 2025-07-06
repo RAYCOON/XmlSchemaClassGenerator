@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedS053A="http://ec.europa.eu/eessi/ns/4_4/S053A" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/S053A" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='GlobalNoteACKRROType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B88496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalRROReferenceLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C48496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalACPRROReferenceLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C58496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberAcceptedIndividualRRO' minOccurs='1' maxOccurs='1' type='CC:EESSICRIndividualClaimsCountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C68496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'TotalAmountIndividualOverpayments' minOccurs='1' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>DF8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateSubmission' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C78496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ReferencesType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B58496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalRROReferenceLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C88496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalACPRROReferenceLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C98496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualRRONumberLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CA8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualACPRRONumberLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CB8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualACKRROType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B48496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IDCreditorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CF8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IDDebtorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>DB8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'References' minOccurs='1' maxOccurs='1' type='sedS053A:ReferencesType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>DC8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PersonReceivingBenefits' minOccurs='1' maxOccurs='1' type='CC:EESSIPersonInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>E18496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'RefundPeriod' minOccurs='1' maxOccurs='1' type='CC:EESSIPeriodType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>D48496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'numberMonths' minOccurs='0' maxOccurs='1' type='xsd:int'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>4D540CBF-5EB2-EB11-80E7-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'RefundAmount' minOccurs='1' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>D58496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualACKRROsType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B28496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IndividualACPRRO' minOccurs='1' maxOccurs='unbounded' type='sedS053A:IndividualACKRROType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>DA8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='S053A'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>BFB53B2F-4CC5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED S053A</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'GlobalNoteACPRRO' minOccurs='1' maxOccurs='1' type='sedS053A:GlobalNoteACKRROType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>DD8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IndividualACPRROs' minOccurs='1' maxOccurs='1' type='sedS053A:IndividualACKRROsType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>CD8496B3-5AC5-E711-80DB-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="S053AindividualRRONumberLiaisonBodyUniqueConstraint1">
+					<xsd:selector xpath="IndividualACPRRO/References"/>
+					<xsd:field xpath="individualRRONumberLiaisonBody"/>
+				</xsd:unique>
+				<xsd:unique name="S053AindividualACPRRONumberLiaisonBodyUniqueConstraint2">
+					<xsd:selector xpath="IndividualACPRRO/References"/>
+					<xsd:field xpath="individualACPRRONumberLiaisonBody"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='S053A' type='sedS053A:S053A'>
+		<xsd:key name = 'sedS053Akeyname1'>
+			<xsd:selector xpath = 'GlobalNoteACPRRO' />
+			<xsd:field xpath = 'globalRROReferenceLiaisonBody' />
+		</xsd:key>
+		<xsd:key name = 'sedS053Akeyname2'>
+			<xsd:selector xpath = 'GlobalNoteACPRRO' />
+			<xsd:field xpath = 'globalACPRROReferenceLiaisonBody' />
+		</xsd:key>
+		<xsd:keyref name = 'sedS053Akeyrefname1' refer='sedS053A:sedS053Akeyname1'>
+			<xsd:selector xpath = 'IndividualACPRROs/IndividualACPRRO/References' />
+			<xsd:field xpath = 'globalRROReferenceLiaisonBody' />
+		</xsd:keyref>
+		<xsd:keyref name = 'sedS053Akeyrefname2' refer='sedS053A:sedS053Akeyname2'>
+			<xsd:selector xpath = 'IndividualACPRROs/IndividualACPRRO/References' />
+			<xsd:field xpath = 'globalACPRROReferenceLiaisonBody' />
+		</xsd:keyref>
+	</xsd:element>
+</xsd:schema>

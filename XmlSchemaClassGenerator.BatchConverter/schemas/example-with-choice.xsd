@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://example.com/payment" 
+           xmlns:tns="http://example.com/payment"
+           elementFormDefault="qualified">
+
+    <xs:element name="Payment" type="tns:PaymentType"/>
+
+    <xs:complexType name="PaymentType">
+        <xs:sequence>
+            <xs:element name="PaymentId" type="xs:string"/>
+            <xs:element name="Amount" type="xs:decimal"/>
+            <xs:element name="Currency" type="xs:string" default="USD"/>
+            <xs:element name="PaymentDate" type="xs:dateTime"/>
+            <xs:choice>
+                <xs:element name="CreditCard" type="tns:CreditCardType"/>
+                <xs:element name="BankTransfer" type="tns:BankTransferType"/>
+                <xs:element name="PayPal" type="tns:PayPalType"/>
+                <xs:element name="Cryptocurrency" type="tns:CryptocurrencyType"/>
+            </xs:choice>
+            <xs:element name="Status" type="tns:PaymentStatusType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CreditCardType">
+        <xs:sequence>
+            <xs:element name="CardNumber" type="xs:string"/>
+            <xs:element name="CardHolderName" type="xs:string"/>
+            <xs:element name="ExpiryMonth" type="xs:int"/>
+            <xs:element name="ExpiryYear" type="xs:int"/>
+            <xs:element name="CVV" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BankTransferType">
+        <xs:sequence>
+            <xs:element name="BankName" type="xs:string"/>
+            <xs:element name="AccountNumber" type="xs:string"/>
+            <xs:element name="RoutingNumber" type="xs:string"/>
+            <xs:element name="SwiftCode" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PayPalType">
+        <xs:sequence>
+            <xs:element name="PayPalEmail" type="xs:string"/>
+            <xs:element name="TransactionId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CryptocurrencyType">
+        <xs:sequence>
+            <xs:element name="CryptoType" type="xs:string"/>
+            <xs:element name="WalletAddress" type="xs:string"/>
+            <xs:element name="TransactionHash" type="xs:string"/>
+            <xs:element name="NetworkFee" type="xs:decimal" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="PaymentStatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Pending"/>
+            <xs:enumeration value="Authorized"/>
+            <xs:enumeration value="Captured"/>
+            <xs:enumeration value="Failed"/>
+            <xs:enumeration value="Refunded"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Example with nested choice -->
+    <xs:complexType name="ShippingMethodType">
+        <xs:sequence>
+            <xs:element name="TrackingNumber" type="xs:string" minOccurs="0"/>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="StandardShipping" type="tns:StandardShippingType"/>
+                </xs:sequence>
+                <xs:sequence>
+                    <xs:element name="ExpressShipping" type="tns:ExpressShippingType"/>
+                </xs:sequence>
+                <xs:choice>
+                    <xs:element name="OvernightShipping" type="tns:OvernightShippingType"/>
+                    <xs:element name="SameDayDelivery" type="tns:SameDayDeliveryType"/>
+                </xs:choice>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StandardShippingType">
+        <xs:sequence>
+            <xs:element name="EstimatedDays" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ExpressShippingType">
+        <xs:sequence>
+            <xs:element name="EstimatedHours" type="xs:int"/>
+            <xs:element name="Carrier" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OvernightShippingType">
+        <xs:sequence>
+            <xs:element name="DeliveryByTime" type="xs:time"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SameDayDeliveryType">
+        <xs:sequence>
+            <xs:element name="TimeSlot" type="xs:string"/>
+            <xs:element name="CourierName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

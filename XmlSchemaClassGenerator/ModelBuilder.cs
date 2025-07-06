@@ -927,16 +927,36 @@ public class ModelBuilder
         {
             PropertyModel property = null;
 
+            // Debug output for PurposeSEDType
+            if (owningTypeModel.Name == "PurposeSEDType")
+            {
+                if (item.XmlParticle is XmlSchemaElement elem)
+                {
+                    Console.WriteLine($"[DEBUG] PurposeSEDType element: {elem.Name}, XmlParent type: {item.XmlParent?.GetType().Name ?? "null"}");
+                    Console.WriteLine($"[DEBUG] Is parent a choice? {item.XmlParent is XmlSchemaChoice}");
+                }
+                Console.WriteLine($"[DEBUG] GenerateChoiceItemProperty: {_configuration.GenerateChoiceItemProperty}");
+            }
+
             // Handle Choice elements when GenerateChoiceItemProperty is enabled
             if (_configuration.GenerateChoiceItemProperty && 
                 item.XmlParent is XmlSchemaChoice choice && 
                 !processedChoices.Contains(choice))
             {
                 var choiceItems = items.Where(i => i.XmlParent == choice).ToList();
+                if (owningTypeModel.Name == "PurposeSEDType")
+                {
+                    Console.WriteLine($"[DEBUG] Found choice, items count: {choiceItems.Count}");
+                    Console.WriteLine($"[DEBUG] processedChoices contains choice: {processedChoices.Contains(choice)}");
+                }
                 if (choiceItems.Count > 0)
                 {
                     processedChoices.Add(choice);
                     var choiceProperties = CreatePropertiesForChoice(source, owningTypeModel, choice, choiceItems, order);
+                    if (owningTypeModel.Name == "PurposeSEDType")
+                    {
+                        Console.WriteLine($"[DEBUG] CreatePropertiesForChoice returned {choiceProperties.Count()} properties");
+                    }
                     properties.AddRange(choiceProperties);
                     
                     // Update order if needed
@@ -946,6 +966,14 @@ public class ModelBuilder
                     // Skip processing these items individually
                     continue;
                 }
+            }
+            
+            // Skip items that belong to already-processed choices
+            if (_configuration.GenerateChoiceItemProperty && 
+                item.XmlParent is XmlSchemaChoice parentChoice && 
+                processedChoices.Contains(parentChoice))
+            {
+                continue;
             }
 
             switch (item.XmlParticle)
@@ -1123,6 +1151,11 @@ public class ModelBuilder
             case null:
                 yield break;
             case XmlSchemaElement element:
+                // Debug for PurposeSEDType elements
+                if (element.Name == "NotificationChangesInRelevantData" || element.Name == "InformationWorkingInTwoOrMoreMemberStates")
+                {
+                    Console.WriteLine($"[DEBUG] GetElements creating particle for {element.Name}, parent type: {parent?.GetType().Name}");
+                }
                 yield return new Particle(element, parent); break;
             case XmlSchemaAny any:
                 yield return new Particle(any, parent); break;
@@ -1165,6 +1198,11 @@ public class ModelBuilder
     private IEnumerable<PropertyModel> CreatePropertiesForChoice(Uri source, TypeModel owningTypeModel, XmlSchemaChoice choice, IList<Particle> choiceItems, int order)
     {
         var properties = new List<PropertyModel>();
+        
+        if (owningTypeModel.Name == "PurposeSEDType")
+        {
+            Console.WriteLine($"[DEBUG] CreatePropertiesForChoice called for PurposeSEDType");
+        }
         
         if (!(owningTypeModel is ClassModel classModel))
             return properties;

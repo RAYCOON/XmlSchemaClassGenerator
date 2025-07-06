@@ -273,7 +273,71 @@ Options:
                              force URI scheme when resolving URLs (default is
                                none; can be: none, same, or any defined value
                                for scheme, like https or http)
+      --dir, --directory=VALUE
+                             process all XSD files in the specified DIRECTORY
+      --rec, --recursive     search directories recursively
+      --res, --auto-resolve  automatically resolve and include imported/included
+                               schemas
+      --np, --namespace-pattern=VALUE
+                             pattern-based namespace mapping.
+                               Format: 'xml-pattern=cs-template' where patterns
+                               can include {id} or {0} placeholders.
+                               Example: 'http://example.com/{id}=MyApp.{id}'
+      --cfg, --config=FILE   read configuration from JSON FILE (basic settings
+                               only)
 </pre>
+
+### **Common Usage Examples**
+
+#### Directory Conversion
+```bash
+# Convert all XSD files in a directory
+xscgen --directory schemas/ --output generated/
+
+# Recursive directory search
+xscgen --directory schemas/ --recursive --output generated/
+
+# With namespace patterns
+xscgen --directory schemas/ \
+    --namespace-pattern "http://example.com/{id}=MyCompany.{id}" \
+    --generateChoiceItemProperty
+```
+
+#### Using Configuration Files
+Create a `config.json` file:
+```json
+{
+  "outputDirectory": "./generated",
+  "generateNullables": true,
+  "separateFiles": true,
+  "namespacePatterns": [
+    {
+      "xmlPattern": "http://example.com/{id}",
+      "cSharpTemplate": "MyCompany.{id}"
+    }
+  ],
+  "sourceDirectories": ["./schemas"]
+}
+```
+
+Then use it:
+```bash
+# Use configuration file
+xscgen --config config.json
+
+# Override config settings
+xscgen --config config.json --separateFiles --output custom-output/
+```
+
+#### EESSI Example
+```bash
+# Convert EESSI schemas with pattern-based namespaces
+xscgen --directory schemas/eessi \
+    --namespace-pattern "http://ec.europa.eu/eessi/ns/4_4/{id}=ITSG.EESSI.Tstelle.XML.SED.{id}.V4_4_1" \
+    --namespace "http://www.w3.org/2000/09/xmldsig#=ITSG.EESSI.Tstelle.XML.XmlDsig" \
+    --generateChoiceItemProperty \
+    --generateNullables
+```
 
 ### **Traditional Generator API (For Static Code Generation)**
 
@@ -451,14 +515,53 @@ public System.Nullable<int> Id
 Choice Elements<a name="choice"></a>
 ------------------------------------
 
-The support for choice elements differs from that [provided by xsd.exe](http://msdn.microsoft.com/en-us/library/sa6z5baz).
-Xsd.exe generates a property called `Item` of type `object` and, if not all choices have a distinct type, 
-another enum property that selects the chosen element.
-Besides being non-typesafe and non-intuitive, this approach breaks apart if the choices have a more complicated structure (e.g. sequences),
-resulting in possibly schema-invalid XML.
+XmlSchemaClassGenerator offers two modes for handling XSD choice elements:
 
-XmlSchemaClassGenerator currently simply pretends choices are sequences.
+### Default Mode (Choices as Sequences)
+By default, XmlSchemaClassGenerator treats choices as sequences, generating separate properties for each choice option.
 This means you'll have to take care only to set a schema-valid combination of these properties to non-null values.
+
+### xsd.exe Compatible Mode
+When using the `--generateChoiceItemProperty` (`-gi`) option, XmlSchemaClassGenerator generates choice elements similar to [xsd.exe](http://msdn.microsoft.com/en-us/library/sa6z5baz):
+
+```bash
+xscgen -gi schema.xsd
+```
+
+This generates:
+- A property called `Item` of type `object` containing the choice value
+- An enum property `ItemElementName` that identifies which choice element is selected
+- An enum type with values for each choice option
+
+**Example XSD:**
+```xml
+<xs:complexType name="ContactType">
+  <xs:choice>
+    <xs:element name="Email" type="xs:string"/>
+    <xs:element name="Phone" type="xs:string"/>
+  </xs:choice>
+</xs:complexType>
+```
+
+**Generated C# (with `-gi`):**
+```csharp
+public partial class ContactType
+{
+    public enum ContactTypeItemChoiceType
+    {
+        Email,
+        Phone,
+    }
+    
+    [XmlChoiceIdentifier("ItemElementName")]
+    public object Item { get; set; }
+    
+    [XmlIgnore]
+    public ContactTypeItemChoiceType ItemElementName { get; set; }
+}
+```
+
+This approach provides better type safety at runtime as you can check the `ItemElementName` property to determine which choice was selected.
 
 Interfaces<a name="interfaces"></a>
 -----------------------------------

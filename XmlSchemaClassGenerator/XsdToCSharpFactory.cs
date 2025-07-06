@@ -187,6 +187,89 @@ namespace XmlSchemaClassGenerator
         }
 
         /// <summary>
+        /// Creates an instance of a specific type
+        /// </summary>
+        public object CreateInstance(Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            return Activator.CreateInstance(type);
+        }
+
+        /// <summary>
+        /// Serializes an object to XML string
+        /// </summary>
+        public string SerializeToXml(object instance)
+        {
+            if (instance == null)
+                throw new ArgumentNullException(nameof(instance));
+
+            var serializer = new XmlSerializer(instance.GetType());
+            var namespaces = new XmlSerializerNamespaces();
+            
+            // Add common namespaces
+            namespaces.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            namespaces.Add("xsd", "http://www.w3.org/2001/XMLSchema");
+            
+            // Add namespaces from type attributes
+            var type = instance.GetType();
+            var xmlTypeAttr = type.GetCustomAttribute<XmlTypeAttribute>();
+            var xmlRootAttr = type.GetCustomAttribute<XmlRootAttribute>();
+            
+            if (xmlRootAttr?.Namespace != null)
+            {
+                var prefix = GetPrefixFromNamespace(xmlRootAttr.Namespace);
+                if (!string.IsNullOrEmpty(prefix))
+                {
+                    namespaces.Add(prefix, xmlRootAttr.Namespace);
+                }
+            }
+
+            using (var stringWriter = new StringWriter())
+            using (var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings 
+            { 
+                Indent = true, 
+                IndentChars = "  " 
+            }))
+            {
+                serializer.Serialize(xmlWriter, instance, namespaces);
+                return stringWriter.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML string to an object of the specified type
+        /// </summary>
+        public object DeserializeFromXml(string xml, Type type)
+        {
+            if (string.IsNullOrWhiteSpace(xml))
+                throw new ArgumentException("XML cannot be empty", nameof(xml));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            var serializer = new XmlSerializer(type);
+            using (var stringReader = new StringReader(xml))
+            {
+                return serializer.Deserialize(stringReader);
+            }
+        }
+
+        private string GetPrefixFromNamespace(string ns)
+        {
+            // Common namespace prefix mappings
+            return ns switch
+            {
+                var n when n.Contains("/S071") => "s071",
+                var n when n.Contains("/CC") => "cc",
+                var n when n.Contains("/SSec") => "ssec",
+                var n when n.Contains("xmldsig") => "ds",
+                var n when n.Contains("xades") => "xades",
+                _ => ""
+            };
+        }
+
+        /// <summary>
         /// Compile XSD files to assembly using the proven Roslyn approach from Compiler class
         /// </summary>
         private Assembly CompileToAssembly(string assemblyName)
@@ -480,6 +563,40 @@ namespace XmlSchemaClassGenerator
             }
 
             return requiredPaths;
+        }
+
+        /// <summary>
+        /// Gets property paths for business-level required fields, excluding structural elements like enum values and signatures.
+        /// This provides a more meaningful list of required fields for EESSI and similar schemas.
+        /// </summary>
+        /// <returns>List of business-level required property paths</returns>
+        public List<string> GetBusinessRequiredPropertyPaths()
+        {
+            var allRequiredPaths = GetRequiredPropertyPaths();
+            
+            // Filter out structural fields
+            return allRequiredPaths
+                .Where(path => !IsStructuralField(path))
+                .ToList();
+        }
+
+        private bool IsStructuralField(string path)
+        {
+            // Filter out enum value fields (common pattern in EESSI schemas)
+            if (path.EndsWith(".Value", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            // Filter out digital signature fields
+            if (path.Contains("Signature", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            // Filter out XML schema metadata fields
+            if (path.Contains("Algorithm", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            // Additional patterns can be added here based on schema conventions
+            
+            return false;
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace XmlSchemaClassGenerator.Tests
         public void EessiNavigatorSuperTest_DeepPropertyManipulation_ShouldNavigateAndSetProperties()
         {
             // Arrange - Setup XsdToCSharpFactory and generate assembly 
-            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.xsd");
+            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.0-20241203T114131.xsd");
             
             // Include all EESSI XSD files for complete type generation
             var eessiDir = Path.GetDirectoryName(xsdPath);
@@ -263,7 +263,7 @@ namespace XmlSchemaClassGenerator.Tests
         public void EessiNavigatorSuperTest_TypeHierarchyExploration_ShouldDiscoverInheritance()
         {
             // Arrange
-            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.xsd");
+            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.0-20241203T114131.xsd");
             
             // Include all EESSI XSD files for complete type generation
             var eessiDir = Path.GetDirectoryName(xsdPath);

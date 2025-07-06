@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedS018="http://ec.europa.eu/eessi/ns/4_4/S018" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/S018" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='StatusFamilyMemberType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>BB8020FE-C53B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'InsuredPerson' minOccurs='0' maxOccurs='1' type='CC:EESSIPersonType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C18020FE-C53B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='OriginalDataType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>296F805F-A3DD-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'document' minOccurs='1' maxOccurs='1' type='SSec:SEntitlementDocumentsType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>2A6F805F-A3DD-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'issuedOn' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>2B6F805F-A3DD-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PeriodEntitlementDocument' minOccurs='1' maxOccurs='1' type='CC:EESSIOngoingPeriodType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>2C6F805F-A3DD-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='CancelRegistrationReasonType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>E4475D43-BD3B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>73F0C957-BD3B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>01</value>
+						<definition>Insured in our Member State since</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>1EBF875F-BD3B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>02</value>
+						<definition>Insured in another Member State since</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>A8EECE65-BD3B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>03</value>
+						<definition>No longer resides in our Member State since</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>19872A6E-BD3B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>05</value>
+						<definition>Died on</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>880F9074-BD3B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>06</value>
+						<definition>Status of the person has changed</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>5885B8D5-24BE-EB11-80E7-000D3A22E8CD</ccts:UniqueID>
+						<value>07</value>
+						<definition>Change of institution within our Member State. You will shortly receive a new SED S073 indicating the ID of the institution of the country of residence.</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>AE3F047B-BD3B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+						<value>99</value>
+						<definition>Other reason</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|03|05|06|07|99){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ISOCodeInsuranceDateType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>F3460889-C93B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'iSOCodeCountryInsurance' minOccurs='0' maxOccurs='1' type='CC:EESSIEUEFTACountryType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F4460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'date' minOccurs='0' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F5460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='CancellationWithEndDateType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>F2460889-C93B-E711-80D5-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'endDateRegistration' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F6460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'reason' minOccurs='1' maxOccurs='1' type='sedS018:CancelRegistrationReasonType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F7460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name = 'PleaseFillInIfReasonInsuredInOurMemberState' minOccurs='0' maxOccurs='1' type='SSec:SDateType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>F9460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'PleaseFillInFollowingIfReasonDiedOn' minOccurs='0' maxOccurs='1' type='SSec:SDiedOnType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>FB460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'PleaseFillInIfReasonInsuredInAnotherMemberState' minOccurs='0' maxOccurs='1' type='sedS018:ISOCodeInsuranceDateType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>F8460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'PleaseFillInFollowingIfReasonOtherReason' minOccurs='0' maxOccurs='1' type='SSec:SOtherReasonLongType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>FA460889-C93B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='CancellationRegistrationInFullReasonType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>396F83A1-3F34-4A34-B7B4-444EC4CE2880</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>E63169C1-FA1D-4064-8A4C-A78689CD5A37</ccts:UniqueID>
+						<value>01</value>
+						<definition>The entitlement was registered  by mistake</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>535298E6-A907-4A94-9456-8318A506B3D8</ccts:UniqueID>
+						<value>02</value>
+						<definition>The person has not resided in our MS</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>A0F68D16-A239-4214-8E9F-6B4D97772A40</ccts:UniqueID>
+						<value>99</value>
+						<definition>Other</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(01|02|99){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='CancellationInFullType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>0AAD8FFE-1CE3-48E1-A5AA-4FCF67C614EC</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'reason' minOccurs='1' maxOccurs='1' type='sedS018:CancellationRegistrationInFullReasonType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>397448E9-A39F-4B51-BEC1-E4B66F3C4ADD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PleaseFillInIfReasonOther' minOccurs='0' maxOccurs='1' type='SSec:SOtherReasonLongType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>6C15DB8B-0B57-4561-8AFE-73824BEA3F86</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='CancellationRegistrationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>9FA0F387-5337-4D5C-BEC6-FCE2B7920863</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name = 'WithEndDate' minOccurs='1' maxOccurs='1' type='sedS018:CancellationWithEndDateType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>7A430E4A-EFC7-40E0-8615-E01CC9E7498F</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name = 'InFull' minOccurs='1' maxOccurs='1' type='sedS018:CancellationInFullType'>
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">
+							<ccts:DictionaryEntryName>3033DEFE-2C8D-4B0C-9C83-6CAECB25221C</ccts:DictionaryEntryName>
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='S018'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>21FCF16B-45DF-E511-80BF-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED S018</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'Person' minOccurs='1' maxOccurs='1' type='SSec:SPersonFullInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>4EAC3D7F-9518-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PersonAddress' minOccurs='0' maxOccurs='1' type='SSec:SPersonAddressType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>F9D17F85-9518-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PleaseFillInIfThisDocumentConcernsFamilyMember' minOccurs='0' maxOccurs='1' type='sedS018:StatusFamilyMemberType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>C28020FE-C53B-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'InformationConcerningEntitlementDocument' minOccurs='1' maxOccurs='1' type='sedS018:OriginalDataType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B44AC1A4-9518-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'Cancellation' minOccurs='1' maxOccurs='1' type='sedS018:CancellationRegistrationType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>ECED71F5-8A3C-E711-80D5-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='S018' type='sedS018:S018' />
+</xsd:schema>

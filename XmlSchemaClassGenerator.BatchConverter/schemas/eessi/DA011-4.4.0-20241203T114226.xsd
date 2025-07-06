@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedDA011="http://ec.europa.eu/eessi/ns/4_4/DA011" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/DA011" version="4.4.0">
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:simpleType name='EESSICRUniqueidentifierType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B459AD82-70E5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>EESSI.CC.BDT</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base='xsd:string'>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name='EESSICRIndividualClaimsCountType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>AB59AD82-70E5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>EESSI.CC.BDT</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base='xsd:int'>
+				<xsd:minInclusive value='0' />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name='EESSIAmountType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B759AD82-70E5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>EESSI.CC.BDT</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base='xsd:double'>
+				<xsd:pattern value='(([1-9][0-9]{0,9})(\.\d{2,2})?|([0]{1})(\.\d{2,2})?)' />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name='EESSIEUEFTACurrencyType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>AF3712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>EESSI.CC.ENUM</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					<CodeListEntry>
+						<ccts:UniqueID>B03712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>EUR</value>
+						<definition>Euro</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B13712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>BGN</value>
+						<definition>Bulgarian Lev</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B23712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>CZK</value>
+						<definition>Czech Koruna</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B33712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>DKK</value>
+						<definition>Danish Krone</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B43712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>GBP</value>
+						<definition>British Pound</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B53712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>HRK</value>
+						<definition>Croatian Kuna</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B63712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>HUF</value>
+						<definition>Hungarian Forint</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B73712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>PLN</value>
+						<definition>Polish Zloty</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B83712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>RON</value>
+						<definition>Romanian New Leu</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>B93712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>SEK</value>
+						<definition>Swedish Krona</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>BA3712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>CHF</value>
+						<definition>Swiss Franc</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>BB3712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>ISK</value>
+						<definition>Icelandic Krona</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>BC3712C1-9EEA-E511-80C1-000D3A22E8CD</ccts:UniqueID>
+						<value>NOK</value>
+						<definition>Norwegian Krone</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>12090942-FAAC-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+						<value>LTL</value>
+						<definition>Lithuanian Litas</definition>
+					</CodeListEntry>
+					<CodeListEntry>
+						<ccts:UniqueID>13090942-FAAC-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+						<value>LVL</value>
+						<definition>Latvian Lats</definition>
+					</CodeListEntry>
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name='value' minOccurs='1' maxOccurs='1'>
+				<xsd:simpleType>
+					<xsd:restriction base='xsd:string'>
+						<xsd:pattern value='(EUR|BGN|CZK|DKK|GBP|HRK|HUF|PLN|RON|SEK|CHF|ISK|NOK|LTL|LVL){1}'/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='EESSIPaymentEUType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>98393937-9218-E611-80EA-000C292ED0D7</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>EESSI.CC.BIE</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'amount' minOccurs='1' maxOccurs='1' type='sedDA011:EESSIAmountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>2A3E7DCE-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'currency' minOccurs='1' maxOccurs='1' type='sedDA011:EESSIEUEFTACurrencyType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>2B3E7DCE-9218-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name='EESSIBusinessDateType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>B559AD82-70E5-E711-80DB-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>EESSI.CC.BDT</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base='xsd:date'>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name='GlobalNoteClaimAcknowledgementType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>44DFD03E-AD49-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalCLAReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='sedDA011:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>48DFD03E-AD49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalACKCLAReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='sedDA011:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>47DFD03E-AD49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberOfIndividualClaims' minOccurs='1' maxOccurs='1' type='sedDA011:EESSICRIndividualClaimsCountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>49DFD03E-AD49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'TotalAmountBenefits' minOccurs='1' maxOccurs='1' type='sedDA011:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>553FDFD0-AD49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateOfReceipt' minOccurs='1' maxOccurs='1' type='sedDA011:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>45DFD03E-AD49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateOfSubmission' minOccurs='1' maxOccurs='1' type='sedDA011:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>46DFD03E-AD49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='DA011'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>8CFCF16B-45DF-E511-80BF-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED DA011</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'GlobalNoteACKCLA' minOccurs='1' maxOccurs='1' type='sedDA011:GlobalNoteClaimAcknowledgementType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A1714185-9818-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='DA011' type='sedDA011:DA011' />
+</xsd:schema>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedS105="http://ec.europa.eu/eessi/ns/4_4/S105" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/S105" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='GlobalNoteMonthsInventoryCreditNoteType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>CEF70CDA-F5A1-E611-A960-00155D00FE00</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalIMOReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>16F80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCRNIMOReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>17F80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberCreditNotes' minOccurs='1' maxOccurs='1' type='CC:EESSICRIndividualClaimsCountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>18F80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberMonthsWithdrawn' minOccurs='1' maxOccurs='1' type='xsd:int'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>668861B7-57FE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateSubmission' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>1CF80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ReferencesType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>CFF70CDA-F5A1-E611-A960-00155D00FE00</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalIMOReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>21F80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCRNIMOReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>22F80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualIMONumberCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>23F80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualCRNIMONumberCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>24F80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualMonthsInventoryCreditNoteType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>CCF70CDA-F5A1-E611-A960-00155D00FE00</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IDCreditorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>EB0B2E21-E336-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IDDebtorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>E80B2E21-E336-E611-80C9-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'References' minOccurs='1' maxOccurs='1' type='sedS105:ReferencesType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5CF80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PersonReceivingBenefits' minOccurs='1' maxOccurs='1' type='CC:EESSIPersonInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5DF80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'numberMonthsWithdrawn' minOccurs='1' maxOccurs='1' type='xsd:int'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>1FF80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualMonthsInventoryCreditNotesType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>CDF70CDA-F5A1-E611-A960-00155D00FE00</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IndividualCRNIMO' minOccurs='1' maxOccurs='unbounded' type='sedS105:IndividualMonthsInventoryCreditNoteType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>5BF80CDA-F5A1-E611-A960-00155D00FE00</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='S105'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>5DFCF16B-45DF-E511-80BF-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED S105</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'GlobalNoteCRNIMO' minOccurs='1' maxOccurs='1' type='sedS105:GlobalNoteMonthsInventoryCreditNoteType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>35532613-9818-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IndividualCRNIMOs' minOccurs='1' maxOccurs='1' type='sedS105:IndividualMonthsInventoryCreditNotesType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>36532613-9818-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="S105individualIMONumberCreditorLiaisonBodyUniqueConstraint1">
+					<xsd:selector xpath="IndividualCRNIMO/References"/>
+					<xsd:field xpath="individualIMONumberCreditorLiaisonBody"/>
+				</xsd:unique>
+				<xsd:unique name="S105individualCRNIMONumberCreditorLiaisonBodyUniqueConstraint2">
+					<xsd:selector xpath="IndividualCRNIMO/References"/>
+					<xsd:field xpath="individualCRNIMONumberCreditorLiaisonBody"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='S105' type='sedS105:S105'>
+		<xsd:key name = 'sedS105keyname1'>
+			<xsd:selector xpath = 'GlobalNoteCRNIMO' />
+			<xsd:field xpath = 'globalIMOReferenceCreditorLiaisonBody' />
+		</xsd:key>
+		<xsd:key name = 'sedS105keyname2'>
+			<xsd:selector xpath = 'GlobalNoteCRNIMO' />
+			<xsd:field xpath = 'globalCRNIMOReferenceCreditorLiaisonBody' />
+		</xsd:key>
+		<xsd:keyref name = 'sedS105keyrefname1' refer='sedS105:sedS105keyname1'>
+			<xsd:selector xpath = 'IndividualCRNIMOs/IndividualCRNIMO/References' />
+			<xsd:field xpath = 'globalIMOReferenceCreditorLiaisonBody' />
+		</xsd:keyref>
+		<xsd:keyref name = 'sedS105keyrefname2' refer='sedS105:sedS105keyname2'>
+			<xsd:selector xpath = 'IndividualCRNIMOs/IndividualCRNIMO/References' />
+			<xsd:field xpath = 'globalCRNIMOReferenceCreditorLiaisonBody' />
+		</xsd:keyref>
+	</xsd:element>
+</xsd:schema>

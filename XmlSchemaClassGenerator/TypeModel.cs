@@ -458,6 +458,45 @@ public class ClassModel(GeneratorConfiguration configuration) : ReferenceTypeMod
 
         classDeclaration.BaseTypes.AddRange(Interfaces.Select(i => i.GetReferenceFor(Namespace)).ToArray());
 
+        // Generate constructor to initialize complex types if configured
+        if (Configuration.InitializeComplexTypesInConstructor)
+        {
+            // Check if a constructor already exists (from collection initialization)
+            var constructor = classDeclaration.Members.OfType<CodeConstructor>().FirstOrDefault();
+            var isNewConstructor = false;
+            
+            if (constructor == null)
+            {
+                constructor = new CodeConstructor
+                {
+                    Attributes = MemberAttributes.Public
+                };
+                isNewConstructor = true;
+            }
+
+            // Find all properties that are complex types (not simple types or collections)
+            foreach (var property in Properties)
+            {
+                if (property.Type is ClassModel && !property.IsCollection && !property.IsArray)
+                {
+                    var propertyReference = new CodePropertyReferenceExpression(
+                        new CodeThisReferenceExpression(), property.Name);
+                    
+                    var typeReference = property.Type.GetReferenceFor(Namespace);
+                    var newExpression = new CodeObjectCreateExpression(typeReference);
+                    
+                    // Initialize the property directly
+                    constructor.Statements.Add(new CodeAssignStatement(propertyReference, newExpression));
+                }
+            }
+
+            // Only add constructor if it's new and has statements
+            if (isNewConstructor && constructor.Statements.Count > 0)
+            {
+                classDeclaration.Members.Add(constructor);
+            }
+        }
+
         Configuration.TypeVisitor(classDeclaration, this);
         return classDeclaration;
     }

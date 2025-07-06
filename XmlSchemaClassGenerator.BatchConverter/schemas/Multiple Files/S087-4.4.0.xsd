@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sedS087="http://ec.europa.eu/eessi/ns/4_4/S087" xmlns:CC="http://ec.europa.eu/eessi/ns/4_4/CC"	xmlns:SSec="http://ec.europa.eu/eessi/ns/4_4/SSec" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" targetNamespace="http://ec.europa.eu/eessi/ns/4_4/S087" version="4.4.0">
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/SSec" schemaLocation="SSec-4.4.xsd"/>
+<xsd:import namespace="http://ec.europa.eu/eessi/ns/4_4/CC" schemaLocation="CC-4.4.xsd"/>
+	<xsd:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd" />
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xsd:complexType name='GlobalNoteCreditNoteClaimContestationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3BDC893A-9649-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalCLAReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>3DDC893A-9649-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCRNReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>3FDC893A-9649-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCOCCRNReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>3EDC893A-9649-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'totalNumberOfCreditNotesContestations' minOccurs='1' maxOccurs='1' type='CC:EESSICRIndividualClaimsCountType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>40DC893A-9649-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'TotalAmountCreditNotesContestations' minOccurs='1' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>43DC893A-9649-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'dateOfSubmission' minOccurs='1' maxOccurs='1' type='CC:EESSIBusinessDateType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>41DC893A-9649-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='ReferencesType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>4A2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'globalCLAReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>6A2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCRNReferenceCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>6B2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'globalCOCCRNReferenceDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>6C2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualCLANumberCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>542F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualCRNNumberCreditorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>6D2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'individualCOCCRNNumberDebtorLiaisonBody' minOccurs='1' maxOccurs='1' type='CC:EESSICRUniqueidentifierType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>6E2F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='CreditNoteContestationRefusalCodeOtherType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>422F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'creditNoteContestationRefusalCodeOther' minOccurs='0' maxOccurs='1' type='CC:EESSIVeryLongStringType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>502F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualCreditNoteClaimContestationType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>9B517022-9A49-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IDCreditorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A8517022-9A49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IDDebtorInstitution' minOccurs='1' maxOccurs='1' type='CC:EESSIInstitutionType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A4517022-9A49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'References' minOccurs='1' maxOccurs='1' type='sedS087:ReferencesType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>722F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PersonReceivingBenefits' minOccurs='1' maxOccurs='1' type='CC:EESSIPersonInfoType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A5517022-9A49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'creditNoteContestationRefusalCode' minOccurs='1' maxOccurs='1' type='CC:EESSIContestationCreditNoteRefusalCodeType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A2517022-9A49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'PleaseFillInIfCreditNoteContestation' minOccurs='0' maxOccurs='1' type='sedS087:CreditNoteContestationRefusalCodeOtherType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>732F6B80-A6EE-E611-80D3-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'AmountContestations' minOccurs='1' maxOccurs='1' type='CC:EESSIPaymentEUType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A7517022-9A49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='IndividualCreditNotesClaimsContestationsType'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>3CDC893A-9649-E611-80CA-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SEDSpecific</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>EESSI</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue></ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'IndividualCOCCRN' minOccurs='1' maxOccurs='unbounded' type='sedS087:IndividualCreditNoteClaimContestationType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>A3517022-9A49-E611-80CA-000D3A22E8CD</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name='S087'>
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				<ccts:UniqueID>52FCF16B-45DF-E511-80BF-000D3A22E8CD</ccts:UniqueID>
+				<ccts:ObjectClassQualifierTerm>SED</ccts:ObjectClassQualifierTerm>
+				<ccts:BusinessProcessContextValue>SED S087</ccts:BusinessProcessContextValue>
+				<ccts:OfficialConstraintContextValue>
+					
+				</ccts:OfficialConstraintContextValue>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name = 'GlobalNoteCOCCRN' minOccurs='1' maxOccurs='1' type='sedS087:GlobalNoteCreditNoteClaimContestationType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B8DAD002-9518-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name = 'IndividualCOCCRNs' minOccurs='1' maxOccurs='1' type='sedS087:IndividualCreditNotesClaimsContestationsType'>
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+						<ccts:DictionaryEntryName>B9DAD002-9518-E611-80EA-000C292ED0D7</ccts:DictionaryEntryName>
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="S087individualCLANumberCreditorLiaisonBodyUniqueConstraint1">
+					<xsd:selector xpath="IndividualCOCCRN/References"/>
+					<xsd:field xpath="individualCLANumberCreditorLiaisonBody"/>
+				</xsd:unique>
+				<xsd:unique name="S087individualCRNNumberCreditorLiaisonBodyUniqueConstraint2">
+					<xsd:selector xpath="IndividualCOCCRN/References"/>
+					<xsd:field xpath="individualCRNNumberCreditorLiaisonBody"/>
+				</xsd:unique>
+				<xsd:unique name="S087individualCOCCRNNumberDebtorLiaisonBodyUniqueConstraint3">
+					<xsd:selector xpath="IndividualCOCCRN/References"/>
+					<xsd:field xpath="individualCOCCRNNumberDebtorLiaisonBody"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element minOccurs="0" maxOccurs="1" ref="ds:Signature"/>
+		</xsd:sequence>
+		<xsd:attribute name='sedPackage' type='xsd:string' />
+		<xsd:attribute name='sedGVer' type='xsd:int' />
+		<xsd:attribute name='sedVer' type='xsd:int' />
+	</xsd:complexType>
+	<xsd:element name='S087' type='sedS087:S087'>
+		<xsd:key name = 'sedS087keyname1'>
+			<xsd:selector xpath = 'GlobalNoteCOCCRN' />
+			<xsd:field xpath = 'globalCLAReferenceCreditorLiaisonBody' />
+		</xsd:key>
+		<xsd:key name = 'sedS087keyname2'>
+			<xsd:selector xpath = 'GlobalNoteCOCCRN' />
+			<xsd:field xpath = 'globalCRNReferenceCreditorLiaisonBody' />
+		</xsd:key>
+		<xsd:key name = 'sedS087keyname3'>
+			<xsd:selector xpath = 'GlobalNoteCOCCRN' />
+			<xsd:field xpath = 'globalCOCCRNReferenceDebtorLiaisonBody' />
+		</xsd:key>
+		<xsd:keyref name = 'sedS087keyrefname1' refer='sedS087:sedS087keyname1'>
+			<xsd:selector xpath = 'IndividualCOCCRNs/IndividualCOCCRN/References' />
+			<xsd:field xpath = 'globalCLAReferenceCreditorLiaisonBody' />
+		</xsd:keyref>
+		<xsd:keyref name = 'sedS087keyrefname2' refer='sedS087:sedS087keyname2'>
+			<xsd:selector xpath = 'IndividualCOCCRNs/IndividualCOCCRN/References' />
+			<xsd:field xpath = 'globalCRNReferenceCreditorLiaisonBody' />
+		</xsd:keyref>
+		<xsd:keyref name = 'sedS087keyrefname3' refer='sedS087:sedS087keyname3'>
+			<xsd:selector xpath = 'IndividualCOCCRNs/IndividualCOCCRN/References' />
+			<xsd:field xpath = 'globalCOCCRNReferenceDebtorLiaisonBody' />
+		</xsd:keyref>
+	</xsd:element>
+</xsd:schema>

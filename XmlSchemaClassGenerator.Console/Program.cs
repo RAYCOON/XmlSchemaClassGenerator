@@ -12,8 +12,39 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Mono.Options;
 using Ganss.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace XmlSchemaClassGenerator.Console;
+
+public class SimpleConfiguration
+{
+    public string OutputDirectory { get; set; }
+    public bool? GenerateNullables { get; set; }
+    public bool? EnableDataBinding { get; set; }
+    public bool? GenerateInterfaces { get; set; }
+    public bool? UsePascalCase { get; set; }
+    public bool? SeparateFiles { get; set; }
+    public string CollectionType { get; set; }
+    public bool? GenerateChoiceItemProperty { get; set; }
+    public string NamespacePrefix { get; set; }
+    public List<NamespaceMapping> NamespaceMappings { get; set; }
+    public List<NamespacePatternMapping> NamespacePatterns { get; set; }
+    public List<string> SourceFiles { get; set; }
+    public List<string> SourceDirectories { get; set; }
+}
+
+public class NamespaceMapping
+{
+    public string XmlNamespace { get; set; }
+    public string CSharpNamespace { get; set; }
+}
+
+public class NamespacePatternMapping
+{
+    public string XmlPattern { get; set; }
+    public string CSharpTemplate { get; set; }
+}
 
 static class Program
 {
@@ -46,6 +77,7 @@ static class Program
         var generateDescriptionAttribute = true;
         var enableUpaCheck = true;
         var generateComplexTypesForCollections = true;
+        var initializeComplexTypes = false;
         var useShouldSerialize = false;
         var separateClasses = false;
         var separateSubstitutes = false;
@@ -66,10 +98,19 @@ static class Program
         var nameSubstituteFiles = new List<string>();
         var unionCommonType = false;
         var separateNamespaceHierarchy = false;
+        var generateChoiceItemProperty = false;
         var serializeEmptyCollections = false;
         var allowDtdParse = false;
         NamingScheme? namingScheme = null;
         var forceUriScheme = "none";
+        var useFilenameAsNamespace = false;
+        var namespaceTransforms = new List<KeyValuePair<string, string>>();
+        var directoryMode = false;
+        var directories = new List<string>();
+        var recursive = false;
+        var autoResolveImports = false;
+        var namespacePatterns = new List<KeyValuePair<string, string>>();
+        var configFile = (string)null;
 
 
         var options = new OptionSet {
@@ -148,6 +189,7 @@ with or without backing field initialization for collections
             { "nu|noUnderscore", "do not generate underscore in private member name (default is false)", v => doNotUseUnderscoreInPrivateMemberNames = v != null },
             { "da|description", "generate DescriptionAttribute (default is true)", v => generateDescriptionAttribute = v != null },
             { "cc|complexTypesForCollections", "generate complex types for collections (default is true)", v => generateComplexTypesForCollections = v != null },
+            { "ctor|initializeComplexTypes", "initialize complex type properties in class constructors (default is false)", v => initializeComplexTypes = v != null },
             { "s|useShouldSerialize", "use ShouldSerialize pattern instead of Specified pattern (default is false)", v => useShouldSerialize = v != null },
             { "sf|separateFiles", "generate a separate file for each class (default is false)", v => separateClasses = v != null },
             { "nh|namespaceHierarchy", "generate a separate folder for namespace hierarchy. Implies \"separateFiles\" if true (default is false)", v=> separateNamespaceHierarchy = v != null },
@@ -167,6 +209,20 @@ with or without backing field initialization for collections
             { "uc|unionCommonType", "generate a common type for unions if possible (default is false)", v => unionCommonType = v != null },
             { "ec|serializeEmptyCollections", "serialize empty collections (default is false)", v => serializeEmptyCollections = v != null },
             { "dtd|allowDtdParse", "allows dtd parse (default is false)", v => allowDtdParse = v != null },
+            { "gi|generateChoiceItemProperty", "generate Item property for choice elements (default is false)", v => generateChoiceItemProperty = v != null },
+            { "fn|useFilenameAsNamespace", "use filename as basis for namespace (default is false)", v => useFilenameAsNamespace = v != null },
+            { "ft|namespaceTransform=", @"regex transformation to apply to filename for namespace generation. 
+Format: 'pattern===replacement' (use === as separator). 
+Can be specified multiple times, applied in order.", v => {
+                if (!string.IsNullOrEmpty(v))
+                {
+                    var parts = v.Split(new[] { "===" }, StringSplitOptions.None);
+                    if (parts.Length == 2)
+                    {
+                        namespaceTransforms.Add(new KeyValuePair<string, string>(parts[0], parts[1]));
+                    }
+                }
+            }},
             { "ns|namingScheme=", @"use the specified naming scheme for class and property names (default is Pascal; can be: Direct, Pascal, Legacy)",
                 v =>
                 {
@@ -179,7 +235,23 @@ with or without backing field initialization for collections
                     };
                 }
             },
-            { "fu|forceUriScheme=", "force URI scheme when resolving URLs (default is none; can be: none, same, or any defined value for scheme, like https or http)", v => forceUriScheme = v }
+            { "fu|forceUriScheme=", "force URI scheme when resolving URLs (default is none; can be: none, same, or any defined value for scheme, like https or http)", v => forceUriScheme = v },
+            { "dir|directory=", "process all XSD files in the specified {DIRECTORY}", v => { directoryMode = true; directories.Add(v); } },
+            { "rec|recursive", "search directories recursively", v => recursive = v != null },
+            { "res|auto-resolve", "automatically resolve and include imported/included schemas", v => autoResolveImports = v != null },
+            { "np|namespace-pattern=", @"pattern-based namespace mapping. 
+Format: 'xml-pattern=cs-template' where patterns can include {id} or {0} placeholders.
+Example: 'http://example.com/{id}=MyApp.{id}'", v => {
+                if (!string.IsNullOrEmpty(v))
+                {
+                    var parts = v.Split('=');
+                    if (parts.Length == 2)
+                    {
+                        namespacePatterns.Add(new KeyValuePair<string, string>(parts[0], parts[1]));
+                    }
+                }
+            }},
+            { "cfg|config=", "read configuration from JSON {FILE} (basic settings only)", v => configFile = v }
         };
 
         var globsAndUris = options.Parse(args);
@@ -190,28 +262,144 @@ with or without backing field initialization for collections
             return 0;
         }
 
-        var uris = new List<string>();
-        foreach (var globOrUri in globsAndUris)
+        // Load configuration from file if specified
+        if (!string.IsNullOrEmpty(configFile))
         {
-            if (Uri.IsWellFormedUriString(globOrUri, UriKind.Absolute))
+            try
             {
-                uris.Add(globOrUri);
-                continue;
+                var jsonString = File.ReadAllText(configFile);
+                var config = JsonSerializer.Deserialize<SimpleConfiguration>(jsonString, new JsonSerializerOptions 
+                { 
+                    PropertyNameCaseInsensitive = true 
+                });
+
+                // Apply configuration values (command line arguments take precedence)
+                if (config != null)
+                {
+                    if (!string.IsNullOrEmpty(config.OutputDirectory) && outputFolder == null)
+                        outputFolder = config.OutputDirectory;
+                    
+                    if (config.GenerateNullables.HasValue && !nullables)
+                        nullables = config.GenerateNullables.Value;
+                    
+                    if (config.EnableDataBinding.HasValue && !enableDataBinding)
+                        enableDataBinding = config.EnableDataBinding.Value;
+                    
+                    if (config.GenerateInterfaces.HasValue && interfaces)
+                        interfaces = config.GenerateInterfaces.Value;
+                    
+                    if (config.UsePascalCase.HasValue && pascal)
+                        pascal = config.UsePascalCase.Value;
+                    
+                    if (config.SeparateFiles.HasValue && !separateClasses)
+                        separateClasses = config.SeparateFiles.Value;
+                    
+                    if (config.GenerateChoiceItemProperty.HasValue && !generateChoiceItemProperty)
+                        generateChoiceItemProperty = config.GenerateChoiceItemProperty.Value;
+                    
+                    if (!string.IsNullOrEmpty(config.NamespacePrefix) && string.IsNullOrEmpty(namespacePrefix))
+                        namespacePrefix = config.NamespacePrefix;
+                    
+                    if (!string.IsNullOrEmpty(config.CollectionType) && collectionType == typeof(Collection<>))
+                        collectionType = Type.GetType(config.CollectionType) ?? typeof(Collection<>);
+                    
+                    // Add namespace mappings from config
+                    if (config.NamespaceMappings != null)
+                    {
+                        foreach (var mapping in config.NamespaceMappings)
+                        {
+                            namespaces.Add($"{mapping.XmlNamespace}={mapping.CSharpNamespace}");
+                        }
+                    }
+                    
+                    // Add namespace patterns from config
+                    if (config.NamespacePatterns != null)
+                    {
+                        foreach (var pattern in config.NamespacePatterns)
+                        {
+                            namespacePatterns.Add(new KeyValuePair<string, string>(pattern.XmlPattern, pattern.CSharpTemplate));
+                        }
+                    }
+
+                    // Add source directories from config
+                    if (config.SourceDirectories != null && config.SourceDirectories.Count > 0)
+                    {
+                        directoryMode = true;
+                        directories.AddRange(config.SourceDirectories);
+                    }
+                    
+                    // Add source files from config
+                    if (config.SourceFiles != null)
+                    {
+                        globsAndUris.AddRange(config.SourceFiles);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"Error reading configuration file '{configFile}': {ex.Message}");
+                return 1;
+            }
+        }
+
+        var uris = new List<string>();
+        
+        // Handle directory mode
+        if (directoryMode)
+        {
+            var resolver = new SchemaResolver
+            {
+                Recursive = recursive,
+                AutoResolveImports = autoResolveImports,
+                Log = verbose ? s => System.Console.WriteLine(s) : null
+            };
+
+            foreach (var dir in directories)
+            {
+                resolver.AddSearchDirectory(dir);
             }
 
-            var expandedGlob = Glob.ExpandNames(globOrUri).ToList();
-            if (expandedGlob.Count == 0)
+            var schemaFiles = resolver.FindSchemaFiles();
+            
+            if (autoResolveImports)
             {
-                System.Console.WriteLine($"No files found for '{globOrUri}'");
-                Environment.Exit((int)ExitCodes.FileNotFound);
+                // Resolve all dependencies
+                schemaFiles = resolver.ResolveSchemas(schemaFiles);
             }
 
-            uris.AddRange(expandedGlob);
+            uris.AddRange(schemaFiles);
+            
+            if (verbose)
+            {
+                System.Console.WriteLine($"Found {uris.Count} schema files to process");
+            }
+        }
+        else
+        {
+            // Original glob/uri handling
+            foreach (var globOrUri in globsAndUris)
+            {
+                if (Uri.IsWellFormedUriString(globOrUri, UriKind.Absolute))
+                {
+                    uris.Add(globOrUri);
+                    continue;
+                }
+
+                var expandedGlob = Glob.ExpandNames(globOrUri).ToList();
+                if (expandedGlob.Count == 0)
+                {
+                    System.Console.WriteLine($"No files found for '{globOrUri}'");
+                    Environment.Exit((int)ExitCodes.FileNotFound);
+                }
+
+                uris.AddRange(expandedGlob);
+            }
         }
 
         ParseNamespaceFiles(namespaces, namespaceFiles);
 
-        var namespaceMap = namespaces.Select(n => CodeUtilities.ParseNamespace(n, namespacePrefix)).ToNamespaceProvider(key =>
+        // Create base namespace provider
+        var baseNamespaceProvider = namespaces.Select(n => CodeUtilities.ParseNamespace(n, namespacePrefix)).ToNamespaceProvider(key =>
         {
             var xn = key.XmlSchemaNamespace;
             var name = string.Join(".", xn.Split('/').Where(p => p != "schema" && GeneratorConfiguration.IdentifierRegex.IsMatch(p))
@@ -219,6 +407,11 @@ with or without backing field initialization for collections
             if (!string.IsNullOrEmpty(namespacePrefix)) { name = namespacePrefix + (string.IsNullOrEmpty(name) ? "" : ("." + name)); }
             return name;
         });
+
+        // Apply namespace patterns if any
+        var namespaceMap = namespacePatterns.Count > 0 
+            ? namespacePatterns.ToNamespaceProviderWithPatterns(baseNamespaceProvider)
+            : baseNamespaceProvider;
 
         ParseNameSubstituteFiles(nameSubstitutes, nameSubstituteFiles);
         var nameSubstituteMap = nameSubstitutes.ToDictionary();
@@ -251,6 +444,7 @@ with or without backing field initialization for collections
             PrivateMemberPrefix = doNotUseUnderscoreInPrivateMemberNames ? "" : "_",
             EnableUpaCheck = enableUpaCheck,
             GenerateComplexTypesForCollections = generateComplexTypesForCollections,
+            InitializeComplexTypesInConstructor = initializeComplexTypes,
             UseShouldSerializePattern = useShouldSerialize,
             SeparateClasses = separateClasses,
             CollectionSettersMode = collectionSettersMode,
@@ -269,8 +463,16 @@ with or without backing field initialization for collections
             SeparateNamespaceHierarchy = separateNamespaceHierarchy,
             SerializeEmptyCollections = serializeEmptyCollections,
             AllowDtdParse = allowDtdParse,
-            ForceUriScheme = forceUriScheme
+            ForceUriScheme = forceUriScheme,
+            UseFilenameAsNamespace = useFilenameAsNamespace,
+            GenerateChoiceItemProperty = generateChoiceItemProperty
         };
+        
+        // Add namespace transforms
+        foreach (var transform in namespaceTransforms)
+        {
+            generator.NamespaceTransforms.Add(new NamespaceTransform(transform.Key, transform.Value));
+        }
 
         if (namingScheme != null)
         {

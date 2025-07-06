@@ -1,0 +1,22 @@
+# Build results
+bin/
+obj/
+
+# Generated output
+output/
+
+# User-specific files
+*.user
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+
+# Rider
+.idea/
+
+# Keep schemas directory but ignore generated content in output
+!schemas/
+!schemas/README.md

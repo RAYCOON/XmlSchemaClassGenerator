@@ -28,7 +28,7 @@ namespace XmlSchemaClassGenerator.Tests
         public void EessiS071_GenerateAssemblyFromXsd_ShouldCreateValidAssembly()
         {
             // Arrange
-            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.xsd");
+            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.0-20241203T114131.xsd");
             
             // Include all EESSI XSD files - this is how the Generator handles imports properly
             var eessiDir = Path.GetDirectoryName(xsdPath);
@@ -88,7 +88,7 @@ namespace XmlSchemaClassGenerator.Tests
         public void EessiS071_CreateAndManipulateObjects_ShouldWork()
         {
             // Arrange
-            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.xsd");
+            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.0-20241203T114131.xsd");
             var eessiDir = Path.GetDirectoryName(xsdPath);
             var allXsdFiles = new List<string> { xsdPath };
             
@@ -169,7 +169,7 @@ namespace XmlSchemaClassGenerator.Tests
         public void EessiS071_TestXmlSerialization_ShouldSerializeAndDeserialize()
         {
             // Arrange
-            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.xsd");
+            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.0-20241203T114131.xsd");
             var eessiDir = Path.GetDirectoryName(xsdPath);
             var allXsdFiles = new List<string> { xsdPath };
             
@@ -251,7 +251,7 @@ namespace XmlSchemaClassGenerator.Tests
         public void EessiS071_ValidateSchemaStructure_ShouldHaveExpectedStructure()
         {
             // Arrange
-            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.xsd");
+            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.0-20241203T114131.xsd");
             var eessiDir = Path.GetDirectoryName(xsdPath);
             var allXsdFiles = new List<string> { xsdPath };
             
@@ -315,7 +315,7 @@ namespace XmlSchemaClassGenerator.Tests
         public void EessiS071_ValidateImportedSchemaTypes_ShouldIncludeXAdESAndXmlDSig()
         {
             // Arrange
-            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.xsd");
+            var xsdPath = Path.Combine(Directory.GetCurrentDirectory(), "xsd", "eessi", "S071-4.4.0-20241203T114131.xsd");
             var eessiDir = Path.GetDirectoryName(xsdPath);
             var allXsdFiles = new List<string> { xsdPath };
             

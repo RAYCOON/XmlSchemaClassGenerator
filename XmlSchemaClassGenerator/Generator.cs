@@ -258,6 +258,12 @@ public class Generator
         set { _configuration.GenerateDescriptionAttribute = value; }
     }
 
+    public bool InitializeComplexTypesInConstructor
+    {
+        get { return _configuration.InitializeComplexTypesInConstructor; }
+        set { _configuration.InitializeComplexTypesInConstructor = value; }
+    }
+
     public CodeTypeReferenceOptions CodeTypeReferenceOptions
     {
         get { return _configuration.CodeTypeReferenceOptions; }
@@ -405,6 +411,18 @@ public class Generator
     {
         get { return _configuration.AllowDtdParse; }
         set { _configuration.AllowDtdParse = value; }
+    }
+
+    public bool UseFilenameAsNamespace
+    {
+        get { return _configuration.UseFilenameAsNamespace; }
+        set { _configuration.UseFilenameAsNamespace = value; }
+    }
+
+    public List<NamespaceTransform> NamespaceTransforms
+    {
+        get { return _configuration.NamespaceTransforms; }
+        set { _configuration.NamespaceTransforms = value; }
     }
 
     public bool ValidationError { get; private set; }
