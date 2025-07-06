@@ -111,6 +111,8 @@ static class Program
         var autoResolveImports = false;
         var namespacePatterns = new List<KeyValuePair<string, string>>();
         var configFile = (string)null;
+        var singleFile = false;
+        var singleFileName = "output.cs";
 
 
         var options = new OptionSet {
@@ -193,6 +195,8 @@ with or without backing field initialization for collections
             { "s|useShouldSerialize", "use ShouldSerialize pattern instead of Specified pattern (default is false)", v => useShouldSerialize = v != null },
             { "sf|separateFiles", "generate a separate file for each class (default is false)", v => separateClasses = v != null },
             { "nh|namespaceHierarchy", "generate a separate folder for namespace hierarchy. Implies \"separateFiles\" if true (default is false)", v=> separateNamespaceHierarchy = v != null },
+            { "single-file", "generate all code into a single file (default is false)", v => singleFile = v != null },
+            { "single-file-name=", "name of the single output file when using --single-file (default is output.cs)", v => singleFileName = v },
             { "sg|separateSubstitutes", "generate a separate property for each element of a substitution group (default is false)", v => separateSubstitutes = v != null },
             { "dnfin|doNotForceIsNullable", "do not force generator to emit IsNullable = true in XmlElement annotation for nillable elements when element is nullable (minOccurs < 1 or parent element is choice) (default is false)", v => doNotForceIsNullable = v != null },
             { "cn|compactTypeNames", "use type names without namespace qualifier for types in the using list (default is false)", v => compactTypeNames = v != null },
@@ -498,6 +502,23 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
             generator.GenerateDebuggerStepThroughAttribute = false;
             generator.DataAnnotationMode = DataAnnotationMode.None;
             generator.GenerateDescriptionAttribute = false;
+        }
+        
+        // Set single file output writer if requested
+        if (singleFile)
+        {
+            if (separateClasses || separateNamespaceHierarchy)
+            {
+                System.Console.WriteLine("Warning: --single-file overrides --separateFiles and --namespaceHierarchy options");
+            }
+            
+            var outputPath = !string.IsNullOrEmpty(outputFolder) 
+                ? Path.Combine(outputFolder, singleFileName)
+                : singleFileName;
+                
+            generator.OutputWriter = new SingleFileOutputWriter(outputPath);
+            generator.SeparateClasses = false;
+            generator.SeparateNamespaceHierarchy = false;
         }
 
         if (verbose) { generator.Log = s => System.Console.Out.WriteLine(s); }

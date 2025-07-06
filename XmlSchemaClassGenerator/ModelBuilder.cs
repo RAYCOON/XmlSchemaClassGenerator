@@ -1167,8 +1167,46 @@ public class ModelBuilder
     {
         var key = new NamespaceKey(source, xmlNamespace);
         var result = _configuration.NamespaceProvider.FindNamespace(key);
-        return !string.IsNullOrEmpty(result) ? result
-            : throw new ArgumentException(string.Format("Namespace {0} not provided through map or generator.", xmlNamespace));
+        
+        if (!string.IsNullOrEmpty(result)) 
+            return result;
+        
+        // Fallback to auto-generation instead of throwing exception
+        var xn = xmlNamespace ?? "";
+        
+        // Remove fragment identifier if present (e.g., #)
+        if (xn.Contains('#'))
+            xn = xn.Substring(0, xn.IndexOf('#'));
+            
+        // Split by common delimiters and filter valid identifiers
+        var parts = xn.Split('/', ':', '.')
+            .Where(p => !string.IsNullOrEmpty(p) && 
+                       p != "http" && p != "https" && p != "schema" && 
+                       GeneratorConfiguration.IdentifierRegex.IsMatch(p))
+            .Select(n => n.ToTitleCase(_configuration.NamingScheme));
+        
+        var name = string.Join(".", parts);
+        
+        // If we still have no name, use a default
+        if (string.IsNullOrEmpty(name))
+        {
+            name = "Generated";
+            if (!string.IsNullOrEmpty(xmlNamespace))
+            {
+                // Try to extract something meaningful from the namespace
+                var lastPart = xmlNamespace.Split('/', '#').LastOrDefault(p => !string.IsNullOrEmpty(p));
+                if (!string.IsNullOrEmpty(lastPart))
+                    name = "Generated." + lastPart.ToTitleCase(_configuration.NamingScheme);
+            }
+        }
+        
+        // Apply namespace prefix if configured
+        if (!string.IsNullOrEmpty(_configuration.NamespacePrefix))
+        {
+            name = _configuration.NamespacePrefix + (string.IsNullOrEmpty(name) ? "" : ("." + name));
+        }
+        
+        return name;
     }
 
     private IEnumerable<PropertyModel> CreatePropertiesForChoice(Uri source, TypeModel owningTypeModel, XmlSchemaChoice choice, IList<Particle> choiceItems, int order)

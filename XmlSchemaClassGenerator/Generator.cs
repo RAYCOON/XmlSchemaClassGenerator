@@ -476,6 +476,12 @@ public class Generator
         var m = new ModelBuilder(_configuration, set);
         var namespaces = m.GenerateCode();
         var writer = _configuration.OutputWriter ?? new FileOutputWriter(OutputFolder ?? ".") { Configuration = _configuration };
+        
+        // Set configuration for custom output writers
+        if (writer is SingleFileOutputWriter sfw && sfw.Configuration == null)
+        {
+            sfw.Configuration = _configuration;
+        }
 
         foreach (var ns in namespaces)
         {
@@ -498,6 +504,12 @@ public class Generator
             }
 
             writer.Write(ns);
+        }
+        
+        // Flush single file writer if applicable
+        if (writer is SingleFileOutputWriter singleFileWriter)
+        {
+            singleFileWriter.Flush();
         }
     }
 
