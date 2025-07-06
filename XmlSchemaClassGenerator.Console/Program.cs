@@ -12,8 +12,39 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Mono.Options;
 using Ganss.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace XmlSchemaClassGenerator.Console;
+
+public class SimpleConfiguration
+{
+    public string OutputDirectory { get; set; }
+    public bool? GenerateNullables { get; set; }
+    public bool? EnableDataBinding { get; set; }
+    public bool? GenerateInterfaces { get; set; }
+    public bool? UsePascalCase { get; set; }
+    public bool? SeparateFiles { get; set; }
+    public string CollectionType { get; set; }
+    public bool? GenerateChoiceItemProperty { get; set; }
+    public string NamespacePrefix { get; set; }
+    public List<NamespaceMapping> NamespaceMappings { get; set; }
+    public List<NamespacePatternMapping> NamespacePatterns { get; set; }
+    public List<string> SourceFiles { get; set; }
+    public List<string> SourceDirectories { get; set; }
+}
+
+public class NamespaceMapping
+{
+    public string XmlNamespace { get; set; }
+    public string CSharpNamespace { get; set; }
+}
+
+public class NamespacePatternMapping
+{
+    public string XmlPattern { get; set; }
+    public string CSharpTemplate { get; set; }
+}
 
 static class Program
 {
@@ -79,6 +110,7 @@ static class Program
         var recursive = false;
         var autoResolveImports = false;
         var namespacePatterns = new List<KeyValuePair<string, string>>();
+        var configFile = (string)null;
 
 
         var options = new OptionSet {
@@ -218,7 +250,8 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
                         namespacePatterns.Add(new KeyValuePair<string, string>(parts[0], parts[1]));
                     }
                 }
-            }}
+            }},
+            { "cfg|config=", "read configuration from JSON {FILE} (basic settings only)", v => configFile = v }
         };
 
         var globsAndUris = options.Parse(args);
@@ -227,6 +260,86 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
         {
             ShowHelp(options);
             return 0;
+        }
+
+        // Load configuration from file if specified
+        if (!string.IsNullOrEmpty(configFile))
+        {
+            try
+            {
+                var jsonString = File.ReadAllText(configFile);
+                var config = JsonSerializer.Deserialize<SimpleConfiguration>(jsonString, new JsonSerializerOptions 
+                { 
+                    PropertyNameCaseInsensitive = true 
+                });
+
+                // Apply configuration values (command line arguments take precedence)
+                if (config != null)
+                {
+                    if (!string.IsNullOrEmpty(config.OutputDirectory) && outputFolder == null)
+                        outputFolder = config.OutputDirectory;
+                    
+                    if (config.GenerateNullables.HasValue && !nullables)
+                        nullables = config.GenerateNullables.Value;
+                    
+                    if (config.EnableDataBinding.HasValue && !enableDataBinding)
+                        enableDataBinding = config.EnableDataBinding.Value;
+                    
+                    if (config.GenerateInterfaces.HasValue && interfaces)
+                        interfaces = config.GenerateInterfaces.Value;
+                    
+                    if (config.UsePascalCase.HasValue && pascal)
+                        pascal = config.UsePascalCase.Value;
+                    
+                    if (config.SeparateFiles.HasValue && !separateClasses)
+                        separateClasses = config.SeparateFiles.Value;
+                    
+                    if (config.GenerateChoiceItemProperty.HasValue && !generateChoiceItemProperty)
+                        generateChoiceItemProperty = config.GenerateChoiceItemProperty.Value;
+                    
+                    if (!string.IsNullOrEmpty(config.NamespacePrefix) && string.IsNullOrEmpty(namespacePrefix))
+                        namespacePrefix = config.NamespacePrefix;
+                    
+                    if (!string.IsNullOrEmpty(config.CollectionType) && collectionType == typeof(Collection<>))
+                        collectionType = Type.GetType(config.CollectionType) ?? typeof(Collection<>);
+                    
+                    // Add namespace mappings from config
+                    if (config.NamespaceMappings != null)
+                    {
+                        foreach (var mapping in config.NamespaceMappings)
+                        {
+                            namespaces.Add($"{mapping.XmlNamespace}={mapping.CSharpNamespace}");
+                        }
+                    }
+                    
+                    // Add namespace patterns from config
+                    if (config.NamespacePatterns != null)
+                    {
+                        foreach (var pattern in config.NamespacePatterns)
+                        {
+                            namespacePatterns.Add(new KeyValuePair<string, string>(pattern.XmlPattern, pattern.CSharpTemplate));
+                        }
+                    }
+
+                    // Add source directories from config
+                    if (config.SourceDirectories != null && config.SourceDirectories.Count > 0)
+                    {
+                        directoryMode = true;
+                        directories.AddRange(config.SourceDirectories);
+                    }
+                    
+                    // Add source files from config
+                    if (config.SourceFiles != null)
+                    {
+                        globsAndUris.AddRange(config.SourceFiles);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($"Error reading configuration file '{configFile}': {ex.Message}");
+                return 1;
+            }
         }
 
         var uris = new List<string>();

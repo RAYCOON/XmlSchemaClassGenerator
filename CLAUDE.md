@@ -42,6 +42,12 @@ dotnet run -- [options] path/to/schema.xsd
 
 # Example with namespace mapping
 dotnet run -- -n "http://example.com=Example.Namespace" -o output schema.xsd
+
+# Convert entire directory
+dotnet run -- --directory schemas/ --output generated/
+
+# Using configuration file
+dotnet run -- --config config.json
 ```
 
 ## Architecture Overview
@@ -104,6 +110,9 @@ The `XsdToCSharpFactory` provides a high-level API that:
 - Choice elements are handled as sequences by default (developer must ensure schema validity)
 - With `GenerateChoiceItemProperty = true` option, choice elements generate xsd.exe-compatible code with `Item` and `ItemElementName` properties
 - Complex restrictions and recursive choices have limited support
+- The console app now supports `--config` option for JSON configuration files
+- Directory processing is built-in with `--directory` and `--recursive` options
+- Pattern-based namespace mapping is supported with `--namespace-pattern`
 
 ## GitHub Actions NuGet Publishing
 

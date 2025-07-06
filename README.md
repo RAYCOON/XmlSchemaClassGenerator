@@ -273,7 +273,71 @@ Options:
                              force URI scheme when resolving URLs (default is
                                none; can be: none, same, or any defined value
                                for scheme, like https or http)
+      --dir, --directory=VALUE
+                             process all XSD files in the specified DIRECTORY
+      --rec, --recursive     search directories recursively
+      --res, --auto-resolve  automatically resolve and include imported/included
+                               schemas
+      --np, --namespace-pattern=VALUE
+                             pattern-based namespace mapping.
+                               Format: 'xml-pattern=cs-template' where patterns
+                               can include {id} or {0} placeholders.
+                               Example: 'http://example.com/{id}=MyApp.{id}'
+      --cfg, --config=FILE   read configuration from JSON FILE (basic settings
+                               only)
 </pre>
+
+### **Common Usage Examples**
+
+#### Directory Conversion
+```bash
+# Convert all XSD files in a directory
+xscgen --directory schemas/ --output generated/
+
+# Recursive directory search
+xscgen --directory schemas/ --recursive --output generated/
+
+# With namespace patterns
+xscgen --directory schemas/ \
+    --namespace-pattern "http://example.com/{id}=MyCompany.{id}" \
+    --generateChoiceItemProperty
+```
+
+#### Using Configuration Files
+Create a `config.json` file:
+```json
+{
+  "outputDirectory": "./generated",
+  "generateNullables": true,
+  "separateFiles": true,
+  "namespacePatterns": [
+    {
+      "xmlPattern": "http://example.com/{id}",
+      "cSharpTemplate": "MyCompany.{id}"
+    }
+  ],
+  "sourceDirectories": ["./schemas"]
+}
+```
+
+Then use it:
+```bash
+# Use configuration file
+xscgen --config config.json
+
+# Override config settings
+xscgen --config config.json --separateFiles --output custom-output/
+```
+
+#### EESSI Example
+```bash
+# Convert EESSI schemas with pattern-based namespaces
+xscgen --directory schemas/eessi \
+    --namespace-pattern "http://ec.europa.eu/eessi/ns/4_4/{id}=ITSG.EESSI.Tstelle.XML.SED.{id}.V4_4_1" \
+    --namespace "http://www.w3.org/2000/09/xmldsig#=ITSG.EESSI.Tstelle.XML.XmlDsig" \
+    --generateChoiceItemProperty \
+    --generateNullables
+```
 
 ### **Traditional Generator API (For Static Code Generation)**
 
