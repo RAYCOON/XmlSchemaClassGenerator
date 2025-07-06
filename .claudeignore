@@ -1,4 +1,5 @@
 # .claudeignore - Files and directories to ignore when using Claude Code
+# This helps reduce context usage and improves performance
 
 # Build outputs
 bin/
@@ -6,14 +7,19 @@ obj/
 *.dll
 *.exe
 *.pdb
+*.mdb
 
-# Visual Studio files
+# Visual Studio / IDE files
 .vs/
+.vscode/
+.idea/
 *.user
 *.suo
 *.cache
 *.sln.docstates
-.vscode/
+*.userprefs
+*.DotSettings
+*.DotSettings.user
 
 # NuGet packages
 packages/
@@ -22,35 +28,94 @@ packages/
 
 # Test results
 TestResults/
+TestResult.xml
 *.trx
 *.coverage
 *.coveragexml
+coverage/
+.nyc_output/
 
 # Generated files
 generated/
 *.generated.cs
+*.Designer.cs
 
 # Temporary files
 *.tmp
 *.temp
+*.bak
+*.swp
 ~$*
+*~
+*.orig
 
 # OS files
 .DS_Store
 Thumbs.db
+Desktop.ini
+.directory
+.Trash-*
 
-# Large test data that might not be relevant
+# Large test data files
 XmlSchemaClassGenerator.Tests/xml/netex_tests/
 XmlSchemaClassGenerator.Tests/xml/bpmn_tests/
 XmlSchemaClassGenerator.Tests/xsd/netex/
 XmlSchemaClassGenerator.Tests/xsd/wfs/
+XmlSchemaClassGenerator.Tests/xsd/maindoc/
+XmlSchemaClassGenerator.Tests/xsd/is24/
+XmlSchemaClassGenerator.Tests/xsd/krankenkassen/
 
-# Binary key files
+# EESSI test files (large directory)
+XmlSchemaClassGenerator.Tests/xsd/eessi/
+
+# Binary and security files
 *.snk
+*.pfx
+*.key
+*.cer
 
-# Example and demo files that are less critical
-*Example.cs
-*Demo.cs
+# Documentation build outputs
+docs/_site/
+docs/.jekyll-cache/
 
-# Documentation assets
-*.rtf
+# Example outputs
+examples/
+results/
+test-output/
+test-*-output/
+TestChoiceDebug/
+
+# Configuration files (generated)
+eessi-config.json
+eessi-batch-config.json
+*-config.json
+# Keep important configs
+!appsettings.json
+!packages.config
+!nuget.config
+
+# Debug and test files
+debug-*.cs
+test-*.xsd
+test-*.txt
+test-*.xml
+
+# Local environment files
+.env
+.env.local
+*.local.json
+
+# Logs
+logs/
+*.log
+
+# BenchmarkDotNet
+BenchmarkDotNet.Artifacts/
+
+# Memory dumps
+*.dmp
+*.stackdump
+
+# Package manager locks (usually kept, but can be ignored if needed)
+# package-lock.json
+# yarn.lock

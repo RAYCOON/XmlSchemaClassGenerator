@@ -587,11 +587,11 @@ namespace XmlSchemaClassGenerator
                 return true;
 
             // Filter out digital signature fields
-            if (path.Contains("Signature", StringComparison.OrdinalIgnoreCase))
+            if (path.IndexOf("Signature", StringComparison.OrdinalIgnoreCase) >= 0)
                 return true;
 
             // Filter out XML schema metadata fields
-            if (path.Contains("Algorithm", StringComparison.OrdinalIgnoreCase))
+            if (path.IndexOf("Algorithm", StringComparison.OrdinalIgnoreCase) >= 0)
                 return true;
 
             // Additional patterns can be added here based on schema conventions
