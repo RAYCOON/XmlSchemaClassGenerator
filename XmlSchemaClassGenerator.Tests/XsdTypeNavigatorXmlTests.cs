@@ -824,6 +824,7 @@ namespace XmlSchemaClassGenerator.Tests
             var s071Instance = Activator.CreateInstance(s071Type);
         try
             {
+                
                 var xml = navigator.SerializeToXml(s071Instance);
                 Assert.NotNull(xml);
                 _output.WriteLine("✓ EESSI S071 XML serialization successful");

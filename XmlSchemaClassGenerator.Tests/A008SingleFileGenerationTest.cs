@@ -35,6 +35,39 @@ namespace XmlSchemaClassGenerator.Tests
             var generatedFilePath = Path.Combine(outputPath, "A008-4.4.1.Designer.cs");
             var existingFilePath = Path.Combine(outputPath, "A008-4.4.0.Designer.cs");
 
+            // Debug output for CI environment
+            if (!File.Exists(existingFilePath))
+            {
+                _output.WriteLine($"Base directory: {AppDomain.CurrentDomain.BaseDirectory}");
+                _output.WriteLine($"Working directory: {Directory.GetCurrentDirectory()}");
+                _output.WriteLine($"Output path: {outputPath}");
+                
+                // List files in the directory to debug
+                if (Directory.Exists(outputPath))
+                {
+                    _output.WriteLine($"Files in {outputPath}:");
+                    foreach (var file in Directory.GetFiles(outputPath))
+                    {
+                        _output.WriteLine($"  - {Path.GetFileName(file)}");
+                    }
+                }
+                else
+                {
+                    _output.WriteLine($"Directory does not exist: {outputPath}");
+                }
+                
+                // Check parent directories
+                var parentPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "xsd");
+                if (Directory.Exists(parentPath))
+                {
+                    _output.WriteLine($"Directories in {parentPath}:");
+                    foreach (var dir in Directory.GetDirectories(parentPath))
+                    {
+                        _output.WriteLine($"  - {Path.GetFileName(dir)}");
+                    }
+                }
+            }
+            
             Assert.True(File.Exists(xsdPath), $"XSD file not found: {xsdPath}");
             Assert.True(File.Exists(existingFilePath), $"Existing file not found: {existingFilePath}");
 
