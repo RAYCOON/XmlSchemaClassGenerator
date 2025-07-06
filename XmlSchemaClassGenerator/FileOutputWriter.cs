@@ -39,7 +39,8 @@ public class FileOutputWriter : OutputWriter
         }
         else
         {
-            var path = Path.Combine(OutputDirectory, cn.Name + ".cs");
+            var filename = GenerateOutputFilename(cn.Name);
+            var path = Path.Combine(OutputDirectory, filename + ".cs");
             Configuration?.WriteLog(path);
             WriteFile(path, cu);
         }
@@ -99,4 +100,117 @@ public class FileOutputWriter : OutputWriter
     static readonly Regex InvalidCharacters = new($"[{string.Join("", Path.GetInvalidFileNameChars())}]", RegexOptions.Compiled);
 
     private static string ValidateName(string name) => InvalidCharacters.Replace(name, "_");
+
+    private string GenerateOutputFilename(string namespaceName)
+    {
+        // Try to match against output filename patterns
+        if (Configuration?.OutputFilenamePatterns != null)
+        {
+            foreach (var pattern in Configuration.OutputFilenamePatterns.OrderBy(p => p.Priority))
+            {
+                var result = TryMatchPattern(namespaceName, pattern);
+                if (!string.IsNullOrEmpty(result))
+                    return ValidateName(result);
+            }
+        }
+
+        // Apply default strategy
+        switch (Configuration?.DefaultOutputFilenameStrategy ?? DefaultOutputFilenameStrategy.UseNamespace)
+        {
+            case DefaultOutputFilenameStrategy.UseSourceFilename:
+                // TODO: Need to pass source filename through the pipeline
+                goto case DefaultOutputFilenameStrategy.UseNamespace;
+                
+            case DefaultOutputFilenameStrategy.UseTemplate:
+                // TODO: Implement template support
+                goto case DefaultOutputFilenameStrategy.UseNamespace;
+                
+            case DefaultOutputFilenameStrategy.UseNamespace:
+            default:
+                return namespaceName;
+        }
+    }
+
+    private string TryMatchPattern(string input, OutputFilenamePattern pattern)
+    {
+        try
+        {
+            var regex = new Regex(pattern.Pattern);
+            var match = regex.Match(input);
+            
+            if (match.Success)
+            {
+                var result = pattern.Template;
+                
+                // Replace numeric placeholders first
+                for (int i = 1; i < match.Groups.Count; i++)
+                {
+                    var value = match.Groups[i].Value;
+                    
+                    // Check if there's a transformation for numeric group
+                    if (pattern.Transforms != null && pattern.Transforms.ContainsKey((i - 1).ToString()))
+                    {
+                        value = ApplyTransformation(value, pattern.Transforms[(i - 1).ToString()]);
+                    }
+                    
+                    result = result.Replace($"{{{i - 1}}}", value);
+                }
+                
+                // Then replace named groups (which might override numeric ones)
+                var groupNames = regex.GetGroupNames();
+                foreach (var groupName in groupNames)
+                {
+                    // Skip numeric group names and the whole match group "0"
+                    if (!string.IsNullOrEmpty(groupName) && groupName != "0" && !int.TryParse(groupName, out _))
+                    {
+                        var group = match.Groups[groupName];
+                        if (group.Success)
+                        {
+                            var value = group.Value;
+                            
+                            // Apply transformations if specified
+                            if (pattern.Transforms != null && pattern.Transforms.ContainsKey(groupName))
+                            {
+                                value = ApplyTransformation(value, pattern.Transforms[groupName]);
+                            }
+                            
+                            result = result.Replace($"{{{groupName}}}", value);
+                        }
+                    }
+                }
+                
+                return result;
+            }
+        }
+        catch (Exception ex)
+        {
+            Configuration?.WriteLog($"Error applying output filename pattern '{pattern.Pattern}': {ex.Message}");
+        }
+        
+        return null;
+    }
+
+    private string ApplyTransformation(string value, string transformation)
+    {
+        switch (transformation?.ToLowerInvariant())
+        {
+            case PatternTransformations.DotsToUnderscores:
+                return value.Replace('.', '_');
+                
+            case PatternTransformations.UnderscoresToDots:
+                return value.Replace('_', '.');
+            
+            case PatternTransformations.Uppercase:
+                return value.ToUpperInvariant();
+            
+            case PatternTransformations.Lowercase:
+                return value.ToLowerInvariant();
+            
+            case PatternTransformations.RemoveHyphens:
+                return value.Replace("-", "");
+            
+            default:
+                return value;
+        }
+    }
 }

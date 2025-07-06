@@ -812,8 +812,8 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
             var propertyValueTypeCode = IsCollection || isArray ? PropertyValueTypeCode.Array : propertyType.GetPropertyValueTypeCode();
             var setter = Configuration.CollectionSettersMode switch
             {
-                CollectionSettersMode.Private when IsEnumerable => "private set",
-                CollectionSettersMode.Init or CollectionSettersMode.InitWithoutConstructorInitialization when IsEnumerable => "init",
+                CollectionSettersMode.Private when IsEnumerable && Configuration.CollectionType != typeof(Array) => "private set",
+                CollectionSettersMode.Init or CollectionSettersMode.InitWithoutConstructorInitialization when IsEnumerable && Configuration.CollectionType != typeof(Array) => "init",
                 _ => "set"
             };
             member.Name += GetAccessors(backingField, withDataBinding, propertyValueTypeCode, setter);
@@ -952,7 +952,7 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
                 Configuration.MemberVisitor(nullableMember, this);
             }
         }
-        else if (isEnumerable && !IsRequired)
+        else if (isEnumerable && !IsRequired && Configuration.CollectionType != typeof(Array))
         {
             var canBeNull = Configuration.CollectionSettersMode is CollectionSettersMode.PublicWithoutConstructorInitialization or CollectionSettersMode.Public or CollectionSettersMode.Init or CollectionSettersMode.InitWithoutConstructorInitialization;
 
@@ -1026,7 +1026,7 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
         member.CustomAttributes.AddRange(attributes);
 
         // initialize List<>
-        if (isEnumerable && (Configuration.CollectionSettersMode != CollectionSettersMode.PublicWithoutConstructorInitialization)
+        if (isEnumerable && Configuration.CollectionType != typeof(Array) && (Configuration.CollectionSettersMode != CollectionSettersMode.PublicWithoutConstructorInitialization)
             && (Configuration.CollectionSettersMode != CollectionSettersMode.InitWithoutConstructorInitialization))
         {
             var constructor = typeDeclaration.Members.OfType<CodeConstructor>().FirstOrDefault();
@@ -1187,9 +1187,15 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
             attributes.Add(arrayAttribute);
         }
 
-        foreach (var args in attributes.Select(a => a.Arguments))
+        foreach (var attribute in attributes)
         {
+            var args = attribute.Arguments;
             bool namespacePrecalculated = args.OfType<CodeAttributeArgument>().Any(a => a.Name == Namespace);
+            
+            // Skip adding namespace and form arguments to XmlIgnoreAttribute
+            if (attribute.Name == "System.Xml.Serialization.XmlIgnoreAttribute")
+                continue;
+                
             if (!namespacePrecalculated)
             {
                 if (XmlNamespace != null)

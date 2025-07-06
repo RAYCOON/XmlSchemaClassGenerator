@@ -29,7 +29,10 @@ public class SimpleConfiguration
     public bool? GenerateChoiceItemProperty { get; set; }
     public string NamespacePrefix { get; set; }
     public List<NamespaceMapping> NamespaceMappings { get; set; }
-    public List<NamespacePatternMapping> NamespacePatterns { get; set; }
+    public List<CSharpNamespacePatternMapping> NamespacePatterns { get; set; }
+    public List<OutputFilenamePatternMapping> OutputFilenamePatterns { get; set; }
+    public string DefaultNamespaceStrategy { get; set; }
+    public string DefaultNamespaceTemplate { get; set; }
     public List<string> SourceFiles { get; set; }
     public List<string> SourceDirectories { get; set; }
 }
@@ -46,9 +49,26 @@ public class NamespacePatternMapping
     public string CSharpTemplate { get; set; }
 }
 
-static class Program
+public class CSharpNamespacePatternMapping
 {
-    static int Main(string[] args)
+    public string Source { get; set; }
+    public string Pattern { get; set; }
+    public string Template { get; set; }
+    public Dictionary<string, string> Transforms { get; set; }
+    public int? Priority { get; set; }
+}
+
+public class OutputFilenamePatternMapping
+{
+    public string Pattern { get; set; }
+    public string Template { get; set; }
+    public Dictionary<string, string> Transforms { get; set; }
+    public int? Priority { get; set; }
+}
+
+public static class Program
+{
+    public static int Main(string[] args)
     {
         var showHelp = args.Length == 0;
         var namespaces = new List<string>();
@@ -101,6 +121,7 @@ static class Program
         var generateChoiceItemProperty = false;
         var serializeEmptyCollections = false;
         var allowDtdParse = false;
+        var useArrays = false;
         NamingScheme? namingScheme = null;
         var forceUriScheme = "none";
         var useFilenameAsNamespace = false;
@@ -109,7 +130,13 @@ static class Program
         var directories = new List<string>();
         var recursive = false;
         var autoResolveImports = false;
-        var namespacePatterns = new List<KeyValuePair<string, string>>();
+        var namespaceMappingPatterns = new List<KeyValuePair<string, string>>();
+        var namespacePatterns = new List<NamespacePattern>();
+        var outputFilenamePatterns = new List<OutputFilenamePattern>();
+        var patternTransforms = new Dictionary<string, string>();
+        var defaultNamespaceStrategy = DefaultNamespaceStrategy.AutoGenerate;
+        var defaultNamespaceTemplate = "Generated.{filename}";
+        var defaultOutputFilenameStrategy = DefaultOutputFilenameStrategy.UseNamespace;
         var configFile = (string)null;
         var singleFile = false;
         var singleFileName = "output.cs";
@@ -213,6 +240,7 @@ with or without backing field initialization for collections
             { "uc|unionCommonType", "generate a common type for unions if possible (default is false)", v => unionCommonType = v != null },
             { "ec|serializeEmptyCollections", "serialize empty collections (default is false)", v => serializeEmptyCollections = v != null },
             { "dtd|allowDtdParse", "allows dtd parse (default is false)", v => allowDtdParse = v != null },
+            { "ua|use-arrays", "use arrays instead of collections for sequences (default is false)", v => useArrays = v != null },
             { "gi|generateChoiceItemProperty", "generate Item property for choice elements (default is false)", v => generateChoiceItemProperty = v != null },
             { "fn|useFilenameAsNamespace", "use filename as basis for namespace (default is false)", v => useFilenameAsNamespace = v != null },
             { "ft|namespaceTransform=", @"regex transformation to apply to filename for namespace generation. 
@@ -243,7 +271,7 @@ Can be specified multiple times, applied in order.", v => {
             { "dir|directory=", "process all XSD files in the specified {DIRECTORY}", v => { directoryMode = true; directories.Add(v); } },
             { "rec|recursive", "search directories recursively", v => recursive = v != null },
             { "res|auto-resolve", "automatically resolve and include imported/included schemas", v => autoResolveImports = v != null },
-            { "np|namespace-pattern=", @"pattern-based namespace mapping. 
+            { "np|namespace-mapping-pattern=", @"pattern-based namespace mapping. 
 Format: 'xml-pattern=cs-template' where patterns can include {id} or {0} placeholders.
 Example: 'http://example.com/{id}=MyApp.{id}'", v => {
                 if (!string.IsNullOrEmpty(v))
@@ -251,8 +279,66 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
                     var parts = v.Split('=');
                     if (parts.Length == 2)
                     {
-                        namespacePatterns.Add(new KeyValuePair<string, string>(parts[0], parts[1]));
+                        namespaceMappingPatterns.Add(new KeyValuePair<string, string>(parts[0], parts[1]));
                     }
+                }
+            }},
+            { "nsp|namespace-pattern=", @"regex pattern for C# namespace generation.
+Format: 'source:regex-pattern=template' where source is 'xml' or 'file'.
+Example: 'file:(?<doc>[A-Z]+[0-9]+)-(?<ver>\d+\.\d+\.\d+)=ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}'", v => {
+                if (!string.IsNullOrEmpty(v))
+                {
+                    var parts = v.Split('=');
+                    if (parts.Length == 2)
+                    {
+                        var sourceParts = parts[0].Split(':');
+                        var pattern = new NamespacePattern(sourceParts.Length > 1 ? sourceParts[1] : sourceParts[0], parts[1]);
+                        if (sourceParts.Length > 1)
+                        {
+                            pattern.Source = sourceParts[0].Equals("file", StringComparison.OrdinalIgnoreCase) ? "Filename" : "XmlNamespace";
+                        }
+                        namespacePatterns.Add(pattern);
+                    }
+                }
+            }},
+            { "ofp|output-filename-pattern=", @"regex pattern for output filename generation.
+Format: 'regex-pattern=template' where pattern matches the C# namespace.
+Example: 'ITSG\.EESSI\..*\.(?<doc>[A-Z]+[0-9]+)\.V(?<ver>\d+_\d+)={doc}-{ver}.Designer'", v => {
+                if (!string.IsNullOrEmpty(v))
+                {
+                    var parts = v.Split('=');
+                    if (parts.Length == 2)
+                    {
+                        outputFilenamePatterns.Add(new OutputFilenamePattern(parts[0], parts[1]));
+                    }
+                }
+            }},
+            { "pt|pattern-transform=", @"transformation to apply to captured groups.
+Format: 'group-name=transformation-type'
+Available transformations: dots_to_underscores, uppercase, lowercase, titlecase, remove_hyphens
+Example: 'ver=dots_to_underscores'", v => {
+                if (!string.IsNullOrEmpty(v))
+                {
+                    var parts = v.Split('=');
+                    if (parts.Length == 2)
+                    {
+                        patternTransforms[parts[0]] = parts[1];
+                    }
+                }
+            }},
+            { "dns|default-namespace-strategy=", @"strategy when no pattern matches.
+Options: AutoGenerate (default), UseFilename, UseXmlNamespace, ThrowException, UseTemplate", v => {
+                if (Enum.TryParse<DefaultNamespaceStrategy>(v, true, out var strategy))
+                {
+                    defaultNamespaceStrategy = strategy;
+                }
+            }},
+            { "dnt|default-namespace-template=", "template for default namespace generation (used with UseTemplate strategy)", v => defaultNamespaceTemplate = v },
+            { "dofs|default-output-filename-strategy=", @"strategy for output filename when no pattern matches.
+Options: UseNamespace (default), UseSourceFilename, UseTemplate", v => {
+                if (Enum.TryParse<DefaultOutputFilenameStrategy>(v, true, out var strategy))
+                {
+                    defaultOutputFilenameStrategy = strategy;
                 }
             }},
             { "cfg|config=", "read configuration from JSON {FILE} (basic settings only)", v => configFile = v }
@@ -321,8 +407,43 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
                     {
                         foreach (var pattern in config.NamespacePatterns)
                         {
-                            namespacePatterns.Add(new KeyValuePair<string, string>(pattern.XmlPattern, pattern.CSharpTemplate));
+                            var nsPattern = new NamespacePattern(pattern.Pattern, pattern.Template);
+                            nsPattern.Source = pattern.Source ?? "XmlNamespace";
+                            if (pattern.Transforms != null)
+                                nsPattern.Transforms = pattern.Transforms;
+                            if (pattern.Priority.HasValue)
+                                nsPattern.Priority = pattern.Priority.Value;
+                            namespacePatterns.Add(nsPattern);
                         }
+                    }
+                    
+                    // Add output filename patterns from config
+                    if (config.OutputFilenamePatterns != null)
+                    {
+                        foreach (var pattern in config.OutputFilenamePatterns)
+                        {
+                            var ofPattern = new OutputFilenamePattern(pattern.Pattern, pattern.Template);
+                            if (pattern.Transforms != null)
+                                ofPattern.Transforms = pattern.Transforms;
+                            if (pattern.Priority.HasValue)
+                                ofPattern.Priority = pattern.Priority.Value;
+                            outputFilenamePatterns.Add(ofPattern);
+                        }
+                    }
+                    
+                    // Set default namespace strategy from config
+                    if (!string.IsNullOrEmpty(config.DefaultNamespaceStrategy))
+                    {
+                        if (Enum.TryParse<DefaultNamespaceStrategy>(config.DefaultNamespaceStrategy, true, out var strategy))
+                        {
+                            defaultNamespaceStrategy = strategy;
+                        }
+                    }
+                    
+                    // Set default namespace template from config
+                    if (!string.IsNullOrEmpty(config.DefaultNamespaceTemplate))
+                    {
+                        defaultNamespaceTemplate = config.DefaultNamespaceTemplate;
                     }
 
                     // Add source directories from config
@@ -383,7 +504,7 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
             // Original glob/uri handling
             foreach (var globOrUri in globsAndUris)
             {
-                if (Uri.IsWellFormedUriString(globOrUri, UriKind.Absolute))
+                if (System.Uri.IsWellFormedUriString(globOrUri, UriKind.Absolute))
                 {
                     uris.Add(globOrUri);
                     continue;
@@ -413,8 +534,8 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
         });
 
         // Apply namespace patterns if any
-        var namespaceMap = namespacePatterns.Count > 0 
-            ? namespacePatterns.ToNamespaceProviderWithPatterns(baseNamespaceProvider)
+        var namespaceMap = namespaceMappingPatterns.Count > 0 
+            ? namespaceMappingPatterns.ToNamespaceProviderWithPatterns(baseNamespaceProvider)
             : baseNamespaceProvider;
 
         ParseNameSubstituteFiles(nameSubstitutes, nameSubstituteFiles);
@@ -438,8 +559,8 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
             EntityFramework = entityFramework,
             GenerateInterfaces = interfaces,
             AssemblyVisible = assembly,
-            CollectionType = collectionType,
-            CollectionImplementationType = collectionImplementationType,
+            CollectionType = useArrays ? typeof(Array) : collectionType,
+            CollectionImplementationType = useArrays ? typeof(Array) : collectionImplementationType,
             CodeTypeReferenceOptions = codeTypeReferenceOptions,
             TextValuePropertyName = textValuePropertyName,
             GenerateDebuggerStepThroughAttribute = generateDebuggerStepThroughAttribute,
@@ -476,6 +597,25 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
         foreach (var transform in namespaceTransforms)
         {
             generator.NamespaceTransforms.Add(new NamespaceTransform(transform.Key, transform.Value));
+        }
+
+        // Configure pattern-based namespace generation
+        if (namespacePatterns.Count > 0 || outputFilenamePatterns.Count > 0)
+        {
+            // Apply transforms to namespace patterns
+            foreach (var pattern in namespacePatterns)
+            {
+                foreach (var transform in patternTransforms)
+                {
+                    pattern.Transforms[transform.Key] = transform.Value;
+                }
+            }
+
+            generator.NamespacePatterns = namespacePatterns;
+            generator.OutputFilenamePatterns = outputFilenamePatterns;
+            generator.DefaultNamespaceStrategy = defaultNamespaceStrategy;
+            generator.DefaultNamespaceTemplate = defaultNamespaceTemplate;
+            generator.DefaultOutputFilenameStrategy = defaultOutputFilenameStrategy;
         }
 
         if (namingScheme != null)
@@ -522,6 +662,9 @@ Example: 'http://example.com/{id}=MyApp.{id}'", v => {
         }
 
         if (verbose) { generator.Log = s => System.Console.Out.WriteLine(s); }
+
+        // Configure namespace provider after all settings are applied
+        generator.ConfigureNamespaceProvider();
 
         generator.Generate(uris);
 

@@ -50,9 +50,9 @@ public class NamespaceProviderTests
     [Fact]
     public void NamespaceKeyComparableTest()
     {
-        Assert.Equal(-1, new NamespaceKey((Uri)null).CompareTo(new NamespaceKey(new Uri("http://test"))));
-        Assert.Equal(1, new NamespaceKey(new Uri("http://test")).CompareTo(new NamespaceKey((Uri)null)));
-        Assert.NotEqual(0, new NamespaceKey(new Uri("http://test")).CompareTo(new NamespaceKey(new Uri("http://test2"))));
+        Assert.Equal(-1, new NamespaceKey((System.Uri)null).CompareTo(new NamespaceKey(new System.Uri("http://test"))));
+        Assert.Equal(1, new NamespaceKey(new System.Uri("http://test")).CompareTo(new NamespaceKey((System.Uri)null)));
+        Assert.NotEqual(0, new NamespaceKey(new System.Uri("http://test")).CompareTo(new NamespaceKey(new System.Uri("http://test2"))));
         Assert.True(new NamespaceKey("http://test").Equals((object)new NamespaceKey("http://test")));
         Assert.False(new NamespaceKey("http://test").Equals((object)null));
         Assert.NotEqual(0, ((IComparable)new NamespaceKey("http://test")).CompareTo(null));
@@ -79,7 +79,7 @@ public class NamespaceProviderTests
     {
         string customNsPattern = "{0}|{1}={2}";
 
-        var uri = new Uri(xmlSchema, UriKind.RelativeOrAbsolute);
+        var uri = new System.Uri(xmlSchema, UriKind.RelativeOrAbsolute);
         var fullNetNs = (string.IsNullOrEmpty(netPrefix)) ? netNs : string.Join(".", netPrefix, netNs);
 
         var expected = new KeyValuePair<NamespaceKey, string>(new NamespaceKey(uri, xmlNs), fullNetNs);

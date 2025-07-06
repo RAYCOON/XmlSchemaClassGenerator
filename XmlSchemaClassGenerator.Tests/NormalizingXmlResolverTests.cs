@@ -19,6 +19,6 @@ public class NormalizingXmlResolverTests
     public void TestOverrides(string forceScheme, string expect, string baseUri, string relUri)
     {
         var res = new NormalizingXmlResolver(forceScheme);
-        Assert.Equal(new Uri(expect), res.ResolveUri(new Uri(baseUri), relUri));
+        Assert.Equal(new System.Uri(expect), res.ResolveUri(new System.Uri(baseUri), relUri));
     }
 }

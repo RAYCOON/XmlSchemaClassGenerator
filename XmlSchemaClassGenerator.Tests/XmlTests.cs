@@ -119,9 +119,9 @@ public class XmlTests(ITestOutputHelper output)
         Compiler.Generate("GraphML", GraphMLPattern, new Generator
         {
             NamespaceProvider = new Dictionary<NamespaceKey, string> {
-                { new NamespaceKey(new Uri("graphml.xsd", UriKind.RelativeOrAbsolute), "http://graphml.graphdrawing.org/xmlns"), "GraphML.Main" },
-                { new NamespaceKey(new Uri("graphml-structure.xsd", UriKind.RelativeOrAbsolute), "http://graphml.graphdrawing.org/xmlns"), "GraphML.Structure" },
-                { new NamespaceKey(new Uri("ygraphxml.xsd", UriKind.RelativeOrAbsolute), "http://graphml.graphdrawing.org/xmlns"), "GraphML.Y" },
+                { new NamespaceKey(new System.Uri("graphml.xsd", UriKind.RelativeOrAbsolute), "http://graphml.graphdrawing.org/xmlns"), "GraphML.Main" },
+                { new NamespaceKey(new System.Uri("graphml-structure.xsd", UriKind.RelativeOrAbsolute), "http://graphml.graphdrawing.org/xmlns"), "GraphML.Structure" },
+                { new NamespaceKey(new System.Uri("ygraphxml.xsd", UriKind.RelativeOrAbsolute), "http://graphml.graphdrawing.org/xmlns"), "GraphML.Y" },
                 { new NamespaceKey("http://www.w3.org/1999/xlink"), "XLink" },
                 { new NamespaceKey("http://www.yworks.com/xml/graphml"), "YEd" },
             }.ToNamespaceProvider(new GeneratorConfiguration { NamespacePrefix = "GraphML" }.NamespaceProvider.GenerateNamespace),

@@ -85,7 +85,24 @@
       "Bash(-sf )",
       "Bash(./generate-eessi-single-files-with-patterns.sh:*)",
       "Bash(dotnet test:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(cat:*)",
+      "Bash(mv:*)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet list:*)",
+      "Bash(sn:*)",
+      "Bash(dotnet pack:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git tag:*)",
+      "Bash(git push:*)",
+      "Bash(--single-file --gi --ua --ctor )",
+      "Bash(--file-pattern \"(?<doc>[A-Z]+[0-9]+)-(?<ver>\\d+\\.\\d+\\.\\d+)=ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}\" )",
+      "Bash(--pattern-transform \"ver=dots_to_underscores\" )",
+      "Bash(-o test-pattern-A008.cs )",
+      "Bash(../XmlSchemaClassGenerator.Tests/xsd/eessi/A008-4.4.0-20241203T114133.xsd)",
+      "Bash(../XmlSchemaClassGenerator.Tests/xsd/eessi/A009-4.4.1-20250507T153911.xsd)",
+      "Bash(-o test-A009.cs ../XmlSchemaClassGenerator.Tests/xsd/eessi/A009-4.4.1-20250507T153911.xsd)"
     ],
     "deny": []
   }

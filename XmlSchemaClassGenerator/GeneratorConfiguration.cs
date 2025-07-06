@@ -13,45 +13,10 @@ public class GeneratorConfiguration
 
     public GeneratorConfiguration()
     {
+        // Initialize with default namespace provider
         NamespaceProvider = new NamespaceProvider()
         {
-            GenerateNamespace = key =>
-            {
-                // Check if filename-based namespace generation is enabled and we have a source file
-                if (UseFilenameAsNamespace && key.Source != null)
-                {
-                    var filename = System.IO.Path.GetFileName(key.Source.LocalPath);
-                    var ns = filename;
-                    
-                    // Apply all namespace transforms in order
-                    foreach (var transform in NamespaceTransforms)
-                    {
-                        if (!string.IsNullOrEmpty(transform.Pattern))
-                        {
-                            ns = System.Text.RegularExpressions.Regex.Replace(ns, transform.Pattern, transform.Replacement ?? "");
-                        }
-                    }
-                    
-                    // If we have a namespace prefix and the transform didn't already include it
-                    if (!string.IsNullOrEmpty(NamespacePrefix) && !ns.StartsWith(NamespacePrefix))
-                    {
-                        ns = NamespacePrefix + "." + ns;
-                    }
-                    
-                    return ns;
-                }
-                
-                // Default namespace generation logic
-                var xn = key.XmlSchemaNamespace;
-                var name = string.Join(".",
-                    xn.Split('/').Where(p => p != "schema" && IdentifierRegex.IsMatch(p))
-                        .Select(n => n.ToTitleCase(NamingScheme.PascalCase)));
-                if (!string.IsNullOrEmpty(NamespacePrefix))
-                {
-                    name = NamespacePrefix + (string.IsNullOrEmpty(name) ? "" : ("." + name));
-                }
-                return name;
-            },
+            GenerateNamespace = DefaultNamespaceGenerator
         };
 
         NamingScheme = NamingScheme.PascalCase;
@@ -66,6 +31,76 @@ public class GeneratorConfiguration
         CommandLineArgumentsProvider = CommandLineArgumentsProvider.CreateFromEnvironment();
         MergeRestrictionsWithBase = true;
         ForceUriScheme = "none";
+    }
+
+    /// <summary>
+    /// Configures the namespace provider based on current settings.
+    /// Should be called after all properties are set.
+    /// </summary>
+    public void ConfigureNamespaceProvider()
+    {
+        // If patterns are configured, use PatternBasedNamespaceProvider
+        if (NamespacePatterns?.Count > 0 && 
+            !(NamespaceProvider is PatternBasedNamespaceProvider))
+        {
+            var patternProvider = new PatternBasedNamespaceProvider(this)
+            {
+                NamespacePatterns = NamespacePatterns ?? new List<NamespacePattern>(),
+                DefaultNamespaceTemplate = DefaultNamespaceTemplate,
+                DefaultStrategy = DefaultNamespaceStrategy
+            };
+
+            // Copy existing mappings
+            foreach (var kvp in NamespaceProvider)
+            {
+                patternProvider.Add(kvp.Key, kvp.Value);
+            }
+
+            NamespaceProvider = patternProvider;
+        }
+        // Otherwise ensure the default generator is set
+        else if (NamespaceProvider.GenerateNamespace == null)
+        {
+            NamespaceProvider.GenerateNamespace = DefaultNamespaceGenerator;
+        }
+    }
+
+    private string DefaultNamespaceGenerator(NamespaceKey key)
+    {
+        // Check if filename-based namespace generation is enabled and we have a source file
+        if (UseFilenameAsNamespace && key.Source != null)
+        {
+            var filename = System.IO.Path.GetFileName(key.Source.LocalPath);
+            var ns = filename;
+            
+            // Apply all namespace transforms in order
+            foreach (var transform in NamespaceTransforms)
+            {
+                if (!string.IsNullOrEmpty(transform.Pattern))
+                {
+                    ns = System.Text.RegularExpressions.Regex.Replace(ns, transform.Pattern, transform.Replacement ?? "");
+                }
+            }
+            
+            // If we have a namespace prefix and the transform didn't already include it
+            if (!string.IsNullOrEmpty(NamespacePrefix) && !ns.StartsWith(NamespacePrefix))
+            {
+                ns = NamespacePrefix + "." + ns;
+            }
+            
+            return ns;
+        }
+        
+        // Default namespace generation logic
+        var xn = key.XmlSchemaNamespace;
+        var name = string.Join(".",
+            xn.Split('/').Where(p => p != "schema" && IdentifierRegex.IsMatch(p))
+                .Select(n => n.ToTitleCase(NamingScheme.PascalCase)));
+        if (!string.IsNullOrEmpty(NamespacePrefix))
+        {
+            name = NamespacePrefix + (string.IsNullOrEmpty(name) ? "" : ("." + name));
+        }
+        return name;
     }
 
     public bool EnumAsString { get; set; }
@@ -411,4 +446,31 @@ public class GeneratorConfiguration
     /// Transforms are applied in order.
     /// </summary>
     public List<NamespaceTransform> NamespaceTransforms { get; set; } = new List<NamespaceTransform>();
+
+    /// <summary>
+    /// Patterns for C# namespace generation.
+    /// Can match against XML namespaces or filenames based on the Source property.
+    /// </summary>
+    public List<NamespacePattern> NamespacePatterns { get; set; } = new List<NamespacePattern>();
+
+    /// <summary>
+    /// Patterns for output filename generation.
+    /// Matches against the generated C# namespace to produce custom output filenames.
+    /// </summary>
+    public List<OutputFilenamePattern> OutputFilenamePatterns { get; set; } = new List<OutputFilenamePattern>();
+
+    /// <summary>
+    /// Template to use when DefaultNamespaceStrategy is UseTemplate
+    /// </summary>
+    public string DefaultNamespaceTemplate { get; set; } = "Generated.{filename}";
+
+    /// <summary>
+    /// Strategy to use when no namespace pattern matches
+    /// </summary>
+    public DefaultNamespaceStrategy DefaultNamespaceStrategy { get; set; } = DefaultNamespaceStrategy.AutoGenerate;
+
+    /// <summary>
+    /// Strategy to use when no output filename pattern matches
+    /// </summary>
+    public DefaultOutputFilenameStrategy DefaultOutputFilenameStrategy { get; set; } = DefaultOutputFilenameStrategy.UseNamespace;
 }

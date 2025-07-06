@@ -425,6 +425,45 @@ public class Generator
         set { _configuration.NamespaceTransforms = value; }
     }
 
+    public List<NamespacePattern> NamespacePatterns
+    {
+        get { return _configuration.NamespacePatterns; }
+        set { _configuration.NamespacePatterns = value; }
+    }
+
+    public List<OutputFilenamePattern> OutputFilenamePatterns
+    {
+        get { return _configuration.OutputFilenamePatterns; }
+        set { _configuration.OutputFilenamePatterns = value; }
+    }
+
+    public string DefaultNamespaceTemplate
+    {
+        get { return _configuration.DefaultNamespaceTemplate; }
+        set { _configuration.DefaultNamespaceTemplate = value; }
+    }
+
+    public DefaultNamespaceStrategy DefaultNamespaceStrategy
+    {
+        get { return _configuration.DefaultNamespaceStrategy; }
+        set { _configuration.DefaultNamespaceStrategy = value; }
+    }
+
+    public DefaultOutputFilenameStrategy DefaultOutputFilenameStrategy
+    {
+        get { return _configuration.DefaultOutputFilenameStrategy; }
+        set { _configuration.DefaultOutputFilenameStrategy = value; }
+    }
+
+    /// <summary>
+    /// Configures the namespace provider based on current settings.
+    /// Should be called after all properties are set.
+    /// </summary>
+    public void ConfigureNamespaceProvider()
+    {
+        _configuration.ConfigureNamespaceProvider();
+    }
+
     public bool ValidationError { get; private set; }
 
     static Generator()
