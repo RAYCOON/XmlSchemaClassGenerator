@@ -1,0 +1,37 @@
+{
+  "SourceDirectories": ["/Users/svenhaude/RiderProjects/Raycoon/XmlSchemaClassGenerator_new/XmlSchemaClassGenerator.Tests/xsd/eessi"],
+  "OutputDirectory": "/Users/svenhaude/RiderProjects/Raycoon/XmlSchemaClassGenerator_new/eessi-output",
+  "CollectionType": "System.Array",
+  "GenerateChoiceItemProperty": true,
+  "UsePascalCase": true,
+  "InitializeComplexTypes": true,
+  "FileGroupingMode": "BySourceFile",
+  "GenerateInterfaces": false,
+  "EnableDataBinding": false,
+  "GenerateDescriptionAttribute": false,
+  "GenerateSerializableAttribute": false,
+  "GenerateDesignerCategoryAttribute": false,
+  "GenerateDebuggerStepThroughAttribute": false,
+  "NamespacePatterns": [
+    {
+      "Source": "Filename",
+      "Pattern": "(?<doc>[A-Z]+[0-9]+[A-Z]?)-(?<major>\\d+)\\.(?<minor>\\d+)",
+      "Template": "ITSG.EESSI.Tstelle.XML.SED.{doc}.V{major}_{minor}_1",
+      "Priority": 1
+    }
+  ],
+  "OutputFilenamePatterns": [
+    {
+      "Pattern": "(?<doc>P3000_[A-Z]{2})-(?<major>\\d+)\\.(?<minor>\\d+)",
+      "Template": "{doc}-{major}.{minor}.Designer",
+      "Priority": 0
+    },
+    {
+      "Pattern": "(?<doc>[A-Z]+[0-9]+[A-Z]?)-(?<major>\\d+)\\.(?<minor>\\d+)",
+      "Template": "{doc}-{major}.{minor}.Designer",
+      "Priority": 1
+    }
+  ],
+  "DefaultNamespaceStrategy": "AutoGenerate",
+  "DefaultOutputFilenameStrategy": "UseNamespace"
+}

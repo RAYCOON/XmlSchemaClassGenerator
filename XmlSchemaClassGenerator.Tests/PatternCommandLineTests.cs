@@ -26,8 +26,8 @@ namespace XmlSchemaClassGenerator.Tests
             var tempXsd = CreateTempXsd();
             var args = new[]
             {
-                "--file-pattern",
-                @"(?<doc>[A-Z]+)-(?<ver>\d+)=MyApp.{doc}.V{ver}",
+                "--namespace-pattern",
+                @"file:(?<doc>[A-Z]+)-(?<ver>\d+)=MyApp.{doc}.V{ver}",
                 tempXsd
             };
 
@@ -52,8 +52,8 @@ namespace XmlSchemaClassGenerator.Tests
             var tempXsd = CreateTempXsd();
             var args = new[]
             {
-                "--xml-pattern",
-                @"http://example\.com/(?<name>\w+)=MyApp.{name}",
+                "--namespace-pattern",
+                @"xml:http://example\.com/(?<name>\w+)=MyApp.{name}",
                 tempXsd
             };
 
@@ -78,8 +78,8 @@ namespace XmlSchemaClassGenerator.Tests
             var tempXsd = CreateTempXsd();
             var args = new[]
             {
-                "--file-pattern",
-                @"(?<ver>\d+\.\d+)=V{ver}",
+                "--namespace-pattern",
+                @"file:(?<ver>\d+\.\d+)=V{ver}",
                 "--pattern-transform",
                 "ver=dots_to_underscores",
                 tempXsd
@@ -106,8 +106,8 @@ namespace XmlSchemaClassGenerator.Tests
             var tempXsd = CreateTempXsd();
             var args = new[]
             {
-                "--file-pattern",
-                @"(?<name>\w+)-(?<ver>\d+\.\d+)={name}.V{ver}",
+                "--namespace-pattern",
+                @"file:(?<name>\w+)-(?<ver>\d+\.\d+)={name}.V{ver}",
                 "--pattern-transform",
                 "ver=dots_to_underscores",
                 "--pattern-transform",
@@ -205,8 +205,8 @@ namespace XmlSchemaClassGenerator.Tests
             var tempXsd = CreateTempXsd();
             var args = new[]
             {
-                "-fp", @"(?<name>\w+)=Test.{name}",
-                "-xp", @"http://example\.com/(?<id>\w+)=Example.{id}",
+                "-nsp", @"file:(?<name>\w+)=Test.{name}",
+                "-nsp", @"xml:http://example\.com/(?<id>\w+)=Example.{id}",
                 "-pt", "name=uppercase",
                 "-dns", "UseFilename",
                 "-dnt", "Default.{filename}",
@@ -238,8 +238,8 @@ namespace XmlSchemaClassGenerator.Tests
                 "--gi",
                 "--ua",
                 "--ctor",
-                "--file-pattern",
-                @"(?<doc>[A-Z]+[0-9]+)-(?<ver>\d+\.\d+\.\d+)=ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}",
+                "--namespace-pattern",
+                @"file:(?<doc>[A-Z]+[0-9]+)-(?<ver>\d+\.\d+\.\d+)=ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}",
                 "--pattern-transform",
                 "ver=dots_to_underscores",
                 "-o",
@@ -276,7 +276,7 @@ namespace XmlSchemaClassGenerator.Tests
             var tempXsd = CreateTempXsd();
             var args = new[]
             {
-                "--file-pattern",
+                "--namespace-pattern",
                 "invalid-pattern-without-equals",
                 tempXsd
             };
