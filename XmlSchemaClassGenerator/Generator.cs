@@ -210,6 +210,12 @@ public class Generator
         set { _configuration.GenerateDesignerCategoryAttribute = value; }
     }
 
+    public bool GenerateSourceFileAttribute
+    {
+        get { return _configuration.GenerateSourceFileAttribute; }
+        set { _configuration.GenerateSourceFileAttribute = value; }
+    }
+
     public Type CollectionType
     {
         get { return _configuration.CollectionType; }
@@ -330,10 +336,17 @@ public class Generator
         set { _configuration.EnableUpaCheck = value; }
     }
 
+    [Obsolete("Use FileGroupingMode property instead")]
     public bool SeparateClasses
     {
-        get { return _configuration.SeparateClasses; }
-        set { _configuration.SeparateClasses = value; }
+        get { return _configuration.FileGroupingMode == FileGroupingMode.ByType; }
+        set { _configuration.FileGroupingMode = value ? FileGroupingMode.ByType : FileGroupingMode.ByNamespace; }
+    }
+    
+    public FileGroupingMode FileGroupingMode
+    {
+        get { return _configuration.FileGroupingMode; }
+        set { _configuration.FileGroupingMode = value; }
     }
 
     public bool SeparateSubstitutes
@@ -545,10 +558,14 @@ public class Generator
             writer.Write(ns);
         }
         
-        // Flush single file writer if applicable
+        // Flush writers that need post-processing
         if (writer is SingleFileOutputWriter singleFileWriter)
         {
             singleFileWriter.Flush();
+        }
+        else if (writer is FileOutputWriter fileWriter && _configuration.FileGroupingMode == FileGroupingMode.BySourceFile)
+        {
+            fileWriter.WriteSourceFileGroups();
         }
     }
 

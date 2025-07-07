@@ -25,6 +25,7 @@ public class SimpleConfiguration
     public bool? GenerateInterfaces { get; set; }
     public bool? UsePascalCase { get; set; }
     public bool? SeparateFiles { get; set; }
+    public string FileGroupingMode { get; set; }
     public string CollectionType { get; set; }
     public bool? GenerateChoiceItemProperty { get; set; }
     public string NamespacePrefix { get; set; }
@@ -35,6 +36,11 @@ public class SimpleConfiguration
     public string DefaultNamespaceTemplate { get; set; }
     public List<string> SourceFiles { get; set; }
     public List<string> SourceDirectories { get; set; }
+    public bool? GenerateDescriptionAttribute { get; set; }
+    public bool? GenerateSerializableAttribute { get; set; }
+    public bool? GenerateDesignerCategoryAttribute { get; set; }
+    public bool? GenerateDebuggerStepThroughAttribute { get; set; }
+    public bool? GenerateSourceFileAttribute { get; set; }
 }
 
 public class NamespaceMapping
@@ -95,6 +101,9 @@ public static class Program
         var disableComments = false;
         var doNotUseUnderscoreInPrivateMemberNames = false;
         var generateDescriptionAttribute = true;
+        var generateSerializableAttribute = true;
+        var generateDesignerCategoryAttribute = true;
+        var generateSourceFileAttribute = true;
         var enableUpaCheck = true;
         var generateComplexTypesForCollections = true;
         var initializeComplexTypes = false;
@@ -140,6 +149,7 @@ public static class Program
         var configFile = (string)null;
         var singleFile = false;
         var singleFileName = "output.cs";
+        var fileGroupingMode = FileGroupingMode.ByNamespace;
 
 
         var options = new OptionSet {
@@ -222,6 +232,12 @@ with or without backing field initialization for collections
             { "s|useShouldSerialize", "use ShouldSerialize pattern instead of Specified pattern (default is false)", v => useShouldSerialize = v != null },
             { "sf|separateFiles", "generate a separate file for each class (default is false)", v => separateClasses = v != null },
             { "nh|namespaceHierarchy", "generate a separate folder for namespace hierarchy. Implies \"separateFiles\" if true (default is false)", v=> separateNamespaceHierarchy = v != null },
+            { "fgm|file-grouping-mode=", "how to group types into files: ByNamespace, ByType, BySourceFile (default is ByNamespace)", v => {
+                if (Enum.TryParse<FileGroupingMode>(v, true, out var mode))
+                    fileGroupingMode = mode;
+                else
+                    System.Console.Error.WriteLine($"Invalid file grouping mode: {v}. Valid values are: ByNamespace, ByType, BySourceFile");
+            }},
             { "single-file", "generate all code into a single file (default is false)", v => singleFile = v != null },
             { "single-file-name=", "name of the single output file when using --single-file (default is output.cs)", v => singleFileName = v },
             { "sg|separateSubstitutes", "generate a separate property for each element of a substitution group (default is false)", v => separateSubstitutes = v != null },
@@ -384,6 +400,10 @@ Options: UseNamespace (default), UseSourceFilename, UseTemplate", v => {
                     if (config.SeparateFiles.HasValue && !separateClasses)
                         separateClasses = config.SeparateFiles.Value;
                     
+                    if (!string.IsNullOrEmpty(config.FileGroupingMode) && 
+                        Enum.TryParse<FileGroupingMode>(config.FileGroupingMode, true, out var configGroupingMode))
+                        fileGroupingMode = configGroupingMode;
+                    
                     if (config.GenerateChoiceItemProperty.HasValue && !generateChoiceItemProperty)
                         generateChoiceItemProperty = config.GenerateChoiceItemProperty.Value;
                     
@@ -392,6 +412,21 @@ Options: UseNamespace (default), UseSourceFilename, UseTemplate", v => {
                     
                     if (!string.IsNullOrEmpty(config.CollectionType) && collectionType == typeof(Collection<>))
                         collectionType = Type.GetType(config.CollectionType) ?? typeof(Collection<>);
+                    
+                    if (config.GenerateDescriptionAttribute.HasValue)
+                        generateDescriptionAttribute = config.GenerateDescriptionAttribute.Value;
+                    
+                    if (config.GenerateSerializableAttribute.HasValue)
+                        generateSerializableAttribute = config.GenerateSerializableAttribute.Value;
+                    
+                    if (config.GenerateDesignerCategoryAttribute.HasValue)
+                        generateDesignerCategoryAttribute = config.GenerateDesignerCategoryAttribute.Value;
+                    
+                    if (config.GenerateDebuggerStepThroughAttribute.HasValue)
+                        generateDebuggerStepThroughAttribute = config.GenerateDebuggerStepThroughAttribute.Value;
+                    
+                    if (config.GenerateSourceFileAttribute.HasValue)
+                        generateSourceFileAttribute = config.GenerateSourceFileAttribute.Value;
                     
                     // Add namespace mappings from config
                     if (config.NamespaceMappings != null)
@@ -545,6 +580,10 @@ Options: UseNamespace (default), UseSourceFilename, UseTemplate", v => {
         {
             outputFolder = Path.GetFullPath(outputFolder);
         }
+        
+        // Handle backward compatibility: if separateClasses is set, override fileGroupingMode
+        if (separateClasses)
+            fileGroupingMode = FileGroupingMode.ByType;
 
         var generator = new Generator
         {
@@ -566,12 +605,15 @@ Options: UseNamespace (default), UseSourceFilename, UseTemplate", v => {
             GenerateDebuggerStepThroughAttribute = generateDebuggerStepThroughAttribute,
             DisableComments = disableComments,
             GenerateDescriptionAttribute = generateDescriptionAttribute,
+            GenerateSerializableAttribute = generateSerializableAttribute,
+            GenerateDesignerCategoryAttribute = generateDesignerCategoryAttribute,
+            GenerateSourceFileAttribute = generateSourceFileAttribute,
             PrivateMemberPrefix = doNotUseUnderscoreInPrivateMemberNames ? "" : "_",
             EnableUpaCheck = enableUpaCheck,
             GenerateComplexTypesForCollections = generateComplexTypesForCollections,
             InitializeComplexTypesInConstructor = initializeComplexTypes,
             UseShouldSerializePattern = useShouldSerialize,
-            SeparateClasses = separateClasses,
+            FileGroupingMode = fileGroupingMode,
             CollectionSettersMode = collectionSettersMode,
             DoNotForceIsNullable = doNotForceIsNullable,
             SeparateSubstitutes = separateSubstitutes,

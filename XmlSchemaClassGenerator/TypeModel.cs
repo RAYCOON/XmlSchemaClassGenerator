@@ -67,6 +67,11 @@ public abstract class TypeModel(GeneratorConfiguration configuration) : Generato
     public bool IsAnonymous { get; set; }
     public virtual bool IsSubtype => false;
     public virtual bool IsRedefined => false;
+    
+    /// <summary>
+    /// The source XSD filename this type was defined in
+    /// </summary>
+    public string SourceFileName { get; set; }
 
     public virtual CodeTypeDeclaration Generate()
     {
@@ -75,6 +80,15 @@ public abstract class TypeModel(GeneratorConfiguration configuration) : Generato
         typeDeclaration.Comments.AddRange(GetComments(Documentation).ToArray());
 
         AddDescription(typeDeclaration.CustomAttributes, Documentation);
+        
+        // Add source file information if available and using BySourceFile grouping
+        // Note: Source file attribute is required for BySourceFile mode to work correctly
+        if (!string.IsNullOrEmpty(SourceFileName) && Configuration.FileGroupingMode == FileGroupingMode.BySourceFile)
+        {
+            var sourceFileAttribute = AttributeDecl<DescriptionAttribute>(
+                new CodeAttributeArgument(new CodePrimitiveExpression($"SourceFile:{SourceFileName}")));
+            typeDeclaration.CustomAttributes.Add(sourceFileAttribute);
+        }
 
         var generatedAttribute = AttributeDecl<GeneratedCodeAttribute>(
             new(new CodePrimitiveExpression(Configuration.Version.Title)),

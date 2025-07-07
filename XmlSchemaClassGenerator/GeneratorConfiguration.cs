@@ -7,6 +7,27 @@ using System.Text.RegularExpressions;
 
 namespace XmlSchemaClassGenerator;
 
+/// <summary>
+/// Specifies how generated types should be grouped into files
+/// </summary>
+public enum FileGroupingMode
+{
+    /// <summary>
+    /// Group types by namespace - all types in same namespace go in one file (default)
+    /// </summary>
+    ByNamespace,
+    
+    /// <summary>
+    /// Each type gets its own file (equivalent to SeparateClasses = true)
+    /// </summary>
+    ByType,
+    
+    /// <summary>
+    /// Group types by their source XSD file - all types from same XSD go in one file
+    /// </summary>
+    BySourceFile
+}
+
 public class GeneratorConfiguration
 {
     public static Regex IdentifierRegex { get; } = new Regex(@"^@?[_\p{L}\p{Nl}][\p{L}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*$", RegexOptions.Compiled);
@@ -254,6 +275,12 @@ public class GeneratorConfiguration
     /// When true, generates constructors that initialize all complex type properties to avoid null references
     /// </summary>
     public bool InitializeComplexTypesInConstructor { get; set; } = false;
+    
+    /// <summary>
+    /// Generate source file information in DescriptionAttribute for BySourceFile grouping mode
+    /// When false, source file information will not be added to generated types
+    /// </summary>
+    public bool GenerateSourceFileAttribute { get; set; } = true;
 
     /// <summary>
     /// Provides a fast and safe way to write to the Log
@@ -354,7 +381,17 @@ public class GeneratorConfiguration
     /// <summary>
     /// Separates each class into an individual file
     /// </summary>
-    public bool SeparateClasses { get; set; } = false;
+    [Obsolete("Use FileGroupingMode property instead. This property maps to FileGroupingMode.ByType when true.")]
+    public bool SeparateClasses 
+    { 
+        get => FileGroupingMode == FileGroupingMode.ByType;
+        set => FileGroupingMode = value ? FileGroupingMode.ByType : FileGroupingMode.ByNamespace;
+    }
+    
+    /// <summary>
+    /// Specifies how generated types should be grouped into files
+    /// </summary>
+    public FileGroupingMode FileGroupingMode { get; set; } = FileGroupingMode.ByNamespace;
 
     /// <summary>
     /// Generates a separate property for each element of a substitution group

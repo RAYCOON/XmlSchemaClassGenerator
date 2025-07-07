@@ -28,22 +28,112 @@ public class FileOutputWriter : OutputWriter
     /// </summary>
     public IList<string> WrittenFiles { get; } = [];
 
+    private readonly Dictionary<string, List<(CodeNamespace Namespace, List<CodeTypeDeclaration> Types)>> _sourceFileGroups = new();
+    
     public override void Write(CodeNamespace cn)
+    {
+        switch (Configuration?.FileGroupingMode ?? FileGroupingMode.ByNamespace)
+        {
+            case FileGroupingMode.ByType:
+                WriteSeparateFiles(cn);
+                break;
+                
+            case FileGroupingMode.BySourceFile:
+                CollectBySourceFile(cn);
+                break;
+                
+            case FileGroupingMode.ByNamespace:
+            default:
+                WriteNamespaceFile(cn);
+                break;
+        }
+    }
+    
+    private void WriteNamespaceFile(CodeNamespace cn)
     {
         var cu = new CodeCompileUnit();
         cu.Namespaces.Add(cn);
-
-        if (Configuration?.SeparateClasses == true || Configuration?.SeparateNamespaceHierarchy == true)
+        
+        var filename = GenerateOutputFilename(cn.Name);
+        var path = Path.Combine(OutputDirectory, filename + ".cs");
+        Configuration?.WriteLog(path);
+        WriteFile(path, cu);
+    }
+    
+    private void CollectBySourceFile(CodeNamespace cn)
+    {
+        // Group types by their source file
+        foreach (CodeTypeDeclaration type in cn.Types)
         {
-            WriteSeparateFiles(cn);
+            var sourceFile = GetTypeSourceFile(type);
+            if (string.IsNullOrEmpty(sourceFile))
+                sourceFile = "Unknown"; // Fallback for types without source
+                
+            if (!_sourceFileGroups.ContainsKey(sourceFile))
+                _sourceFileGroups[sourceFile] = new List<(CodeNamespace, List<CodeTypeDeclaration>)>();
+                
+            // Find or create entry for this namespace
+            var nsEntry = _sourceFileGroups[sourceFile].FirstOrDefault(e => e.Namespace.Name == cn.Name);
+            if (nsEntry.Namespace == null)
+            {
+                var newNs = new CodeNamespace(cn.Name);
+                newNs.Imports.AddRange(cn.Imports.Cast<CodeNamespaceImport>().ToArray());
+                newNs.Comments.AddRange(cn.Comments);
+                _sourceFileGroups[sourceFile].Add((newNs, new List<CodeTypeDeclaration> { type }));
+            }
+            else
+            {
+                nsEntry.Types.Add(type);
+            }
         }
-        else
+    }
+    
+    /// <summary>
+    /// Writes all collected source file groups. Call this after all namespaces have been processed.
+    /// </summary>
+    public void WriteSourceFileGroups()
+    {
+        foreach (var kvp in _sourceFileGroups)
         {
-            var filename = GenerateOutputFilename(cn.Name);
+            var sourceFile = kvp.Key;
+            var namespaceGroups = kvp.Value;
+            var cu = new CodeCompileUnit();
+            
+            // Add all namespaces that have types from this source file
+            foreach (var nsGroup in namespaceGroups)
+            {
+                var ns = nsGroup.Namespace;
+                var types = nsGroup.Types;
+                ns.Types.Clear();
+                foreach (var type in types)
+                    ns.Types.Add(type);
+                cu.Namespaces.Add(ns);
+            }
+            
+            var filename = GenerateOutputFilename(sourceFile);
             var path = Path.Combine(OutputDirectory, filename + ".cs");
             Configuration?.WriteLog(path);
             WriteFile(path, cu);
         }
+        
+        _sourceFileGroups.Clear();
+    }
+    
+    private string GetTypeSourceFile(CodeTypeDeclaration type)
+    {
+        // Look for a custom attribute that stores the source file
+        foreach (CodeAttributeDeclaration attr in type.CustomAttributes)
+        {
+            if (attr.AttributeType.BaseType == "System.ComponentModel.DescriptionAttribute" && 
+                attr.Arguments.Count > 0 &&
+                attr.Arguments[0].Value is CodePrimitiveExpression primitive &&
+                primitive.Value is string description &&
+                description.StartsWith("SourceFile:"))
+            {
+                return description.Substring("SourceFile:".Length);
+            }
+        }
+        return null;
     }
 
     protected virtual void WriteFile(string path, CodeCompileUnit cu)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
@@ -360,7 +361,8 @@ public class ModelBuilder
         derivedClassModel = new ClassModel(_configuration)
         {
             Name = _configuration.NamingProvider.RootClassNameFromQualifiedName(rootElement.QualifiedName, rootElement),
-            Namespace = CreateNamespaceModel(elementSource, rootElement.QualifiedName)
+            Namespace = CreateNamespaceModel(elementSource, rootElement.QualifiedName),
+            SourceFileName = elementSource != null ? Path.GetFileNameWithoutExtension(elementSource.LocalPath) : null
         };
 
         derivedClassModel.Documentation.AddRange(GetDocumentation(rootElement));
@@ -391,7 +393,8 @@ public class ModelBuilder
         var originalClassModel = new ClassModel(_configuration)
         {
             Name = _configuration.NamingProvider.RootClassNameFromQualifiedName(type.RootElementName, rootElement),
-            Namespace = classModel.Namespace
+            Namespace = classModel.Namespace,
+            SourceFileName = classModel.SourceFileName
         };
 
         originalClassModel.Documentation.AddRange(classModel.Documentation);
@@ -476,7 +479,8 @@ public class ModelBuilder
             {
                 Name = name,
                 Namespace = namespaceModel,
-                XmlSchemaName = qualifiedName
+                XmlSchemaName = qualifiedName,
+                SourceFileName = GetSourceFileName(source)
             };
 
             interfaceModel.Documentation.AddRange(docs);
@@ -534,7 +538,8 @@ public class ModelBuilder
                 IsAbstract = complexType.IsAbstract,
                 IsAnonymous = string.IsNullOrEmpty(complexType.QualifiedName.Name),
                 IsMixed = complexType.IsMixed,
-                IsSubstitution = complexType.Parent is XmlSchemaElement parent && !parent.SubstitutionGroup.IsEmpty
+                IsSubstitution = complexType.Parent is XmlSchemaElement parent && !parent.SubstitutionGroup.IsEmpty,
+                SourceFileName = GetSourceFileName(source)
             };
 
             classModel.Documentation.AddRange(docs);
@@ -743,6 +748,7 @@ public class ModelBuilder
                 XmlSchemaName = qualifiedName,
                 XmlSchemaType = simpleType,
                 IsAnonymous = string.IsNullOrEmpty(simpleType.QualifiedName.Name),
+                SourceFileName = GetSourceFileName(source)
             };
 
             enumModel.Documentation.AddRange(docs);
@@ -787,6 +793,7 @@ public class ModelBuilder
                 XmlSchemaName = qualifiedName,
                 XmlSchemaType = simpleType,
                 ValueType = simpleType.Datatype.GetEffectiveType(_configuration, restrictions, simpleType),
+                SourceFileName = GetSourceFileName(source)
             };
 
             simpleModel.Documentation.AddRange(docs);
@@ -812,6 +819,23 @@ public class ModelBuilder
             var interfaces = attributes.OfType<XmlSchemaAttributeGroupRef>()
                 .Select(a => (InterfaceModel)builder.CreateTypeModel(a.RefName, builder.AttributeGroups[a.RefName].First()));
             refTypeModel.AddInterfaces(interfaces);
+        }
+        
+        private static string GetSourceFileName(Uri source)
+        {
+            if (source == null) return null;
+            
+            try
+            {
+                // Extract just the filename without path or extension
+                var filename = Path.GetFileNameWithoutExtension(source.LocalPath);
+                return filename;
+            }
+            catch
+            {
+                // If we can't extract a filename, return null
+                return null;
+            }
         }
     }
 
@@ -1265,7 +1289,8 @@ public class ModelBuilder
             XmlSchemaName = new XmlQualifiedName(enumName, owningTypeModel.XmlSchemaName.Namespace),
             XmlSchemaType = null, // This is a generated enum, not from schema
             IsAnonymous = false,
-            Values = enumValues
+            Values = enumValues,
+            SourceFileName = owningTypeModel.SourceFileName // Inherit from owning type
         };
         
         // Register the enum model in the namespace
