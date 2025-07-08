@@ -13,7 +13,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit;
 using Xunit.Abstractions;
-using XmlSchemaClassGenerator.BatchConverter.Services;
 
 namespace XmlSchemaClassGenerator.Tests
 {
@@ -104,33 +103,24 @@ namespace XmlSchemaClassGenerator.Tests
             // Ensure output directory exists
             Directory.CreateDirectory(outputPath);
 
-            // Set namespace provider
-            var namespaceProvider = new NamespaceProvider();
-            
-            // Add namespace mappings using NamespaceKey
-            namespaceProvider.Add(new NamespaceKey("http://www.w3.org/2000/09/xmldsig#"), "ITSG.EESSI.Tstelle.XML.XmlDsig");
-            namespaceProvider.Add(new NamespaceKey("http://uri.etsi.org/01903/v1.3.2#"), "ITSG.EESSI.Tstelle.XML.Etsi");
-            namespaceProvider.Add(new NamespaceKey("http://uri.etsi.org/01903/v1.4.1#"), "ITSG.EESSI.Tstelle.XML.Etsi141");
-            namespaceProvider.Add(new NamespaceKey("http://uri.etsi.org/02231/v2#"), "ITSG.EESSI.Tstelle.XML.Etsi2");
-            namespaceProvider.Add(new NamespaceKey("http://www.w3.org/2001/04/xmlenc#"), "ITSG.EESSI.Tstelle.XML.XmlEnc");
-
-            // Create pattern-based namespace provider
-            var patternProvider = new NamespacePatternProvider(namespaceProvider);
-            patternProvider.AddPattern("http://ec.europa.eu/eessi/ns/4_4/{id}", "ITSG.EESSI.Tstelle.XML.SED.{id}.V4_4_1");
-
-            // Create namespace to filename mapping
-            var fileNameMappings = new Dictionary<string, string>
+            // Set up namespace mappings
+            var namespaceProvider = new NamespaceProvider
             {
-                { "ITSG.EESSI.Tstelle.XML.SED.A008.V4_4_1", "A008-4.4.1" },
-                { "ITSG.EESSI.Tstelle.XML.XmlDsig", "XmlDsig-4.4.1" },
-                { "ITSG.EESSI.Tstelle.XML.Etsi", "XAdES-4.4.1" }
+                GenerateNamespace = key => key.XmlSchemaNamespace switch
+                {
+                    "http://www.w3.org/2000/09/xmldsig#" => "ITSG.EESSI.Tstelle.XML.XmlDsig",
+                    "http://uri.etsi.org/01903/v1.3.2#" => "ITSG.EESSI.Tstelle.XML.Etsi",
+                    "http://uri.etsi.org/01903/v1.4.1#" => "ITSG.EESSI.Tstelle.XML.Etsi141",
+                    "http://uri.etsi.org/02231/v2#" => "ITSG.EESSI.Tstelle.XML.Etsi2",
+                    "http://www.w3.org/2001/04/xmlenc#" => "ITSG.EESSI.Tstelle.XML.XmlEnc",
+                    _ when key.XmlSchemaNamespace.StartsWith("http://ec.europa.eu/eessi/ns/4_4/") =>
+                        $"ITSG.EESSI.Tstelle.XML.SED.{key.XmlSchemaNamespace.Substring("http://ec.europa.eu/eessi/ns/4_4/".Length)}.V4_4_1",
+                    _ => key.XmlSchemaNamespace.Replace('/', '.').Replace("http:", "").Replace("https:", "").Trim('.')
+                }
             };
 
-            // Create custom output writer for single file
-            var outputWriter = new CustomFileOutputWriter(outputPath, fileNameMappings, true, true);
-
-            // Create the namespace provider with pattern support
-            var finalNamespaceProvider = patternProvider.CreateNamespaceProvider();
+            // Create single file output writer
+            var outputWriter = new SingleFileOutputWriter(generatedFilePath);
 
             // Act - Configure and generate
             var generator = new Generator
@@ -151,7 +141,7 @@ namespace XmlSchemaClassGenerator.Tests
                 UseShouldSerializePattern = false,
                 EnumAsString = false,
                 SeparateClasses = false,
-                NamespaceProvider = finalNamespaceProvider,
+                NamespaceProvider = namespaceProvider,
                 OutputWriter = outputWriter
             };
             

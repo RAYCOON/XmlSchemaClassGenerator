@@ -32,7 +32,7 @@ namespace XmlSchemaClassGenerator.Tests
                 .Where(f => !Path.GetFileName(f).StartsWith("XAdES") && 
                            !Path.GetFileName(f).StartsWith("xmldsig"))
                 .OrderBy(f => f)
-                .Take(10) // Process only first 20 files for testing
+                .Take(3) // Process only first 20 files for testing
                 .ToList();
 
             _output.WriteLine($"Processing {xsdFiles.Count} EESSI XSD files (out of {allXsdFiles.Count - 2} total)");

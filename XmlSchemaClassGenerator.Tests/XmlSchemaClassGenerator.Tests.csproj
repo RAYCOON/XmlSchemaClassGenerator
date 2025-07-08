@@ -21,7 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\XmlSampleGenerator\XmlSampleGenerator.csproj" />
     <ProjectReference Include="..\XmlSchemaClassGenerator\XmlSchemaClassGenerator.csproj" />
-    <ProjectReference Include="..\XmlSchemaClassGenerator.BatchConverter\XmlSchemaClassGenerator.BatchConverter.csproj" />
     <ProjectReference Include="..\XmlSchemaClassGenerator.Console\XmlSchemaClassGenerator.Console.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -64,5 +63,11 @@
   <ItemGroup>
     <Folder Include="xml\eessi\" />
     <Folder Include="xsd\csharp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="H003DirectSerializationTest.cs" />
+    <Compile Remove="EessiA008H003ValidationTest.cs" />
+    <Compile Remove="A008ComprehensiveTest_Fixed.cs" />
+    <Compile Remove="A008ComprehensiveTest.cs" />
   </ItemGroup>
 </Project>

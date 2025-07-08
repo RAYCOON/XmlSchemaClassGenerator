@@ -41,6 +41,10 @@ public class SimpleConfiguration
     public bool? GenerateDesignerCategoryAttribute { get; set; }
     public bool? GenerateDebuggerStepThroughAttribute { get; set; }
     public bool? GenerateSourceFileAttribute { get; set; }
+    public bool? InitializeComplexTypes { get; set; }
+    public string CollectionSettersMode { get; set; }
+    public bool? EmitOrder { get; set; }
+    public string DataAnnotationMode { get; set; }
 }
 
 public class NamespaceMapping
@@ -150,6 +154,7 @@ public static class Program
         var singleFile = false;
         var singleFileName = "output.cs";
         var fileGroupingMode = FileGroupingMode.ByNamespace;
+        var dataAnnotationMode = DataAnnotationMode.None;
 
 
         var options = new OptionSet {
@@ -428,6 +433,36 @@ Options: UseNamespace (default), UseSourceFilename, UseTemplate", v => {
                     if (config.GenerateSourceFileAttribute.HasValue)
                         generateSourceFileAttribute = config.GenerateSourceFileAttribute.Value;
                     
+                    if (config.InitializeComplexTypes.HasValue && !initializeComplexTypes)
+                        initializeComplexTypes = config.InitializeComplexTypes.Value;
+                    
+                    if (!string.IsNullOrEmpty(config.CollectionSettersMode))
+                    {
+                        collectionSettersMode = config.CollectionSettersMode switch
+                        {
+                            "Private" => CollectionSettersMode.Private,
+                            "Public" => CollectionSettersMode.Public,
+                            "PublicWithoutConstructorInitialization" => CollectionSettersMode.PublicWithoutConstructorInitialization,
+                            "Init" => CollectionSettersMode.Init,
+                            "InitWithoutConstructorInitialization" => CollectionSettersMode.InitWithoutConstructorInitialization,
+                            _ => CollectionSettersMode.Private
+                        };
+                    }
+                    
+                    if (config.EmitOrder.HasValue)
+                        emitOrder = config.EmitOrder.Value;
+                    
+                    if (!string.IsNullOrEmpty(config.DataAnnotationMode))
+                    {
+                        dataAnnotationMode = config.DataAnnotationMode switch
+                        {
+                            "None" => DataAnnotationMode.None,
+                            "Partial" => DataAnnotationMode.Partial,
+                            "All" => DataAnnotationMode.All,
+                            _ => DataAnnotationMode.None
+                        };
+                    }
+                    
                     // Add namespace mappings from config
                     if (config.NamespaceMappings != null)
                     {
@@ -632,7 +667,8 @@ Options: UseNamespace (default), UseSourceFilename, UseTemplate", v => {
             AllowDtdParse = allowDtdParse,
             ForceUriScheme = forceUriScheme,
             UseFilenameAsNamespace = useFilenameAsNamespace,
-            GenerateChoiceItemProperty = generateChoiceItemProperty
+            GenerateChoiceItemProperty = generateChoiceItemProperty,
+            DataAnnotationMode = dataAnnotationMode
         };
         
         // Add namespace transforms

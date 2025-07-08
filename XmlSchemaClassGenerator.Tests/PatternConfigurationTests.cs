@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.Json;
 using Xunit;
 using XmlSchemaClassGenerator.Console;
+using XmlSchemaClassGenerator;
 
 namespace XmlSchemaClassGenerator.Tests
 {
@@ -45,10 +46,11 @@ namespace XmlSchemaClassGenerator.Tests
             var config = new SimpleConfiguration
             {
                 OutputDirectory = "generated",
-                FilenamePatterns = new List<FilenamePatternMapping>
+                NamespacePatterns = new List<CSharpNamespacePatternMapping>
                 {
-                    new FilenamePatternMapping
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "Filename",
                         Pattern = @"(?<doc>[A-Z]+)-(?<ver>\d+\.\d+)",
                         Template = "MyApp.{doc}.V{ver}",
                         Transforms = new Dictionary<string, string>
@@ -76,10 +78,11 @@ namespace XmlSchemaClassGenerator.Tests
             var config = new SimpleConfiguration
             {
                 OutputDirectory = "generated",
-                XmlNamespacePatterns = new List<XmlNamespacePatternMapping>
+                NamespacePatterns = new List<CSharpNamespacePatternMapping>
                 {
-                    new XmlNamespacePatternMapping
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "XmlNamespace",
                         Pattern = @"http://example\.com/(?<name>\w+)",
                         Template = "MyApp.{name}",
                         Transforms = null,
@@ -148,10 +151,11 @@ namespace XmlSchemaClassGenerator.Tests
                 UsePascalCase = true,
                 SeparateFiles = false,
                 CollectionType = "System.Array",
-                FilenamePatterns = new List<FilenamePatternMapping>
+                NamespacePatterns = new List<CSharpNamespacePatternMapping>
                 {
-                    new FilenamePatternMapping
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "Filename",
                         Pattern = @"(?<doc>[A-Z]+[0-9]+)-(?<ver>\d+\.\d+\.\d+)",
                         Template = "ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}",
                         Transforms = new Dictionary<string, string>
@@ -159,18 +163,17 @@ namespace XmlSchemaClassGenerator.Tests
                             ["ver"] = "dots_to_underscores"
                         },
                         Priority = 1
-                    }
-                },
-                XmlNamespacePatterns = new List<XmlNamespacePatternMapping>
-                {
-                    new XmlNamespacePatternMapping
+                    },
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "XmlNamespace",
                         Pattern = @"http://ec\.europa\.eu/eessi/ns/(?<ver>[^/]+)/(?<doc>[A-Z]+[0-9]+)",
                         Template = "ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}",
                         Transforms = new Dictionary<string, string>
                         {
                             ["ver"] = "dots_to_underscores"
-                        }
+                        },
+                        Priority = 2
                     }
                 },
                 DefaultNamespaceStrategy = "UseFilename",
@@ -196,16 +199,18 @@ namespace XmlSchemaClassGenerator.Tests
             var config = new SimpleConfiguration
             {
                 OutputDirectory = "generated",
-                FilenamePatterns = new List<FilenamePatternMapping>
+                NamespacePatterns = new List<CSharpNamespacePatternMapping>
                 {
-                    new FilenamePatternMapping
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "Filename",
                         Pattern = @".*",
                         Template = "LowPriority",
                         Priority = 100
                     },
-                    new FilenamePatternMapping
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "Filename",
                         Pattern = @"test.*",
                         Template = "HighPriority",
                         Priority = 1
@@ -236,10 +241,11 @@ namespace XmlSchemaClassGenerator.Tests
             {
                 OutputDirectory = "generated",
                 SourceDirectories = new List<string> { tempDir },
-                FilenamePatterns = new List<FilenamePatternMapping>
+                NamespacePatterns = new List<CSharpNamespacePatternMapping>
                 {
-                    new FilenamePatternMapping
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "Filename",
                         Pattern = @"(?<name>\w+)",
                         Template = "Test.{name}"
                     }
@@ -269,8 +275,8 @@ namespace XmlSchemaClassGenerator.Tests
             var config = new SimpleConfiguration
             {
                 OutputDirectory = "generated",
-                FilenamePatterns = new List<FilenamePatternMapping>(),
-                XmlNamespacePatterns = new List<XmlNamespacePatternMapping>()
+                NamespacePatterns = new List<CSharpNamespacePatternMapping>(),
+                OutputFilenamePatterns = new List<OutputFilenamePatternMapping>()
             };
 
             File.WriteAllText(_tempConfigFile, JsonSerializer.Serialize(config));
@@ -289,10 +295,11 @@ namespace XmlSchemaClassGenerator.Tests
             var config = new SimpleConfiguration
             {
                 OutputDirectory = "generated",
-                FilenamePatterns = new List<FilenamePatternMapping>
+                NamespacePatterns = new List<CSharpNamespacePatternMapping>
                 {
-                    new FilenamePatternMapping
+                    new CSharpNamespacePatternMapping
                     {
+                        Source = "Filename",
                         Pattern = @"(?<name>\w+)",
                         Template = "Test.{name}",
                         Transforms = null

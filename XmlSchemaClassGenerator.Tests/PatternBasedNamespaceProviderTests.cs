@@ -22,12 +22,13 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(?<doc>[A-Z]+[0-9]+)-(?<ver>\d+\.\d+\.\d+)",
                         "ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}")
                     {
+                        Source = "Filename",
                         Transforms = new Dictionary<string, string> { ["ver"] = "dots_to_underscores" }
                     }
                 }
@@ -49,11 +50,14 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                XmlNamespacePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"http://ec\.europa\.eu/eessi/ns/(?<ver>[^/]+)/(?<doc>[A-Z]+[0-9]+)",
                         "ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}")
+                    {
+                        Source = "XmlNamespace"
+                    }
                 }
             };
 
@@ -73,12 +77,13 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"test-(?<version>\d+\.\d+\.\d+)",
                         "Test.V{version}")
                     {
+                        Source = "Filename",
                         Transforms = new Dictionary<string, string> { ["version"] = "dots_to_underscores" }
                     }
                 }
@@ -100,12 +105,13 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(?<name>[a-z]+)",
                         "Test.{name}")
                     {
+                        Source = "Filename",
                         Transforms = new Dictionary<string, string> { ["name"] = "uppercase" }
                     }
                 }
@@ -127,12 +133,13 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(?<name>[A-Z]+)",
                         "Test.{name}")
                     {
+                        Source = "Filename",
                         Transforms = new Dictionary<string, string> { ["name"] = "lowercase" }
                     }
                 }
@@ -154,12 +161,13 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(?<name>[a-z-]+)",
                         "Test.{name}")
                     {
+                        Source = "Filename",
                         Transforms = new Dictionary<string, string> { ["name"] = "remove_hyphens" }
                     }
                 }
@@ -181,10 +189,10 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
-                    new NamespacePattern(@".*", "Second") { Priority = 200 },
-                    new NamespacePattern(@".*", "First") { Priority = 100 }
+                    new NamespacePattern(@".*", "Second") { Source = "Filename", Priority = 200 },
+                    new NamespacePattern(@".*", "First") { Source = "Filename", Priority = 100 }
                 }
             };
 
@@ -204,11 +212,14 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(?<type>[A-Z]+)-(?<num>\d+)-(?<ver>\d+\.\d+)",
                         "{type}.Number{num}.Version{ver}")
+                    {
+                        Source = "Filename"
+                    }
                 }
             };
 
@@ -228,9 +239,12 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(@"specific-pattern", "Matched")
+                    {
+                        Source = "Filename"
+                    }
                 },
                 DefaultStrategy = DefaultNamespaceStrategy.AutoGenerate
             };
@@ -251,9 +265,12 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(@"will-not-match", "Matched")
+                    {
+                        Source = "Filename"
+                    }
                 },
                 DefaultStrategy = DefaultNamespaceStrategy.UseFilename
             };
@@ -274,9 +291,12 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                XmlNamespacePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(@"will-not-match", "Matched")
+                    {
+                        Source = "XmlNamespace"
+                    }
                 },
                 DefaultStrategy = DefaultNamespaceStrategy.UseXmlNamespace
             };
@@ -338,9 +358,12 @@ namespace XmlSchemaClassGenerator.Tests
             
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(@"[invalid(regex", "Test")
+                    {
+                        Source = "Filename"
+                    }
                 }
             };
 
@@ -361,11 +384,14 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(?<name>\w+)",
                         "Test.{name}.{missing}")
+                    {
+                        Source = "Filename"
+                    }
                 }
             };
 
@@ -385,11 +411,14 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(\w+)-(\d+)",
                         "Test.{0}.Version{1}")
+                    {
+                        Source = "Filename"
+                    }
                 }
             };
 
@@ -409,12 +438,13 @@ namespace XmlSchemaClassGenerator.Tests
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
                     new NamespacePattern(
                         @"(?<doc>[A-Za-z]+[0-9]+)-(?<ver>\d+\.\d+\.\d+)-\d+T\d+",
                         "ITSG.EESSI.Tstelle.XML.SED.{doc}.V{ver}")
                     {
+                        Source = "Filename",
                         Transforms = new Dictionary<string, string> 
                         { 
                             ["ver"] = "dots_to_underscores",
@@ -436,19 +466,16 @@ namespace XmlSchemaClassGenerator.Tests
         }
 
         [Fact]
-        public void BothPatternsConfigured_FilenameTriedFirst()
+        public void BothPatternsConfigured_PriorityDeterminesOrder()
         {
             // Arrange
             var config = CreateTestConfiguration();
             var provider = new PatternBasedNamespaceProvider(config)
             {
-                FilenamePatterns = new List<NamespacePattern>
+                NamespacePatterns = new List<NamespacePattern>
                 {
-                    new NamespacePattern(@"test", "FromFilename")
-                },
-                XmlNamespacePatterns = new List<NamespacePattern>
-                {
-                    new NamespacePattern(@".*", "FromXmlNamespace")
+                    new NamespacePattern(@"test", "FromFilename") { Source = "Filename", Priority = 100 },
+                    new NamespacePattern(@".*", "FromXmlNamespace") { Source = "XmlNamespace", Priority = 200 }
                 }
             };
 

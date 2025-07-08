@@ -15,11 +15,12 @@ public class FileOutputWriterTests(ITestOutputHelper output)
     [Fact]
     [TestPriority(1)]
     [UseCulture("en-US")]
-    public void TestDefaultProvider_ThrowsArgumentException()
+    public void TestDefaultProvider_GeneratesWithAutoNamespace()
     {
-        var outputWriter = new FileWatcherOutputWriter(Path.Combine("output", "FileOutputWriterTests", "DefaultProvider"));
+        var directory = Path.Combine("output", "FileOutputWriterTests", "DefaultProvider");
+        var outputWriter = new FileWatcherOutputWriter(directory);
 
-        void Action() => Compiler.Generate(
+        Compiler.Generate(
             "DefaultProvider",
             PrefixPattern,
             new Generator
@@ -28,8 +29,10 @@ public class FileOutputWriterTests(ITestOutputHelper output)
                 EnableDataBinding = true,
             });
 
-        ArgumentException ex = Assert.Throws<ArgumentException>(Action);
-        Assert.Equal("Namespace http://tempuri.org/PurchaseOrderSchema.xsd not provided through map or generator.", ex.Message);
+        SharedTestFunctions.TestSamples(output, "DefaultProvider", PrefixPattern);
+        Assert.Single(outputWriter.Files);
+        // Auto-generated namespace will create a file like "Tempuri.cs" or similar
+        Assert.True(outputWriter.Files.First().EndsWith(".cs"));
     }
 
     [Fact]
@@ -270,12 +273,12 @@ public class FileOutputWriterTests(ITestOutputHelper output)
     [Fact]
     [TestPriority(1)]
     [UseCulture("en-US")]
-    public void TestSeparateDefaultProvider_ThrowsArgumentException()
+    public void TestSeparateDefaultProvider_GeneratesWithAutoNamespace()
     {
         var directory = Path.Combine("output", "FileOutputWriterTests", "SeparateDefaultProvider");
         var outputWriter = new FileWatcherOutputWriter(directory);
 
-        void Action() => Compiler.Generate(
+        Compiler.Generate(
             "SeparateDefaultProvider",
             PrefixPattern,
             new Generator
@@ -285,8 +288,10 @@ public class FileOutputWriterTests(ITestOutputHelper output)
                 SeparateClasses = true,
             });
 
-        ArgumentException ex = Assert.Throws<ArgumentException>(Action);
-        Assert.Equal("Namespace http://tempuri.org/PurchaseOrderSchema.xsd not provided through map or generator.", ex.Message);
+        SharedTestFunctions.TestSamples(output, "SeparateDefaultProvider", PrefixPattern);
+        Assert.Equal(2, outputWriter.Files.Count());
+        // Auto-generated namespace will create files in a directory
+        Assert.All(outputWriter.Files, file => Assert.True(file.EndsWith(".cs")));
     }
 
     [Fact]

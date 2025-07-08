@@ -752,7 +752,7 @@ namespace XmlSchemaClassGenerator
 
         private GeneratorConfiguration CreateDefaultConfiguration()
         {
-            return new GeneratorConfiguration
+            var config = new GeneratorConfiguration
             {
                 GenerateNullables = true,
                 GenerateSerializableAttribute = true,
@@ -764,6 +764,12 @@ namespace XmlSchemaClassGenerator
                 NamespacePrefix = "Generated",
                 NamingScheme = NamingScheme.PascalCase
             };
+            
+            // Set up default namespace provider that auto-generates namespaces
+            config.NamespaceProvider = new NamespaceProvider();
+            config.ConfigureNamespaceProvider();
+            
+            return config;
         }
 
 

@@ -27,8 +27,9 @@ namespace XmlSchemaClassGenerator.Tests
                 ],
                 ""namespacePatterns"": [
                     {
-                        ""xmlPattern"": ""http://example.com/{id}"",
-                        ""cSharpTemplate"": ""MyCompany.{id}""
+                        ""source"": ""XmlNamespace"",
+                        ""pattern"": ""http://example.com/{id}"",
+                        ""template"": ""MyCompany.{id}""
                     }
                 ],
                 ""sourceDirectories"": [""./schemas""],
@@ -55,8 +56,9 @@ namespace XmlSchemaClassGenerator.Tests
             
             Assert.NotNull(config.NamespacePatterns);
             Assert.Single(config.NamespacePatterns);
-            Assert.Equal("http://example.com/{id}", config.NamespacePatterns[0].XmlPattern);
-            Assert.Equal("MyCompany.{id}", config.NamespacePatterns[0].CSharpTemplate);
+            Assert.Equal("XmlNamespace", config.NamespacePatterns[0].Source);
+            Assert.Equal("http://example.com/{id}", config.NamespacePatterns[0].Pattern);
+            Assert.Equal("MyCompany.{id}", config.NamespacePatterns[0].Template);
             
             Assert.NotNull(config.SourceDirectories);
             Assert.Single(config.SourceDirectories);

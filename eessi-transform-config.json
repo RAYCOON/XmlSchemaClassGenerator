@@ -5,6 +5,9 @@
   "GenerateChoiceItemProperty": true,
   "UsePascalCase": true,
   "InitializeComplexTypes": true,
+  "GenerateNullables": true,
+  "GenerateConstructorForRequiredPropertiesOnly": true,
+  "CollectionSettersMode": "PublicWithoutConstructorInitialization",
   "FileGroupingMode": "BySourceFile",
   "GenerateInterfaces": false,
   "EnableDataBinding": false,
@@ -12,6 +15,9 @@
   "GenerateSerializableAttribute": false,
   "GenerateDesignerCategoryAttribute": false,
   "GenerateDebuggerStepThroughAttribute": false,
+  "EmitOrder": true,
+  "DataAnnotationMode": "All",
+  "GenerateXmlSchemaAttribute": true,
   "NamespacePatterns": [
     {
       "Source": "Filename",
@@ -27,7 +33,7 @@
       "Priority": 0
     },
     {
-      "Pattern": "(?<doc>[A-Z]+[0-9]+[A-Z]?)-(?<major>\\d+)\\.(?<minor>\\d+)",
+      "Pattern": "(?<doc>[A-Z]+[0-9]+[A-Z]*)-(?<major>\\d+)\\.(?<minor>\\d+)",
       "Template": "{doc}-{major}.{minor}.Designer",
       "Priority": 1
     }

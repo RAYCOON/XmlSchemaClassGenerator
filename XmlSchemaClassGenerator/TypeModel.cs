@@ -697,7 +697,7 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
 
     private bool IsValueType => PropertyType is EnumModel || (PropertyType is SimpleModel model && model.ValueType.IsValueType);
 
-    private bool IsNullableValueType => IsNullable && !IsEnumerable && IsValueType;
+    private bool IsNullableValueType => IsNullable && !IsEnumerable && IsValueType && !IsChoiceIdentifier;
 
     private bool IsNullableReferenceType => IsNullable && (!IsEnumerable || !IsPrivateSetter) && (PropertyType is ClassModel || (PropertyType is SimpleModel model && !model.ValueType.IsValueType));
 
@@ -799,7 +799,7 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
 
         if (DefaultValue == null || isEnumerable)
         {
-            if (isNullableValueType && Configuration.GenerateNullables && !(Configuration.UseShouldSerializePattern && !IsAttribute))
+            if (isNullableValueType && Configuration.GenerateNullables && !(Configuration.UseShouldSerializePattern && !IsAttribute) && !IsChoiceIdentifier)
                 member.Name += Value;
 
             if (IsNillableValueType)
@@ -1117,8 +1117,6 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
             if (IsAny)
             {
                 var anyAttribute = AttributeDecl<XmlAnyAttributeAttribute>();
-                if (Order != null)
-                    anyAttribute.Arguments.Add(new(nameof(Order), new CodePrimitiveExpression(Order.Value)));
                 attributes.Add(anyAttribute);
             }
             else
@@ -1131,8 +1129,11 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
             if (IsAny)
             {
                 var anyAttribute = AttributeDecl<XmlAnyElementAttribute>();
+                
+                // Add Order parameter when EmitOrder is enabled
                 if (Order != null)
                     anyAttribute.Arguments.Add(new(nameof(Order), new CodePrimitiveExpression(Order.Value)));
+                
                 attributes.Add(anyAttribute);
             }
             else if (IsChoice && Configuration.GenerateChoiceItemProperty)
