@@ -98,7 +98,7 @@ public class FileOutputWriter : OutputWriter
             var sourceFile = kvp.Key;
             var namespaceGroups = kvp.Value;
             var cu = new CodeCompileUnit();
-            
+
             // Add all namespaces that have types from this source file
             foreach (var nsGroup in namespaceGroups)
             {
@@ -106,17 +106,35 @@ public class FileOutputWriter : OutputWriter
                 var types = nsGroup.Types;
                 ns.Types.Clear();
                 foreach (var type in types)
+                {
+                    if (Configuration?.GenerateSourceFileAttribute == false)
+                        RemoveSourceFileAttribute(type);
                     ns.Types.Add(type);
+                }
                 cu.Namespaces.Add(ns);
             }
-            
+
             var filename = GenerateOutputFilename(sourceFile);
             var path = Path.Combine(OutputDirectory, filename + ".cs");
             Configuration?.WriteLog(path);
             WriteFile(path, cu);
         }
-        
+
         _sourceFileGroups.Clear();
+    }
+
+    private static void RemoveSourceFileAttribute(CodeTypeDeclaration type)
+    {
+        var toRemove = type.CustomAttributes
+            .Cast<CodeAttributeDeclaration>()
+            .FirstOrDefault(attr =>
+                attr.AttributeType.BaseType == "System.ComponentModel.DescriptionAttribute" &&
+                attr.Arguments.Count > 0 &&
+                attr.Arguments[0].Value is CodePrimitiveExpression p &&
+                p.Value is string s &&
+                s.StartsWith("SourceFile:"));
+        if (toRemove != null)
+            type.CustomAttributes.Remove(toRemove);
     }
     
     private string GetTypeSourceFile(CodeTypeDeclaration type)

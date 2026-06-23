@@ -82,7 +82,6 @@ public abstract class TypeModel(GeneratorConfiguration configuration) : Generato
         AddDescription(typeDeclaration.CustomAttributes, Documentation);
         
         // Add source file information if available and using BySourceFile grouping
-        // Note: Source file attribute is required for BySourceFile mode to work correctly
         if (!string.IsNullOrEmpty(SourceFileName) && Configuration.FileGroupingMode == FileGroupingMode.BySourceFile)
         {
             var sourceFileAttribute = AttributeDecl<DescriptionAttribute>(
