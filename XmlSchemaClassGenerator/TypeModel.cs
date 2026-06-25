@@ -1150,6 +1150,11 @@ public class PropertyModel(GeneratorConfiguration configuration, string name, Ty
 
                     if (!string.IsNullOrEmpty(choiceElement.ElementName.Namespace))
                         choiceAttribute.Arguments.Add(new(Namespace, new CodePrimitiveExpression(choiceElement.ElementName.Namespace)));
+                    else if ((Form == XmlSchemaForm.Unqualified || Form == XmlSchemaForm.None) && XmlNamespace == null)
+                        // Choice members must carry Form=Unqualified just like normal local elements.
+                        // Otherwise the XmlSerializer expects them in the target namespace and fails to
+                        // deserialize the unqualified (xmlns="") payload element -> the choice value (Item) stays null.
+                        choiceAttribute.Arguments.Add(new(nameof(Form), new CodeFieldReferenceExpression(TypeRefExpr<XmlSchemaForm>(), nameof(XmlSchemaForm.Unqualified))));
 
                     attributes.Add(choiceAttribute);
                 }
