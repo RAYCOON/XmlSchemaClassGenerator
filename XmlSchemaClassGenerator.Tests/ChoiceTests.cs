@@ -51,20 +51,15 @@ public class ChoiceTests
 
         var content = output.Content.First();
 
-        // Verify that choice properties are generated
+        // GenerateChoiceItemProperty renders a choice as a single `object Item` with one
+        // [XmlElement(Type=typeof(...))] per member (proven CDM 4.4.1 style) -- NO XmlChoiceIdentifier
+        // and NO ItemChoiceType enum, even when two members share a CLR type (here both string).
         Assert.Contains("public object Item { get; set; }", content);
-        Assert.Contains("public PersonTypeItemChoiceType ItemElementName { get; set; }", content);
-        
-        // Verify enum is generated
-        Assert.Contains("public enum PersonTypeItemChoiceType", content);
+        Assert.DoesNotContain("ItemElementName", content);
+        Assert.DoesNotContain("ItemChoiceType", content);
+        Assert.DoesNotContain("XmlChoiceIdentifier", content);
         Assert.Contains("Telefon", content);
         Assert.Contains("Email", content);
-        
-        // Verify XmlChoiceIdentifier attribute
-        Assert.Contains("XmlChoiceIdentifierAttribute", content);
-        
-        // Telefon and Email share the CLR type (string), so the serializer cannot tell them
-        // apart by type -> XmlChoiceIdentifier + enum are required. Members carry Form=Unqualified.
         Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""Telefon"", Type=typeof(string), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]", content);
         Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""Email"", Type=typeof(string), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]", content);
     }
@@ -156,22 +151,21 @@ public class ChoiceTests
 
         var content = output.Content.First();
 
-        // First choice: StringValue|IntValue|BoolValue have DISTINCT CLR types (string/int/bool),
-        // so the serializer discriminates by runtime type -> single object Item, NO identifier/enum.
+        // Both choices render as a single `object Item` (CDM 4.4.1 style): one
+        // [XmlElement(Type=typeof(...))] per member, NO XmlChoiceIdentifier/enum -- even the second
+        // choice whose members (CreatedDate|ModifiedDate) share a CLR type (DateTime).
         Assert.Contains("public object Item { get; set; }", content);
         Assert.Contains(@"XmlElementAttribute(""StringValue"", Type=typeof(string)", content);
         Assert.Contains(@"XmlElementAttribute(""IntValue"", Type=typeof(int)", content);
         Assert.Contains(@"XmlElementAttribute(""BoolValue"", Type=typeof(bool)", content);
-        Assert.DoesNotContain("ItemElementName", content); // first choice needs no XmlChoiceIdentifier
 
-        // Second choice: CreatedDate|ModifiedDate share the CLR type (DateTime) -> ambiguous by type,
-        // so XmlChoiceIdentifier + enum are required.
         Assert.Contains("public object Item1 { get; set; }", content);
-        Assert.Contains("public DataTypeItemChoiceType1 Item1ElementName { get; set; }", content);
-        Assert.Contains("XmlChoiceIdentifierAttribute(\"Item1ElementName\")", content);
-        Assert.Contains("public enum DataTypeItemChoiceType1", content);
-        Assert.Contains("CreatedDate", content);
-        Assert.Contains("ModifiedDate", content);
+        Assert.Contains(@"XmlElementAttribute(""CreatedDate"", Type=typeof(System.DateTime)", content);
+        Assert.Contains(@"XmlElementAttribute(""ModifiedDate"", Type=typeof(System.DateTime)", content);
+
+        Assert.DoesNotContain("ItemElementName", content);
+        Assert.DoesNotContain("ItemChoiceType", content);
+        Assert.DoesNotContain("XmlChoiceIdentifier", content);
     }
 
     [Fact]
