@@ -1236,12 +1236,7 @@ public class ModelBuilder
     private IEnumerable<PropertyModel> CreatePropertiesForChoice(Uri source, TypeModel owningTypeModel, XmlSchemaChoice choice, IList<Particle> choiceItems, int order)
     {
         var properties = new List<PropertyModel>();
-        
-        if (owningTypeModel.Name == "PurposeSEDType")
-        {
-            Console.WriteLine($"[DEBUG] CreatePropertiesForChoice called for PurposeSEDType");
-        }
-        
+
         if (!(owningTypeModel is ClassModel classModel))
             return properties;
 
@@ -1264,52 +1259,22 @@ public class ModelBuilder
         if (choiceElementTypes.Count == 0)
             return properties;
 
-        // Determine choice property names (handle multiple choices)
+        // Determine choice property name (handle multiple choices in one type: Item, Item1, ...)
         var currentCount = classModel.ChoicePropertiesCount;
         var itemPropertyName = currentCount == 0 ? "Item" : $"Item{currentCount}";
-        var enumPropertyName = $"{itemPropertyName}ElementName";
-        var enumName = currentCount == 0 
-            ? $"{owningTypeModel.Name}ItemChoiceType" 
-            : $"{owningTypeModel.Name}ItemChoiceType{currentCount}";
 
-        // Create enum values
-        var enumValues = choiceElementTypes
-            .Select(ce => new EnumValueModel
-            {
-                Name = _configuration.NamingProvider.EnumMemberNameFromValue(enumName, ce.ElementName.Name, null),
-                Value = ce.ElementName.Name
-            })
-            .ToList();
-
-        // Create the actual EnumModel for the choice enum
-        var enumModel = new EnumModel(_configuration)
-        {
-            Name = enumName,
-            Namespace = owningTypeModel.Namespace,
-            XmlSchemaName = new XmlQualifiedName(enumName, owningTypeModel.XmlSchemaName.Namespace),
-            XmlSchemaType = null, // This is a generated enum, not from schema
-            IsAnonymous = false,
-            Values = enumValues,
-            SourceFileName = owningTypeModel.SourceFileName // Inherit from owning type
-        };
-        
-        // Register the enum model in the namespace
-        if (owningTypeModel.Namespace != null)
-        {
-            owningTypeModel.Namespace.Types[enumName] = enumModel;
-        }
-
-        // Add enum definition to class model for code generation
-        var enumDefinition = new ChoiceEnumDefinition(enumName, enumValues);
-        classModel.ChoiceEnumDefinitions.Add(enumDefinition);
-
-        // Create Item property (object type)
+        // Represent the choice as a single `object Item` property that carries one
+        // [XmlElement(Type=typeof(...))] per choice member, all at the SAME Order. The
+        // XmlSerializer picks the active element from Item's runtime type, so NO
+        // XmlChoiceIdentifier/enum is needed. This matches the proven CDM 4.4.1
+        // representation: it round-trips correctly (only the set member is serialized)
+        // AND works with the reflection-based tree editor, which sets only `Item` and
+        // never an `ItemElementName` discriminator (the XmlChoiceIdentifier variant
+        // crashed there). The previous identifier/enum approach is intentionally dropped.
         var itemProperty = new PropertyModel(_configuration, itemPropertyName, new SimpleModel(_configuration) { ValueType = typeof(object) }, owningTypeModel)
         {
             IsChoice = true,
-            ChoiceEnumName = enumName,
             ChoiceElementTypes = choiceElementTypes,
-            ChoiceIdentifierFieldName = enumPropertyName,
             IsRequired = choice.MinOccurs > 0
         };
 
@@ -1318,19 +1283,7 @@ public class ModelBuilder
 
         properties.Add(itemProperty);
 
-        // Create identifier enum property using the EnumModel
-        var enumProperty = new PropertyModel(_configuration, enumPropertyName, enumModel, owningTypeModel)
-        {
-            IsChoiceIdentifier = true,
-            IsRequired = choice.MinOccurs > 0
-        };
-
-        if (_configuration.EmitOrder)
-            enumProperty.Order = order + 1;
-
-        properties.Add(enumProperty);
-
-        // Increment choice count
+        // Increment choice count so a second choice in the same type becomes Item1, ...
         classModel.ChoicePropertiesCount++;
 
         return properties;
