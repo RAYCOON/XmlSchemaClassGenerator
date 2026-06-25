@@ -63,9 +63,10 @@ public class ChoiceTests
         // Verify XmlChoiceIdentifier attribute
         Assert.Contains("XmlChoiceIdentifierAttribute", content);
         
-        // Verify XmlElement attributes for choice elements
-        Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""Telefon"", Type=typeof(string))]", content);
-        Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""Email"", Type=typeof(string))]", content);
+        // Telefon and Email share the CLR type (string), so the serializer cannot tell them
+        // apart by type -> XmlChoiceIdentifier + enum are required. Members carry Form=Unqualified.
+        Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""Telefon"", Type=typeof(string), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]", content);
+        Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""Email"", Type=typeof(string), Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]", content);
     }
 
     [Fact]
@@ -155,20 +156,19 @@ public class ChoiceTests
 
         var content = output.Content.First();
 
-        // First choice
+        // First choice: StringValue|IntValue|BoolValue have DISTINCT CLR types (string/int/bool),
+        // so the serializer discriminates by runtime type -> single object Item, NO identifier/enum.
         Assert.Contains("public object Item { get; set; }", content);
-        Assert.Contains("public DataTypeItemChoiceType ItemElementName { get; set; }", content);
-        
-        // Second choice
+        Assert.Contains(@"XmlElementAttribute(""StringValue"", Type=typeof(string)", content);
+        Assert.Contains(@"XmlElementAttribute(""IntValue"", Type=typeof(int)", content);
+        Assert.Contains(@"XmlElementAttribute(""BoolValue"", Type=typeof(bool)", content);
+        Assert.DoesNotContain("ItemElementName", content); // first choice needs no XmlChoiceIdentifier
+
+        // Second choice: CreatedDate|ModifiedDate share the CLR type (DateTime) -> ambiguous by type,
+        // so XmlChoiceIdentifier + enum are required.
         Assert.Contains("public object Item1 { get; set; }", content);
         Assert.Contains("public DataTypeItemChoiceType1 Item1ElementName { get; set; }", content);
-        
-        // Verify enums
-        Assert.Contains("public enum DataTypeItemChoiceType", content);
-        Assert.Contains("StringValue", content);
-        Assert.Contains("IntValue", content);
-        Assert.Contains("BoolValue", content);
-        
+        Assert.Contains("XmlChoiceIdentifierAttribute(\"Item1ElementName\")", content);
         Assert.Contains("public enum DataTypeItemChoiceType1", content);
         Assert.Contains("CreatedDate", content);
         Assert.Contains("ModifiedDate", content);
@@ -225,10 +225,12 @@ public class ChoiceTests
 
         var content = output.Content.First();
 
-        // Verify choice with complex types
+        // TextContent|BinaryContent have DISTINCT complex types (TextType|BinaryType), so the
+        // serializer discriminates by runtime type -> single object Item, NO identifier/enum.
         Assert.Contains("public object Item { get; set; }", content);
-        Assert.Contains("public MessageTypeItemChoiceType ItemElementName { get; set; }", content);
-        
+        Assert.DoesNotContain("ItemElementName", content);
+        Assert.DoesNotContain("MessageTypeItemChoiceType", content);
+
         // Verify XmlElement attributes reference the correct types (may have different names due to uniqueness)
         Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""TextContent"", Type=typeof(", content);
         Assert.Contains(@"[System.Xml.Serialization.XmlElementAttribute(""BinaryContent"", Type=typeof(", content);

@@ -1263,25 +1263,91 @@ public class ModelBuilder
         var currentCount = classModel.ChoicePropertiesCount;
         var itemPropertyName = currentCount == 0 ? "Item" : $"Item{currentCount}";
 
-        // Represent the choice as a single `object Item` property that carries one
-        // [XmlElement(Type=typeof(...))] per choice member, all at the SAME Order. The
-        // XmlSerializer picks the active element from Item's runtime type, so NO
-        // XmlChoiceIdentifier/enum is needed. This matches the proven CDM 4.4.1
-        // representation: it round-trips correctly (only the set member is serialized)
-        // AND works with the reflection-based tree editor, which sets only `Item` and
-        // never an `ItemElementName` discriminator (the XmlChoiceIdentifier variant
-        // crashed there). The previous identifier/enum approach is intentionally dropped.
-        var itemProperty = new PropertyModel(_configuration, itemPropertyName, new SimpleModel(_configuration) { ValueType = typeof(object) }, owningTypeModel)
+        // Decide the choice representation. The XmlSerializer can pick the active element of an
+        // `object Item` choice purely from the value's runtime type ONLY when the choice members
+        // have pairwise-distinct CLR types. If two members share a type (e.g. two xs:string
+        // alternatives, or two elements of the same complex type), type alone is ambiguous and
+        // the serializer REQUIRES an XmlChoiceIdentifier + enum to disambiguate.
+        var distinctTypeCount = choiceElementTypes.Select(ce => ce.ElementType).Distinct().Count();
+        var typesAreDistinct = distinctTypeCount == choiceElementTypes.Count;
+
+        if (typesAreDistinct)
         {
-            IsChoice = true,
-            ChoiceElementTypes = choiceElementTypes,
-            IsRequired = choice.MinOccurs > 0
-        };
+            // Distinct member types -> a single `object Item` with one [XmlElement(Type=typeof(...))]
+            // per member, all at the SAME Order; no identifier/enum needed. This matches the proven
+            // CDM 4.4.1 representation: it round-trips correctly (only the set member is serialized)
+            // AND works with the reflection-based tree editor, which sets only `Item` and never an
+            // `ItemElementName` discriminator (the XmlChoiceIdentifier variant crashed there).
+            var itemProperty = new PropertyModel(_configuration, itemPropertyName, new SimpleModel(_configuration) { ValueType = typeof(object) }, owningTypeModel)
+            {
+                IsChoice = true,
+                ChoiceElementTypes = choiceElementTypes,
+                IsRequired = choice.MinOccurs > 0
+            };
 
-        if (_configuration.EmitOrder)
-            itemProperty.Order = order;
+            if (_configuration.EmitOrder)
+                itemProperty.Order = order;
 
-        properties.Add(itemProperty);
+            properties.Add(itemProperty);
+        }
+        else
+        {
+            // Colliding member types -> `object Item` + XmlChoiceIdentifier + an ItemChoiceType enum
+            // that records which element the value represents (type alone can't tell them apart).
+            var enumPropertyName = $"{itemPropertyName}ElementName";
+            var enumName = currentCount == 0
+                ? $"{owningTypeModel.Name}ItemChoiceType"
+                : $"{owningTypeModel.Name}ItemChoiceType{currentCount}";
+
+            var enumValues = choiceElementTypes
+                .Select(ce => new EnumValueModel
+                {
+                    Name = _configuration.NamingProvider.EnumMemberNameFromValue(enumName, ce.ElementName.Name, null),
+                    Value = ce.ElementName.Name
+                })
+                .ToList();
+
+            var enumModel = new EnumModel(_configuration)
+            {
+                Name = enumName,
+                Namespace = owningTypeModel.Namespace,
+                XmlSchemaName = new XmlQualifiedName(enumName, owningTypeModel.XmlSchemaName.Namespace),
+                XmlSchemaType = null, // generated enum, not from schema
+                IsAnonymous = false,
+                Values = enumValues,
+                SourceFileName = owningTypeModel.SourceFileName
+            };
+
+            if (owningTypeModel.Namespace != null)
+                owningTypeModel.Namespace.Types[enumName] = enumModel;
+
+            classModel.ChoiceEnumDefinitions.Add(new ChoiceEnumDefinition(enumName, enumValues));
+
+            var itemProperty = new PropertyModel(_configuration, itemPropertyName, new SimpleModel(_configuration) { ValueType = typeof(object) }, owningTypeModel)
+            {
+                IsChoice = true,
+                ChoiceEnumName = enumName,
+                ChoiceElementTypes = choiceElementTypes,
+                ChoiceIdentifierFieldName = enumPropertyName,
+                IsRequired = choice.MinOccurs > 0
+            };
+
+            if (_configuration.EmitOrder)
+                itemProperty.Order = order;
+
+            properties.Add(itemProperty);
+
+            var enumProperty = new PropertyModel(_configuration, enumPropertyName, enumModel, owningTypeModel)
+            {
+                IsChoiceIdentifier = true,
+                IsRequired = choice.MinOccurs > 0
+            };
+
+            if (_configuration.EmitOrder)
+                enumProperty.Order = order + 1;
+
+            properties.Add(enumProperty);
+        }
 
         // Increment choice count so a second choice in the same type becomes Item1, ...
         classModel.ChoicePropertiesCount++;
